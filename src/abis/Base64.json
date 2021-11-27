@@ -43649,9 +43649,17 @@
     "name": "solc",
     "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x0a0d3B51fdC857C4cDA79e946c8155b2874DE6a5",
+      "transactionHash": "0x7453eabd4ce006e9569b0bf77d1fb242d734a3e36a30788c54b5a56d61708ace"
+    }
+  },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-27T21:59:34.725Z",
+  "updatedAt": "2021-11-27T22:48:55.724Z",
+  "networkType": "ethereum",
   "devdoc": {
     "author": "Brecht Devos - <brecht@loopring.org>",
     "kind": "dev",
