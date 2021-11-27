@@ -1,8 +1,9 @@
 {
-  "name": "eth-marketplace",
+  "name": "og",
   "version": "0.1.0",
-  "description": "An Ethereum Marketplace",
-  "author": "gregory@dappuniversity.com",
+  "description": "OG",
+  "author": "nfttank",
+  "homepage": "https://nfttank.github.io/OG/",
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.0",
     "babel-polyfill": "6.26.0",
@@ -15,6 +16,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
+    "gh-pages": "^3.2.3",
     "react": "16.8.4",
     "react-bootstrap": "1.0.0-beta.5",
     "react-dom": "16.8.4",
@@ -28,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
