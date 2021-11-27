@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Generator: Gravit.io -->
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation:isolate' viewBox='0 0 1000 1000' width='1000pt' height='1000pt'>
+    <defs>
+        <clipPath id='_clipPath_6PUbToie5nsoohGR2xIVgSwBf4OOxQx4'>
+            <rect width='1000' height='1000' />
+        </clipPath>
+    </defs>
+    <g clip-path='url(#_clipPath_6PUbToie5nsoohGR2xIVgSwBf4OOxQx4)'>
+        <g>
+            <mask id='_mask_Eds5GohxdRveoa6TJHvIjCwrhrl9cOx0'>
+                <rect x='200' y='200' width='300' height='300' fill='white' stroke='none' />
+            </mask>
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' />
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' mask='url(#_mask_Eds5GohxdRveoa6TJHvIjCwrhrl9cOx0)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+            <clipPath id='_clipPath_fJUK4PSDndEyseqI2144G5LGu6PTPPFv'>
+                <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' />
+                <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' mask='url(#_mask_Eds5GohxdRveoa6TJHvIjCwrhrl9cOx0)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+            </clipPath>
+            <g clip-path='url(#_clipPath_fJUK4PSDndEyseqI2144G5LGu6PTPPFv)'>
+                <path d=' M 168.644 121.539 L 150.226 121.539 L 150.226 76.647 L 113.499 76.647 L 101.545 121.539 L 68.944 121.539 L 119.43 0 L 65.297 0 L 0 157.242 L 0 167.21 L 97.852 167.21 L 97.852 203.832 L 150.229 203.832 L 150.229 167.21 L 168.647 167.21 L 168.644 121.539 Z ' fill='rgb(0,0,0)' />
+            </g>
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='transparent' mask='url(#_mask_Eds5GohxdRveoa6TJHvIjCwrhrl9cOx0)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+        </g>
+    </g>
+</svg>

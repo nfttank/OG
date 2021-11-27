@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!-- Generator: Gravit.io -->
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' style='isolation:isolate' viewBox='0 0 1000 1000' width='1000pt' height='1000pt'>
+    <defs>
+        <clipPath id='_clipPath_uWrI7etdBZ9ucuTBnJorAdmxPJmBzctc'>
+            <rect width='1000' height='1000' />
+        </clipPath>
+    </defs>
+    <g clip-path='url(#_clipPath_uWrI7etdBZ9ucuTBnJorAdmxPJmBzctc)'>
+        <g>
+            <mask id='_mask_IUtY9FBim13I6wp71X07r390Aqa3FyS6'>
+                <rect x='200' y='200' width='300' height='300' fill='white' stroke='none' />
+            </mask>
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' />
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' mask='url(#_mask_IUtY9FBim13I6wp71X07r390Aqa3FyS6)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+            <clipPath id='_clipPath_lLBqfXgTqNwMRZ5fEbYYwwzAVlgpdmiP'>
+                <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' />
+                <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='none' mask='url(#_mask_IUtY9FBim13I6wp71X07r390Aqa3FyS6)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+            </clipPath>
+            <g clip-path='url(#_clipPath_lLBqfXgTqNwMRZ5fEbYYwwzAVlgpdmiP)'>
+                <path d=' M 90.593 64.845 C 86.082 64.845 81.709 65.157 77.413 65.813 C 90.554 43.851 103.811 21.979 116.924 0 L 59.397 0 L 22.782 61.721 C 6.098 89.661 0 109.873 0 130.295 C 0 173.763 32.295 203.8 79.303 203.8 C 126.048 203.8 158.26 173.718 158.26 130.041 C 158.26 91.539 130.457 64.845 90.593 64.845 L 90.593 64.845 Z  M 79.13 158.044 C 62.991 158.044 51.3 146.698 51.3 130.041 C 51.3 113.213 62.991 101.741 79.13 101.741 C 95.439 101.741 106.959 113.213 106.959 130.041 C 106.959 146.698 95.439 158.044 79.13 158.044 Z ' fill='rgb(0,0,0)' />
+            </g>
+            <rect x='200' y='200' width='300' height='300' transform='matrix(1,0,0,1,0,0)' fill='transparent' mask='url(#_mask_IUtY9FBim13I6wp71X07r390Aqa3FyS6)' vector-effect='non-scaling-stroke' stroke-width='2' stroke='rgb(153,0,255)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='2' />
+        </g>
+    </g>
+</svg>

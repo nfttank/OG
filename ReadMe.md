@@ -75,3 +75,25 @@ https://opensea.io/assets/0x5ab21ec0bfa0b29545230395e3adaca7d552c948/1
 Ape Gang uses long Ids like 4981676894159712808201908443964193325271219637660871887967797657650558140417
 */
 
+# Deployment
+- Install Node
+- Install yarn `npm install --global yarn`
+- **Only once** Install gh-pages `yarn add gh-pages`
+- **Only once** add homepage to package.json
+```
+{
+  "name": ...,
+  "version": ...,
+  "homepage": "https://nfttank.github.io/OG/",
+  "dependencies": ...
+```
+- **Only once** add scripts predeploy and deploy to package.json
+```
+  "scripts": {
+    "start": ...,
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  }
+```
+- Run deployment with `npm run deploy`
+- GitHub Pages have to point to the branch `gh-pages` (updated and pushed by this deployment)
