@@ -26,8 +26,17 @@ TODO
 * convert the path <g> ... to </g> to base64
 * update or add the slug on the contract with setSupportedCollectionSlug()
 
+# External Contracts
+
+address constant CryptoPunksContractMainnet = 0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8;
+address constant BoredApesContractMainnet = 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D; 
+address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB9396471050C; 
+address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6;
+address constant MetaHeroCoreContractMainnet = 0xFb10b1717C92e9cc2d634080c3c337808408D9E1;
+address constant MetaHeroGenerativeContractMainnet = 0x6dc6001535e15b9def7b0f6A20a2111dFA9454E2;
 
 Whitelist: Top 100 All Time Collections on OpenSea 08.11.2021
+
 
 CryptoPunks 0-9999 #638596
 https://opensea.io/assets/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/0
@@ -73,6 +82,7 @@ Punks Comic 1-1000
 https://opensea.io/assets/0x5ab21ec0bfa0b29545230395e3adaca7d552c948/1
 
 Ape Gang uses long Ids like 4981676894159712808201908443964193325271219637660871887967797657650558140417
+
 */
 
 # Deployment

@@ -1,3 +1,24 @@
+/*
+
+     OOOOOOOOO                  GGGGGGGGGGGGG
+   OO:::::::::OO             GGG::::::::::::G
+ OO:::::::::::::OO         GG:::::::::::::::G
+O:::::::OOO:::::::O       G:::::GGGGGGGG::::G
+O::::::O   O::::::O      G:::::G       GGGGGG
+O:::::O     O:::::O     G:::::G              
+O:::::O     O:::::O     G:::::G              
+O:::::O     O:::::O     G:::::G    GGGGGGGGGG
+O:::::O     O:::::O     G:::::G    G::::::::G
+O:::::O     O:::::O     G:::::G    GGGGG::::G
+O:::::O     O:::::O     G:::::G        G::::G
+O::::::O   O::::::O      G:::::G       G::::G
+O:::::::OOO:::::::O       G:::::GGGGGGGG::::G
+ OO:::::::::::::OO         GG:::::::::::::::G
+   OO:::::::::OO             GGG::::::GGG:::G
+     OOOOOOOOO                  GGGGGG   GGGG
+     
+*/
+
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
@@ -7,13 +28,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-
-address constant CryptoPunksContractMainnet = 0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8;
-address constant BoredApesContractMainnet = 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D; 
-address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB9396471050C; 
-address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6;
-address constant MetaHeroCoreContractMainnet = 0xFb10b1717C92e9cc2d634080c3c337808408D9E1;
-address constant MetaHeroGenerativeContractMainnet = 0x6dc6001535e15b9def7b0f6A20a2111dFA9454E2;
 
 library Stringify {
 
@@ -262,7 +276,7 @@ library DigitsPaths {
         else if (numberDigitCount == 3)            
         {
             rectX = currentIndex == 2 ? 490 : 210;
-            rectY = currentIndex == 0 ? 210 : 490;
+            rectY = currentIndex == 0 ? 195 : 475; // -15 to the top because with three chars it seems like the text is too far away from the top while mathematically it would be correct 
             rectWidth = currentIndex == 0 ? 580 : 300; // to center, we need to change the width of the upper rect, don't change it of the lower two rects, let's overlap them to center the paths perfectly
             rectHeight = 300;
         }
@@ -376,6 +390,10 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
     function getSupportedCollections() public view returns (address[] memory) {
         return _supportedCollections;
     }
+
+    function clearSupportedCollections() public onlyOwner {
+         delete _supportedCollections;
+    }
     
     function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) public onlyOwner {
         _supportedCollectionSlugs[contractAddress] = string(Base64.decode(base64EncodedSvgSlug));
@@ -390,7 +408,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
         return _knownContractAddresses[name];
     }
     
-    function _safeOwnerOf(uint256 tokenId) public view returns (address) {
+    function safeOwnerOf(uint256 tokenId) public view returns (address) {
         
         address ownerOfToken = address(0);
                 
@@ -405,7 +423,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
     function getOwnedSupportedCollection(uint256 tokenId) public view returns (address) {
         require(_knownContractAddresses["gottoken"] != address(0), "GotToken contract address not set");
         
-        address ownerOfToken = _safeOwnerOf(tokenId);
+        address ownerOfToken = safeOwnerOf(tokenId);
         if (ownerOfToken == address(0))
             return address(0);
     
@@ -428,7 +446,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
 
     function getColors(uint256 tokenId) public view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
 
-        address ownerOfToken = _safeOwnerOf(tokenId);
+        address ownerOfToken = safeOwnerOf(tokenId);
         if (ownerOfToken != address(0)) {
             if (_knownContractAddresses["ogcolor"] != address(0)) {
                 OGColorInterface ogColorContract = OGColorInterface(_knownContractAddresses["ogcolor"]);

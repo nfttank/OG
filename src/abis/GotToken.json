@@ -8522,12 +8522,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xa1570cA571aF76db9b4D317752fedeBC635D665A",
-      "transactionHash": "0x57b75b3d8c3a5ec6d55abb9154d731bac6e6dfbb3107483511745ef41cddbb41"
+      "address": "0x7030aE5a8fB0f9d0C12E5A3a628f2a9Dd5f39c69",
+      "transactionHash": "0x08e0b2ca413fad14f68a40fb3d0dad478762e5a629168a2533ed5e8e85b2148b"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-27T22:48:55.658Z",
+  "updatedAt": "2021-11-30T23:32:46.986Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "nfttank.eth",
