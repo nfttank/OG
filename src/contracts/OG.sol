@@ -258,7 +258,6 @@ library DigitsPaths {
             return string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3]));
     }
 
-
     function getSmallDigitBounds(uint256 numberDigitCount, uint16 currentIndex) private pure returns (uint16 x, uint16 y, uint16 width, uint16 height) {
 
         uint16 rectX = 0;
@@ -376,9 +375,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
     mapping(address => string) private _supportedCollectionSlugs;
     mapping(string => address) private _knownContractAddresses;
 
-
     constructor() ERC721("OG", "OG") Ownable() {
-        
         _knownContractAddresses["gottoken"] = address(0);
         _knownContractAddresses["ogcolor"] = address(0);
     }
@@ -457,7 +454,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
             }
         }
         
-        return ("#ffffff", "#000000", "#000000", "#ffffff");
+        return ("#FFFFFF", "#000000", "#000000", "#FFFFFF");
     }
 
     function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
@@ -487,7 +484,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
         else
             parts[3] = "";
             
-        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#ffffff' stroke='none' />")); // don't apply colors here
+        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' />")); // don't apply colors here
         parts[5] = "</mask>";
         parts[6] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
         parts[7] = DigitsPaths.generate(tokenId);
@@ -505,15 +502,14 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
     
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Stringify.that(tokenId), '", "description": "Crypto Natives.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Stringify.that(tokenId), '", "description": "The 10k OGs of 2021.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
     
     function claim(uint16 tokenId) public nonReentrant {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
         _safeMint(_msgSender(), tokenId);
-    }
-    
+    }   
 }
 
 /**
