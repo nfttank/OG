@@ -13,8 +13,8 @@ TODO
 
 # Checks
 * ONLYOWNER = CONTRACT OWNER OR ITEM OWNER?
-* limit onlyOwner methods like addSupportedCollection(), setSupportedCollectionSlug(), setKnownContractAddresses(), & getKnownContractAddress().
-* set setKnownContractAddresses() with the correct contract addresses for the corresponding net (Mainnet, etc.)
+* limit onlyOwner methods like addSupportedCollection(), setSupportedCollectionSlug(), setTrustedContractAddresses(), & getTrustedContractAddress().
+* set setTrustedContractAddresses() with the correct contract addresses for the corresponding net (Mainnet, etc.)
 
 # Add or update supported collections
 * add **new** collections with addSupportedCollection() if required

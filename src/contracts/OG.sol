@@ -21,168 +21,187 @@ O:::::::OOO:::::::O       G:::::GGGGGGGG::::G
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import '@openzeppelin/contracts/utils/Strings.sol';
+import 'base64-sol/base64.sol';
 
-library Stringify {
+/**
+ * @title OG
+ * @dev nfttank.eth
+ */
+contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
 
-    function that(uint256 value) internal pure returns (string memory) {
-    // Inspired by OraclizeAPI's implementation - MIT license
-    // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
+    mapping(address => string) private _supportedSlugs;
+    mapping(string => address) private _trustedContracts;
+    mapping(uint256 => string) private _custom;
+    address[] private _supportedCollections;
 
-        if (value == 0) {
-            return "0";
-        }
-        uint256 temp = value;
-        uint256 digits;
-        while (temp != 0) {
-            digits++;
-            temp /= 10;
-        }
-        bytes memory buffer = new bytes(digits);
-        while (value != 0) {
-            digits -= 1;
-            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
-            value /= 10;
-        }
-        return string(buffer);
+    constructor() ERC721("OG", "OG") Ownable() {
+        _trustedContracts["gottoken"] = address(0);
+        _trustedContracts["ogcolor"] = address(0);
     }
 
+    function addSupportedCollection(address contractAddress) external onlyOwner {
+         _supportedCollections.push(contractAddress);
+    }
+    
+    function getSupportedCollections() external view onlyOwner returns (address[] memory) {
+        return _supportedCollections;
+    }
+
+    function clearSupportedCollections() external onlyOwner {
+         delete _supportedCollections;
+    }
+    
+    function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) external onlyOwner {
+        _supportedSlugs[contractAddress] = string(Base64.decode(base64EncodedSvgSlug));
+    }
+
+    function setCustom(uint256 tokenId, string calldata base64EncodedSvg) external onlyOwner {
+        _custom[tokenId] = string(Base64.decode(base64EncodedSvg));
+    }
+
+    function resetCustom(uint256 tokenId) external onlyOwner {
+        delete _custom[tokenId];
+    }
+
+    function setTrustedContractAddresses(address gotTokenAddress, address ogColorAddress) external onlyOwner {
+        _trustedContracts["gottoken"] = gotTokenAddress;
+        _trustedContracts["ogcolor"] = ogColorAddress;
+    }
+    
+    function getTrustedContractAddress(string calldata contractName) external view onlyOwner returns (address) {
+        return _trustedContracts[contractName];
+    }
+    
+    function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        
+        (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor)
+            = Customizer.getColors(this, _trustedContracts["ogcolor"], tokenId);
+        
+        address supportedCollection = Customizer.getOwnedSupportedCollection(this, _trustedContracts["gottoken"], _supportedCollections, tokenId);
+        bool hasCollection = supportedCollection != address(0);
+
+        string[8] memory parts;
+
+        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'>";
+        parts[1] = string(abi.encodePacked("<defs><linearGradient id='backColor'><stop stop-color='", backColor, "'/></linearGradient><linearGradient id='frameColor'><stop stop-color='", frameColor, "'/></linearGradient><linearGradient id='digitColor'><stop stop-color='", digitColor, "'/></linearGradient><linearGradient id='slugColor'><stop stop-color='", slugColor, "'/></linearGradient></defs>"));
+        parts[2] = "<mask id='_mask'>";
+        
+        if (hasCollection)
+            parts[3] = "<path id='path-0' d='M 504.28 105.614 C 804.145 105.541 991.639 430.111 841.768 689.836 C 691.898 949.563 317.067 949.655 167.072 690 C 26.805 447.185 181.324 140.169 459.907 108.16 Z' style='fill: none;'/>";
+        else
+           parts[3] = "";
+            
+        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
+
+        string memory digits = _custom[tokenId];
+        if (bytes(digits).length == 0)
+            digits = Digits.generate(tokenId);
+
+        parts[5] = digits;
+          
+        if (hasCollection)  
+            parts[6] = _supportedSlugs[supportedCollection];
+        else
+            parts[6] = "";
+            
+        parts[7] = "</svg>";
+        
+        return string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]));
+    }
+    
+    function tokenURI(uint256 tokenId) override public view returns (string memory) {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+    
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "The 10k OGs by Tank.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        return string(abi.encodePacked('data:application/json;base64,', json));
+    }
+    
+    function claim(uint16 tokenId) public nonReentrant {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        _safeMint(_msgSender(), tokenId);
+    }   
 }
 
-/// @title Base64
-/// @author Brecht Devos - <brecht@loopring.org>
-/// @notice Provides functions for encoding/decoding base64
-library Base64 {
-    string internal constant TABLE_ENCODE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-    bytes  internal constant TABLE_DECODE = hex"0000000000000000000000000000000000000000000000000000000000000000"
-                                            hex"00000000000000000000003e0000003f3435363738393a3b3c3d000000000000"
-                                            hex"00000102030405060708090a0b0c0d0e0f101112131415161718190000000000"
-                                            hex"001a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132330000000000";
+/**
+ * The interface to access the GotToken contract to check of an address owns a given token of a given contract
+ */
+interface GotTokenInterface {
+    function ownsTokenOfContract(address possibleOwner, address contractAddress, uint256 tokenId) external view returns (bool);
+    function ownsTokenOfContracts(address possibleOwner, address[] calldata upToTenContractAddresses, uint256 tokenId) external view returns (bool[] memory);
+}
 
-    function encode(bytes memory data) internal pure returns (string memory) {
-        if (data.length == 0) return '';
+/**
+ * The interface to access the OGColor contract to get the colors to render the SVG
+ */
+interface OGColorInterface {
+    function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor);
+}
 
-        // load the table into memory
-        string memory table = TABLE_ENCODE;
-
-        // multiply by 4/3 rounded up
-        uint256 encodedLen = 4 * ((data.length + 2) / 3);
-
-        // add some extra buffer at the end required for the writing
-        string memory result = new string(encodedLen + 32);
-
-        assembly {
-            // set the actual output length
-            mstore(result, encodedLen)
-
-            // prepare the lookup table
-            let tablePtr := add(table, 1)
-
-            // input ptr
-            let dataPtr := data
-            let endPtr := add(dataPtr, mload(data))
-
-            // result ptr, jump over length
-            let resultPtr := add(result, 32)
-
-            // run over the input, 3 bytes at a time
-            for {} lt(dataPtr, endPtr) {}
-            {
-                // read 3 bytes
-                dataPtr := add(dataPtr, 3)
-                let input := mload(dataPtr)
-
-                // write 4 characters
-                mstore8(resultPtr, mload(add(tablePtr, and(shr(18, input), 0x3F))))
-                resultPtr := add(resultPtr, 1)
-                mstore8(resultPtr, mload(add(tablePtr, and(shr(12, input), 0x3F))))
-                resultPtr := add(resultPtr, 1)
-                mstore8(resultPtr, mload(add(tablePtr, and(shr( 6, input), 0x3F))))
-                resultPtr := add(resultPtr, 1)
-                mstore8(resultPtr, mload(add(tablePtr, and(        input,  0x3F))))
-                resultPtr := add(resultPtr, 1)
-            }
-
-            // padding with '='
-            switch mod(mload(data), 3)
-            case 1 { mstore(sub(resultPtr, 2), shl(240, 0x3d3d)) }
-            case 2 { mstore(sub(resultPtr, 1), shl(248, 0x3d)) }
+library Customizer {
+    
+    function safeOwnerOf(ERC721 callingContract, uint256 tokenId) internal view returns (address) {
+        
+        address ownerOfToken = address(0);
+                
+        try callingContract.ownerOf(tokenId) returns (address a) {
+            ownerOfToken = a;
         }
+        catch { }
 
-        return result;
+        return ownerOfToken;
     }
 
-    function decode(string memory _data) internal pure returns (bytes memory) {
-        bytes memory data = bytes(_data);
+    function getColors(ERC721 callingContract, address ogColorContractAddress, uint256 tokenId) internal view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
 
-        if (data.length == 0) return new bytes(0);
-        require(data.length % 4 == 0, "invalid base64 decoder input");
-
-        // load the table into memory
-        bytes memory table = TABLE_DECODE;
-
-        // every 4 characters represent 3 bytes
-        uint256 decodedLen = (data.length / 4) * 3;
-
-        // add some extra buffer at the end required for the writing
-        bytes memory result = new bytes(decodedLen + 32);
-
-        assembly {
-            // padding with '='
-            let lastBytes := mload(add(data, mload(data)))
-            if eq(and(lastBytes, 0xFF), 0x3d) {
-                decodedLen := sub(decodedLen, 1)
-                if eq(and(lastBytes, 0xFFFF), 0x3d3d) {
-                    decodedLen := sub(decodedLen, 1)
+        address ownerOfToken = safeOwnerOf(callingContract, tokenId);
+        if (ownerOfToken != address(0)) {
+            if (ogColorContractAddress != address(0)) {
+                OGColorInterface ogColorContract = OGColorInterface(ogColorContractAddress);
+                try ogColorContract.getColors(ownerOfToken, tokenId) returns (string memory extBackColor, string memory extFrameColor, string memory extDigitColor, string memory extSlugColor) {
+                    return (extBackColor, extFrameColor, extDigitColor, extSlugColor);
                 }
-            }
-
-            // set the actual output length
-            mstore(result, decodedLen)
-
-            // prepare the lookup table
-            let tablePtr := add(table, 1)
-
-            // input ptr
-            let dataPtr := data
-            let endPtr := add(dataPtr, mload(data))
-
-            // result ptr, jump over length
-            let resultPtr := add(result, 32)
-
-            // run over the input, 4 characters at a time
-            for {} lt(dataPtr, endPtr) {}
-            {
-               // read 4 characters
-               dataPtr := add(dataPtr, 4)
-               let input := mload(dataPtr)
-
-               // write 3 bytes
-               let output := add(
-                   add(
-                       shl(18, and(mload(add(tablePtr, and(shr(24, input), 0xFF))), 0xFF)),
-                       shl(12, and(mload(add(tablePtr, and(shr(16, input), 0xFF))), 0xFF))),
-                   add(
-                       shl( 6, and(mload(add(tablePtr, and(shr( 8, input), 0xFF))), 0xFF)),
-                               and(mload(add(tablePtr, and(        input , 0xFF))), 0xFF)
-                    )
-                )
-                mstore(resultPtr, shl(232, output))
-                resultPtr := add(resultPtr, 3)
+                catch { }
             }
         }
+        
+        return ("#FFFFFF", "#000000", "#000000", "#FFFFFF");
+    }
+    
+    function getOwnedSupportedCollection(ERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) internal view returns (address) {
+        require(gotTokenContractAddress != address(0), "GotToken contract address not set");
+        
+        address ownerOfToken = safeOwnerOf(callingContract, tokenId);
+        if (ownerOfToken == address(0))
+            return address(0);
+    
+        bool[] memory ownsTokens;
+        
+        GotTokenInterface gotTokenContract = GotTokenInterface(gotTokenContractAddress);        
+        try gotTokenContract.ownsTokenOfContracts(ownerOfToken, supportedCollections, tokenId) returns (bool[] memory returnValue) {
+            ownsTokens = returnValue;
+        }
+        catch { return address(0); }
 
-        return result;
+        // find the first contract which is owned
+        for (uint256 i = 0; i < ownsTokens.length; i++) {
+            if (ownsTokens[i])
+                return supportedCollections[i];
+        }
+
+        return address(0);
     }
 }
 
-library DigitsPaths {
+library Digits {
     
     uint16 constant private smallheight = 2038; // needs div /10
 
@@ -234,7 +253,7 @@ library DigitsPaths {
     function generateMultiDigits(uint256 tokenId) private pure returns (string memory) {
         require(tokenId >= 10 && tokenId <= 9999, "Token Id invalid");
         
-        bytes memory stringBytes = bytes(Stringify.that(tokenId));
+        bytes memory stringBytes = bytes(Strings.toString(tokenId));
         
         string[] memory parts = new string[](stringBytes.length);
         
@@ -247,7 +266,7 @@ library DigitsPaths {
             uint16 offsetX = ((rectX * 10) + (((rectWidth * 10) - getSmallDigitWidth(number) /* is x10 */) / 2)) / 10;
             uint16 offsetY = ((rectY * 10) + (((rectHeight * 10) - smallheight /* is x10 */) / 2)) / 10;
 
-            parts[i] = string(abi.encodePacked("<path transform='translate(", Stringify.that(offsetX), ", ", Stringify.that(offsetY), ")' ", getSmallDigitPath(number)));
+            parts[i] = string(abi.encodePacked("<path transform='translate(", Strings.toString(offsetX), ", ", Strings.toString(offsetY), ")' ", getSmallDigitPath(number)));
         }
         
         if (stringBytes.length == 2) 
@@ -363,167 +382,4 @@ library DigitsPaths {
             
         return 0;
     }
-}
-
-/**
- * @title Owner
- * @dev Set & change owner
- */
-contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
-
-    address[] _supportedCollections;
-    mapping(address => string) private _supportedCollectionSlugs;
-    mapping(string => address) private _knownContractAddresses;
-
-    constructor() ERC721("OG", "OG") Ownable() {
-        _knownContractAddresses["gottoken"] = address(0);
-        _knownContractAddresses["ogcolor"] = address(0);
-    }
-
-    function addSupportedCollection(address contractAddress) public onlyOwner {
-         _supportedCollections.push(contractAddress);
-    }
-    
-    function getSupportedCollections() public view returns (address[] memory) {
-        return _supportedCollections;
-    }
-
-    function clearSupportedCollections() public onlyOwner {
-         delete _supportedCollections;
-    }
-    
-    function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) public onlyOwner {
-        _supportedCollectionSlugs[contractAddress] = string(Base64.decode(base64EncodedSvgSlug));
-    }
-
-    function setKnownContractAddresses(address gotTokenAddress, address ogColorAddress) public onlyOwner {
-        _knownContractAddresses["gottoken"] = gotTokenAddress;
-        _knownContractAddresses["ogcolor"] = ogColorAddress;
-    }
-    
-    function getKnownContractAddress(string calldata name) public view onlyOwner returns (address) {
-        return _knownContractAddresses[name];
-    }
-    
-    function safeOwnerOf(uint256 tokenId) public view returns (address) {
-        
-        address ownerOfToken = address(0);
-                
-        try this.ownerOf(tokenId) returns (address a) {
-            ownerOfToken = a;
-        }
-        catch { }
-
-        return ownerOfToken;
-    }
-    
-    function getOwnedSupportedCollection(uint256 tokenId) public view returns (address) {
-        require(_knownContractAddresses["gottoken"] != address(0), "GotToken contract address not set");
-        
-        address ownerOfToken = safeOwnerOf(tokenId);
-        if (ownerOfToken == address(0))
-            return address(0);
-    
-        bool[] memory ownsTokens;
-        
-        GotTokenInterface gotTokenContract = GotTokenInterface(_knownContractAddresses["gottoken"]);        
-        try gotTokenContract.ownsTokenOfContracts(ownerOfToken, _supportedCollections, tokenId) returns (bool[] memory returnValue) {
-            ownsTokens = returnValue;
-        }
-        catch { return address(0); }
-
-        // find the first contract which is owned
-        for (uint256 i = 0; i < ownsTokens.length; i++) {
-            if (ownsTokens[i])
-                return _supportedCollections[i];
-        }
-
-        return address(0);
-    }
-
-    function getColors(uint256 tokenId) public view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
-
-        address ownerOfToken = safeOwnerOf(tokenId);
-        if (ownerOfToken != address(0)) {
-            if (_knownContractAddresses["ogcolor"] != address(0)) {
-                OGColorInterface ogColorContract = OGColorInterface(_knownContractAddresses["ogcolor"]);
-                try ogColorContract.getColors(ownerOfToken, tokenId) returns (string memory extBackColor, string memory extFrameColor, string memory extDigitColor, string memory extSlugColor) {
-                    return (extBackColor, extFrameColor, extDigitColor, extSlugColor);
-                }
-                catch { }
-            }
-        }
-        
-        return ("#FFFFFF", "#000000", "#000000", "#FFFFFF");
-    }
-
-    function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
-        
-        (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) = getColors(tokenId);
-        
-        address supportedCollection = getOwnedSupportedCollection(tokenId);
-        bool hasCollection = supportedCollection != address(0);
-
-        string[10] memory parts;
-
-        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'>";
-        
-        parts[1] = string(abi.encodePacked(
-            "<defs>"
-            "<linearGradient id='backColor'><stop stop-color='", backColor, "'/></linearGradient>", 
-            "<linearGradient id='frameColor'><stop stop-color='", frameColor, "'/></linearGradient>",
-            "<linearGradient id='digitColor'><stop stop-color='", digitColor, "'/></linearGradient>",
-            "<linearGradient id='slugColor'><stop stop-color='", slugColor, "'/></linearGradient>",
-            "</defs>"));
-        
-        parts[2] = "<mask id='_mask'>";
-        
-        if (hasCollection)
-            parts[3] = "<path id='path-0' d='M 504.28 105.614 C 804.145 105.541 991.639 430.111 841.768 689.836 C 691.898 949.563 317.067 949.655 167.072 690 C 26.805 447.185 181.324 140.169 459.907 108.16 Z' style='fill: none;'/>";
-        else
-            parts[3] = "";
-            
-        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' />")); // don't apply colors here
-        parts[5] = "</mask>";
-        parts[6] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
-        parts[7] = DigitsPaths.generate(tokenId);
-          
-        if (hasCollection)  
-            parts[8] = _supportedCollectionSlugs[supportedCollection];
-        else
-            parts[8] = "";
-            
-        parts[9] = "</svg>";
-        
-        return string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]));
-    }
-    
-    function tokenURI(uint256 tokenId) override public view returns (string memory) {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
-    
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Stringify.that(tokenId), '", "description": "The 10k OGs of 2021.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
-        return string(abi.encodePacked('data:application/json;base64,', json));
-    }
-    
-    function claim(uint16 tokenId) public nonReentrant {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
-        _safeMint(_msgSender(), tokenId);
-    }   
-}
-
-/**
- * The interface to access the GotToken contract to check of an address owns a given token of a given contract
- */
-interface GotTokenInterface {
-    function ownsTokenOfContract(address possibleOwner, address contractAddress, uint256 tokenId) external view returns (bool);
-    function ownsTokenOfContracts(address possibleOwner, address[] calldata upToTenContractAddresses, uint256 tokenId) external view returns (bool[] memory);
-}
-
-
-/**
- * The interface to access the OGColor contract to get the colors to render the SVG
- */
-interface OGColorInterface {
-    function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor);
 }
