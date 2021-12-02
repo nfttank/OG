@@ -100,6 +100,7 @@ contract OG is ERC721Enumerable, ReentrancyGuard, Ownable {
         else
            parts[3] = "";
             
+        // don't apply colors on this string, this should be kept white
         parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
 
         string memory digits = _custom[tokenId];

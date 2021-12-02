@@ -44,4 +44,19 @@ contract('OG', (accounts) => {
       assert.include(svg, 'M 423.537 343.5 L 423.537 415.082 L 470.362 415.082') // part of the path of "1"
     })
   })
+
+  /*
+  describe('*** dump ***', async () => {
+    it('dumps', async () => {
+
+      const fs = require('fs')
+        
+      for (let i = 0; i < 10000; i++) {
+        const svg = await contract.renderSvg(i)
+        fs.writeFile('resoures/samples/' + i + '.svg', svg, (err) => {})
+      }
+    })
+  })
+  */
+ 
 })
