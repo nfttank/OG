@@ -34,6 +34,7 @@ address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB939647
 address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6;
 address constant MetaHeroCoreContractMainnet = 0xFb10b1717C92e9cc2d634080c3c337808408D9E1;
 address constant MetaHeroGenerativeContractMainnet = 0x6dc6001535e15b9def7b0f6A20a2111dFA9454E2;
+address constant NounsContractMainnet = 0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03;
 
 Whitelist: Top 100 All Time Collections on OpenSea 08.11.2021
 
