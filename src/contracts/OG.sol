@@ -44,10 +44,15 @@ contract OG is ERC721, ReentrancyGuard, Ownable {
     mapping(string => address) private _trustedContracts;
     mapping(uint256 => string) private _custom;
     address[] private _supportedCollections;
+    bool _paused;
 
     constructor() ERC721("OG", "OG") Ownable() {
         _trustedContracts["gottoken"] = address(0);
         _trustedContracts["ogcolor"] = address(0);
+    }
+
+    function setPaused(bool paused) external onlyOwner {
+        _paused = paused;
     }
 
     function addSupportedCollection(address contractAddress) external onlyOwner {
@@ -125,12 +130,14 @@ contract OG is ERC721, ReentrancyGuard, Ownable {
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
     
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "The 10k OGs by Tank.", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
     
-    function claim(uint16 tokenId) public nonReentrant {
+    function mint(uint16 tokenId) public {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        require(!_paused, "Minting is paused");
+
         _safeMint(_msgSender(), tokenId);
     }   
 }

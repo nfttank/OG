@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
- * @title Defines colors for OG NFTs. When claiming, a color and an application (which part of the OG NFT to colorize) has to be defined.
+ * @title Defines colors for OG NFTs. When minting, a color and an application (which part of the OG NFT to colorize) has to be defined.
  * There are four different applications (back, frame, digit, slug), but only a few colors to mint.
  * @author nfttank.eth
  */
@@ -25,7 +25,7 @@ contract OGColor is ERC721Enumerable, ReentrancyGuard, Ownable {
     constructor() ERC721("OGColor", "OGCOLOR") Ownable() {
     }
 
-    function claim(string calldata application, string calldata hexColor) public nonReentrant {
+    function mint(string calldata application, string calldata hexColor) public nonReentrant {
 
         // take the next free token index, no need to define it externally
         uint256 tokenId = totalSupply();

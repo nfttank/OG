@@ -22,13 +22,13 @@ contract('OGColor', (accounts) => {
     })
   })
 
-  describe('claim', async () => {
+  describe('mint', async () => {
 
     it('creates a new token', async () => {
       
       const testAddress = accounts[0];
 
-      const result = await contract.claim('back', '#EC058E', {from: testAddress})
+      const result = await contract.mint('back', '#EC058E', {from: testAddress})
       const event = result.logs[0].args
 
       let totalSupply = (await contract.totalSupply()).toNumber()
@@ -41,9 +41,9 @@ contract('OGColor', (accounts) => {
 
       const testAddress = accounts[0];
 
-      await contract.claim('frame', '#EC058A', {from: testAddress})
-      await contract.claim('frame', '#EC058A', {from: testAddress})
-      await contract.claim('frame', '#EC058A', {from: testAddress})
+      await contract.mint('frame', '#EC058A', {from: testAddress})
+      await contract.mint('frame', '#EC058A', {from: testAddress})
+      await contract.mint('frame', '#EC058A', {from: testAddress})
 
       assert.equal(await contract.totalSupply(), 3+1, 'could mint the same color multiple times')
     })
@@ -52,20 +52,20 @@ contract('OGColor', (accounts) => {
 
       const testAddress = accounts[0];
 
-      await contract.claim('back', '#EC058A', {from: testAddress})
-      await contract.claim('frame', '#EC058A', {from: testAddress})
-      await contract.claim('digit', '#EC058A', {from: testAddress})
-      await contract.claim('slug', '#EC058A', {from: testAddress})
+      await contract.mint('back', '#EC058A', {from: testAddress})
+      await contract.mint('frame', '#EC058A', {from: testAddress})
+      await contract.mint('digit', '#EC058A', {from: testAddress})
+      await contract.mint('slug', '#EC058A', {from: testAddress})
 
       assert.equal(await contract.totalSupply(), 3+1+4, 'could mint the same color multiple times')
     })
 
     it('cannot mint invalid HEX colors', async () => {
-      await contract.claim('back', '#ZAZAZA').should.be.rejected;
+      await contract.mint('back', '#ZAZAZA').should.be.rejected;
     })
 
     it('cannot mint unknown applications', async () => {
-      await contract.claim('fore', '#EC058A').should.be.rejected;
+      await contract.mint('fore', '#EC058A').should.be.rejected;
     })
   })
 
@@ -76,10 +76,10 @@ contract('OGColor', (accounts) => {
       const testAddress = accounts[1];
 
       // Mint 3 more tokens
-      await contract.claim('back', '#AAAAAA', {from: testAddress})
-      await contract.claim('frame', '#BBBBBB', {from: testAddress})
-      await contract.claim('digit', '#CCCCCC', {from: testAddress})
-      await contract.claim('slug', '#DDDDDD', {from: testAddress})
+      await contract.mint('back', '#AAAAAA', {from: testAddress})
+      await contract.mint('frame', '#BBBBBB', {from: testAddress})
+      await contract.mint('digit', '#CCCCCC', {from: testAddress})
+      await contract.mint('slug', '#DDDDDD', {from: testAddress})
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
@@ -89,7 +89,7 @@ contract('OGColor', (accounts) => {
       assert.equal(result[3], '#DDDDDD')
     })
 
-    it('gets default values if nothing was claimed', async () => {
+    it('gets default values if nothing was minted', async () => {
 
       const testAddress = accounts[2];
 
@@ -107,10 +107,10 @@ contract('OGColor', (accounts) => {
       const receiverAddress = accounts[4];
 
       // mint four tokens
-      const result1 = await contract.claim('back', '#AAAAA0', {from: testAddress})
-      const result2 = await contract.claim('frame', '#BBBBB0', {from: testAddress})
-      await contract.claim('digit', '#CCCCC0', {from: testAddress})
-      await contract.claim('slug', '#DDDDD0', {from: testAddress})
+      const result1 = await contract.mint('back', '#AAAAA0', {from: testAddress})
+      const result2 = await contract.mint('frame', '#BBBBB0', {from: testAddress})
+      await contract.mint('digit', '#CCCCC0', {from: testAddress})
+      await contract.mint('slug', '#DDDDD0', {from: testAddress})
 
 
       // determine the tokenIds
@@ -135,16 +135,16 @@ contract('OGColor', (accounts) => {
       const receiverAddress = accounts[6];
 
       // mint four tokens
-      const result1_1 = await contract.claim('back', '#AAAAA1', {from: testAddress})
-      await contract.claim('frame', '#BBBBB1', {from: testAddress})
-      const result3_1 = await contract.claim('digit', '#CCCCC1', {from: testAddress})
-      await contract.claim('slug', '#DDDDD1', {from: testAddress})
+      const result1_1 = await contract.mint('back', '#AAAAA1', {from: testAddress})
+      await contract.mint('frame', '#BBBBB1', {from: testAddress})
+      const result3_1 = await contract.mint('digit', '#CCCCC1', {from: testAddress})
+      await contract.mint('slug', '#DDDDD1', {from: testAddress})
 
       // mint four more tokens
-      await contract.claim('back', '#AAAAA2', {from: testAddress})
-      const result2_2 = await contract.claim('frame', '#BBBBB2', {from: testAddress})
-      const result3_2 = await contract.claim('digit', '#CCCCC2', {from: testAddress})
-      await contract.claim('slug', '#DDDDD2', {from: testAddress})
+      await contract.mint('back', '#AAAAA2', {from: testAddress})
+      const result2_2 = await contract.mint('frame', '#BBBBB2', {from: testAddress})
+      const result3_2 = await contract.mint('digit', '#CCCCC2', {from: testAddress})
+      await contract.mint('slug', '#DDDDD2', {from: testAddress})
 
       // determine the tokenIds
       const tokenId1_1 = result1_1.logs[0].args.tokenId
@@ -180,11 +180,11 @@ contract('OGColor', (accounts) => {
       const burnAddress = '0x000000000000000000000000000000000000dead'
 
       // mint four tokens
-      const result1 = await contract.claim('back', '#AAAAA1', {from: testAddress}) // burn 4
-      /*           */ await contract.claim('back', '#AAAAA2', {from: testAddress}) // keep
-      const result3 = await contract.claim('back', '#AAAAA3', {from: testAddress}) // sell 2
-      const result4 = await contract.claim('back', '#AAAAA4', {from: testAddress}) // burn 3
-      const result5 = await contract.claim('back', '#AAAAA5', {from: testAddress}) // sell 1
+      const result1 = await contract.mint('back', '#AAAAA1', {from: testAddress}) // burn 4
+      /*           */ await contract.mint('back', '#AAAAA2', {from: testAddress}) // keep
+      const result3 = await contract.mint('back', '#AAAAA3', {from: testAddress}) // sell 2
+      const result4 = await contract.mint('back', '#AAAAA4', {from: testAddress}) // burn 3
+      const result5 = await contract.mint('back', '#AAAAA5', {from: testAddress}) // sell 1
 
       // determine the tokenIds
       const tokenId1 = result1.logs[0].args.tokenId

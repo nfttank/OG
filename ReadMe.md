@@ -1,3 +1,6 @@
+OG numbers, on chain rendered numeric NFTs. Rendered images are public domain by Creative Commons Zero v1.0 Universal (CC0-1.0). Feel free to use them in any way you want <3
+
+
 # Rules
 
 * OG #1-12 can only be minted by the punk holders within the [12 topsales](https://www.larvalabs.com/cryptopunks/topsales): The "OG dozen".
@@ -9,6 +12,11 @@
 TODO
 * Whitelisting of the OG dozen
 * Color replacement (background, circle, slug, numbers) --> OK
+* withdraw
+* pickrandom, like one or many of all/<100/<1000 etc. OGs
+* ERC optimizations? 
+   * https://nftchance.medium.com/the-cannibalization-of-nfts-by-openzeppelin-by-insanely-high-gas-prices-cd2c9a7c1e7
+   * https://etherscan.io/address/0x0f78c6eee3c89ff37fd9ef96bd685830993636f2#code
 
 
 # Checks

@@ -50,8 +50,8 @@ class App extends Component {
     }
   }
 
-  claim = (colorApplication, color) => {
-    this.state.contract.methods.claim(colorApplication, color).send({ from: this.state.account })
+  mint = (colorApplication, color) => {
+    this.state.contract.methods.mint(colorApplication, color).send({ from: this.state.account })
       .once('receipt', (receipt) => {
         this.setState({
           colors: [...this.state.colors, color]
@@ -96,7 +96,7 @@ class App extends Component {
                   event.preventDefault()
                   const color = this.color.value
                   const colorApplication = this.colorApplication.value
-                  this.claim(colorApplication, color)
+                  this.mint(colorApplication, color)
                 }}>
                   <input
                     type='text'
@@ -113,7 +113,7 @@ class App extends Component {
                   <input
                     type='submit'
                     className='btn btn-block btn-primary'
-                    value='claim'
+                    value='mint'
                   />
                 </form>
               </div>
