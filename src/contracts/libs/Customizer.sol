@@ -37,7 +37,9 @@ library Customizer {
     }
     
     function getOwnedSupportedCollection(IERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) external view returns (address) {
-        require(gotTokenContractAddress != address(0), "GotToken contract address not set");
+        
+        if (gotTokenContractAddress == address(0))
+            return address(0);
         
         address ownerOfToken = safeOwnerOf(callingContract, tokenId);
         if (ownerOfToken == address(0))

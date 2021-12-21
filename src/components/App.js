@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import './App.css'
 import OG from '../abis/OG.json'
+import Autocomplete from '@celebryts/react-autocomplete-tags'
 
 class App extends Component {
 
@@ -25,7 +26,7 @@ class App extends Component {
 
   async loadBlockchainData() {
     const web3 = window.web3
-    // Load account
+
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
 
@@ -33,28 +34,49 @@ class App extends Component {
     const networkData = OG.networks[networkId]
     if (networkData) {
       const abi = OG.abi
-      const address = networkData.address
-      const contract = new web3.eth.Contract(abi, address)
+      const contractAddress = networkData.address
+      const contract = new web3.eth.Contract(abi, contractAddress)
       this.setState({ contract })
       const totalSupply = await contract.methods.totalSupply().call()
       this.setState({ totalSupply })
 
-      const tokenCount = await contract.methods.balanceOf(address, 0).call()
+      const tokenCount = await contract.methods.balanceOf(this.state.account).call()
+
       for (var i = 0; i < tokenCount; i++) {
-        this.setState({
-          tokens: [...this.state.tokens, await contract.methods.tokenOfOwnerByIndex(address, i).call()]
-        })
+        const og = await contract.methods.tokenOfOwnerByIndex(this.state.account, i).call()
+        this.setState({ ogs: this.state.ogs.concat(og)})
+        const svg = await contract.methods.renderSvg(og).call()
+        this.setState({ svgs: this.state.svgs.concat(svg)})
       }
+
     } else {
       window.alert('Smart contract not deployed to detected network.')
     }
   }
 
-  mint = (tokens) => {
-    this.state.contract.methods.multiMint(tokens).send({ from: this.state.account })
-        .once('receipt', (receipt) => {
-          this.setState({ tokens: [...this.state.colors, tokens] })
-        })
+  mint = () => {
+
+   // window.alert(this.state.tokenInput)
+
+    // for (var i = 0; i < this.state.tokenInput.length; i++) {
+    //   this.state.contract.methods.mint(this.state.tokenInput[i]).send({ from: this.state.account })
+    //     .once('receipt', (receipt) => {
+    //       // this.setState({ ogs: this.state.ogs.concat(tokens[i])})
+    //       // const svg = this.state.contract.methods.renderSvg(tokens[i]).send({ from: this.state.account })
+    //       // this.setState({ svgs: this.state.svgs.concat(svg)})
+    //     })
+    // }
+
+    // this.state.contract.methods.mintMultiple(this.state.tokenInput).send({ from: this.state.account })
+    // .once('receipt', (receipt) => {
+    //   window.alert(receipt)
+    //   this.setState({ ogs: this.state.ogs.concat(this.state.tokenInput)})
+
+    //   for (var i = 0; i < this.state.tokenInput.length; i++) {
+    //     const svg = this.state.contract.methods.renderSvg(this.state.tokenInput[i]).send({ from: this.state.account })
+    //     this.setState({ svgs: this.state.svgs.concat(svg)})
+    //   }
+    // })
   }
 
   constructor(props) {
@@ -63,8 +85,22 @@ class App extends Component {
       account: '',
       contract: null,
       totalSupply: 0,
-      tokens: []
+      ogs: [],
+      svgs: [],
+      tokenInput: []
     }
+  }
+
+  handleChange = (value) => {
+    console.log('Value received from onChange: ' + value)
+  }
+
+  tagAdd = (tag) => {
+    this.setState({tokenInput: this.state.tokenInput.concat(tag.value)})
+  }
+
+  tagDelete = (deletedTag, restTags) => {
+    this.setState({tokenInput: restTags})
   }
 
   render() {
@@ -92,38 +128,30 @@ class App extends Component {
                 <h1>Issue Token</h1>
                 <form onSubmit={(event) => {
                   event.preventDefault()
-                  const color = this.color.value
-                  const colorApplication = this.colorApplication.value
-                  this.mint(colorApplication, color)
+                  this.mint()
                 }}>
-                  <input
-                    type='text'
-                    className='form-control mb-1'
-                    placeholder='e.g. back'
-                    ref={(input) => { this.colorApplication = input }}
-                  />
-                  <input
-                    type='text'
-                    className='form-control mb-1'
-                    placeholder='e.g. #FFFFFF'
-                    ref={(input) => { this.color = input }}
-                  />
-                  <input
-                    type='submit'
-                    className='btn btn-block btn-primary'
-                    value='mint'
-                  />
+                {/* https://github.com/celebryts/react-autocomplete-tags */}
+                <Autocomplete
+                  onChange={this.handleChange}
+                  onAdd={this.tagAdd}
+                  onDelete={this.tagDelete}
+                />
+                <input
+                  type='submit'
+                  className='btn btn-block btn-primary'
+                  value='mint'
+                />
+                <a>{this.state.tokenInput.map(t => t + ', ')}</a>
                 </form>
               </div>
             </main>
           </div>
           <hr />
           <div className="row text-center">
-            {this.state.colors.map((color, key) => {
+            {this.state.svgs.map((svg, index) => {
               return (
-                <div key={key} className="col-md-3 mb-3">
-                  <div className="token" style={{ backgroundColor: color }}></div>
-                  <div>{color}</div>
+                <div key={index} className="col-md-3 mb-3">
+                  <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', 'height=\'1000\' transform=\'scale(0.3)\'')}} />
                 </div>
               )
             })}

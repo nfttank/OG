@@ -29,7 +29,6 @@ import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
-import './ERC/ERC721SlimForArbitraryMints.sol';
 import './interfaces/GotTokenInterface.sol';
 import './interfaces/OGColorInterface.sol';
 import './libs/Customizer.sol';
@@ -135,15 +134,12 @@ contract OG is ERC721Enumerable, Ownable {
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
     
-    function mint(uint16 tokenId) public {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+    function mint(uint16[] calldata tokenIds) public payable {
         require(!_paused, "Minting is paused");
+        require(tokenIds.length <= 5, "You can mint a maximum of 5" );
+        require(msg.value >= 0.01 ether * tokenIds.length, "Not enough ETH sent, check price");
 
-        _safeMint(_msgSender(), tokenId);
-    } 
-
-    function mintMultiple(uint16[] calldata tokenIds) public {
-        require(!_paused, "Minting is paused");
+        require(totalSupply() + tokenIds.length <= 10000, "Exceeds maximum supply");
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
            require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, string(abi.encodePacked("Token Id ", Strings.toString(tokenIds[i]), " invalid"))); 
