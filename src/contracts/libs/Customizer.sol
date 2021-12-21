@@ -2,13 +2,13 @@
 
 pragma solidity 0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "../interfaces/GotTokenInterface.sol";
 import "../interfaces/OGColorInterface.sol";
 
 library Customizer {
     
-    function safeOwnerOf(ERC721 callingContract, uint256 tokenId) public view returns (address) {
+    function safeOwnerOf(IERC721 callingContract, uint256 tokenId) public view returns (address) {
         
         address ownerOfToken = address(0);
                 
@@ -20,7 +20,7 @@ library Customizer {
         return ownerOfToken;
     }
 
-    function getColors(ERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
+    function getColors(IERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
 
         address ownerOfToken = safeOwnerOf(callingContract, tokenId);
         if (ownerOfToken != address(0)) {
@@ -36,7 +36,7 @@ library Customizer {
         return ("#FFFFFF", "#000000", "#000000", "#FFFFFF");
     }
     
-    function getOwnedSupportedCollection(ERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) external view returns (address) {
+    function getOwnedSupportedCollection(IERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) external view returns (address) {
         require(gotTokenContractAddress != address(0), "GotToken contract address not set");
         
         address ownerOfToken = safeOwnerOf(callingContract, tokenId);

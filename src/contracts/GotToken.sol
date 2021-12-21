@@ -2,7 +2,7 @@
 
 pragma solidity 0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 /**
  * @title Checks if a given address owns a token from a given ERC721 contract or the CryptoPunks contract (which does not implement ERC721)
@@ -54,7 +54,7 @@ contract GotToken {
             realTokenOwner = punksContract.punkIndexToAddress(tokenId);
         }
         else {
-            ERC721 ercContract = ERC721(contractAddress);
+            IERC721 ercContract = IERC721(contractAddress);
             realTokenOwner = ercContract.ownerOf(tokenId);
         }
 

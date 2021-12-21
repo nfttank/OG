@@ -24,11 +24,12 @@ O:::::::OOO:::::::O       G:::::GGGGGGGG::::G
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
 import '@openzeppelin/contracts/utils/Strings.sol';
 import 'base64-sol/base64.sol';
+import './ERC/ERC721SlimForArbitraryMints.sol';
 import './interfaces/GotTokenInterface.sol';
 import './interfaces/OGColorInterface.sol';
 import './libs/Customizer.sol';
@@ -36,9 +37,9 @@ import './libs/Digits.sol';
 
 /**
  * @title OG
- * @dev nfttank.eth
+ * @author nfttank.eth
  */
-contract OG is ERC721, ReentrancyGuard, Ownable {
+contract OG is ERC721Enumerable, Ownable {
 
     mapping(address => string) private _supportedSlugs;
     mapping(string => address) private _trustedContracts;
@@ -139,5 +140,17 @@ contract OG is ERC721, ReentrancyGuard, Ownable {
         require(!_paused, "Minting is paused");
 
         _safeMint(_msgSender(), tokenId);
-    }   
+    } 
+
+    function mintMultiple(uint16[] calldata tokenIds) public {
+        require(!_paused, "Minting is paused");
+
+        for (uint16 i = 0; i < tokenIds.length; i++) {
+           require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, string(abi.encodePacked("Token Id ", Strings.toString(tokenIds[i]), " invalid"))); 
+        }
+
+        for (uint16 i = 0; i < tokenIds.length; i++) {
+            _safeMint(_msgSender(), tokenIds[i]);
+        }
+    }
 }

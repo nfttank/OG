@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
 import './App.css'
-import OGColor from '../abis/OGColor.json'
+import OG from '../abis/OG.json'
 
 class App extends Component {
 
@@ -30,19 +30,19 @@ class App extends Component {
     this.setState({ account: accounts[0] })
 
     const networkId = await web3.eth.net.getId()
-    const networkData = OGColor.networks[networkId]
+    const networkData = OG.networks[networkId]
     if (networkData) {
-      const abi = OGColor.abi
+      const abi = OG.abi
       const address = networkData.address
       const contract = new web3.eth.Contract(abi, address)
       this.setState({ contract })
       const totalSupply = await contract.methods.totalSupply().call()
       this.setState({ totalSupply })
-      const colorsForAddress = await contract.methods.getColors(address, 0).call()
-      // Load Colors
-      for (var i = 0; i < 4; i++) {
+
+      const tokenCount = await contract.methods.balanceOf(address, 0).call()
+      for (var i = 0; i < tokenCount; i++) {
         this.setState({
-          colors: [...this.state.colors, colorsForAddress[i]]
+          tokens: [...this.state.tokens, await contract.methods.tokenOfOwnerByIndex(address, i).call()]
         })
       }
     } else {
@@ -50,13 +50,11 @@ class App extends Component {
     }
   }
 
-  mint = (colorApplication, color) => {
-    this.state.contract.methods.mint(colorApplication, color).send({ from: this.state.account })
-      .once('receipt', (receipt) => {
-        this.setState({
-          colors: [...this.state.colors, color]
+  mint = (tokens) => {
+    this.state.contract.methods.multiMint(tokens).send({ from: this.state.account })
+        .once('receipt', (receipt) => {
+          this.setState({ tokens: [...this.state.colors, tokens] })
         })
-      })
   }
 
   constructor(props) {
@@ -65,7 +63,7 @@ class App extends Component {
       account: '',
       contract: null,
       totalSupply: 0,
-      colors: []
+      tokens: []
     }
   }
 
@@ -79,7 +77,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            OG Colors
+            OG by Tank
           </a>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
