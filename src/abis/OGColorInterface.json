@@ -55,15 +55,15 @@
     "absolutePath": "project:/src/contracts/interfaces/OGColorInterface.sol",
     "exportedSymbols": {
       "OGColorInterface": [
-        6003
+        6002
       ]
     },
-    "id": 6004,
+    "id": 6003,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5986,
+        "id": 5985,
         "literals": [
           "solidity",
           "0.8",
@@ -78,38 +78,38 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 5987,
+          "id": 5986,
           "nodeType": "StructuredDocumentation",
           "src": "63:124:25",
           "text": " @title The interface to access the OGColor contract to get the colors to render the SVG\n @author nfttank.eth"
         },
         "fullyImplemented": false,
-        "id": 6003,
+        "id": 6002,
         "linearizedBaseContracts": [
-          6003
+          6002
         ],
         "name": "OGColorInterface",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "116e85bf",
-            "id": 6002,
+            "id": 6001,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getColors",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5992,
+              "id": 5991,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5989,
+                  "id": 5988,
                   "mutability": "mutable",
                   "name": "forAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "242:18:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -118,7 +118,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5988,
+                    "id": 5987,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "242:7:25",
@@ -132,11 +132,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5991,
+                  "id": 5990,
                   "mutability": "mutable",
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "262:15:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -145,7 +145,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5990,
+                    "id": 5989,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "262:7:25",
@@ -160,16 +160,16 @@
               "src": "241:37:25"
             },
             "returnParameters": {
-              "id": 6001,
+              "id": 6000,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5994,
+                  "id": 5993,
                   "mutability": "mutable",
                   "name": "backColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "302:23:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -178,7 +178,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5993,
+                    "id": 5992,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "302:6:25",
@@ -191,11 +191,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5996,
+                  "id": 5995,
                   "mutability": "mutable",
                   "name": "frameColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "327:24:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -204,7 +204,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5995,
+                    "id": 5994,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "327:6:25",
@@ -217,11 +217,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5998,
+                  "id": 5997,
                   "mutability": "mutable",
                   "name": "digitColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "353:24:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -230,7 +230,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5997,
+                    "id": 5996,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "353:6:25",
@@ -243,11 +243,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 6000,
+                  "id": 5999,
                   "mutability": "mutable",
                   "name": "slugColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "379:23:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -256,7 +256,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5999,
+                    "id": 5998,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "379:6:25",
@@ -270,14 +270,14 @@
               ],
               "src": "301:102:25"
             },
-            "scope": 6003,
+            "scope": 6002,
             "src": "223:181:25",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6004,
+        "scope": 6003,
         "src": "189:218:25"
       }
     ],
@@ -287,15 +287,15 @@
     "absolutePath": "project:/src/contracts/interfaces/OGColorInterface.sol",
     "exportedSymbols": {
       "OGColorInterface": [
-        6003
+        6002
       ]
     },
-    "id": 6004,
+    "id": 6003,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5986,
+        "id": 5985,
         "literals": [
           "solidity",
           "0.8",
@@ -310,38 +310,38 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 5987,
+          "id": 5986,
           "nodeType": "StructuredDocumentation",
           "src": "63:124:25",
           "text": " @title The interface to access the OGColor contract to get the colors to render the SVG\n @author nfttank.eth"
         },
         "fullyImplemented": false,
-        "id": 6003,
+        "id": 6002,
         "linearizedBaseContracts": [
-          6003
+          6002
         ],
         "name": "OGColorInterface",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "116e85bf",
-            "id": 6002,
+            "id": 6001,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getColors",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5992,
+              "id": 5991,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5989,
+                  "id": 5988,
                   "mutability": "mutable",
                   "name": "forAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "242:18:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -350,7 +350,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5988,
+                    "id": 5987,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "242:7:25",
@@ -364,11 +364,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5991,
+                  "id": 5990,
                   "mutability": "mutable",
                   "name": "tokenId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "262:15:25",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -377,7 +377,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5990,
+                    "id": 5989,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "262:7:25",
@@ -392,16 +392,16 @@
               "src": "241:37:25"
             },
             "returnParameters": {
-              "id": 6001,
+              "id": 6000,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5994,
+                  "id": 5993,
                   "mutability": "mutable",
                   "name": "backColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "302:23:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -410,7 +410,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5993,
+                    "id": 5992,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "302:6:25",
@@ -423,11 +423,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5996,
+                  "id": 5995,
                   "mutability": "mutable",
                   "name": "frameColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "327:24:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -436,7 +436,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5995,
+                    "id": 5994,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "327:6:25",
@@ -449,11 +449,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5998,
+                  "id": 5997,
                   "mutability": "mutable",
                   "name": "digitColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "353:24:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -462,7 +462,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5997,
+                    "id": 5996,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "353:6:25",
@@ -475,11 +475,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 6000,
+                  "id": 5999,
                   "mutability": "mutable",
                   "name": "slugColor",
                   "nodeType": "VariableDeclaration",
-                  "scope": 6002,
+                  "scope": 6001,
                   "src": "379:23:25",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -488,7 +488,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 5999,
+                    "id": 5998,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "379:6:25",
@@ -502,14 +502,14 @@
               ],
               "src": "301:102:25"
             },
-            "scope": 6003,
+            "scope": 6002,
             "src": "223:181:25",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 6004,
+        "scope": 6003,
         "src": "189:218:25"
       }
     ],
@@ -521,7 +521,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-20T20:14:07.745Z",
+  "updatedAt": "2021-12-20T23:42:27.219Z",
   "devdoc": {
     "author": "nfttank.eth",
     "kind": "dev",

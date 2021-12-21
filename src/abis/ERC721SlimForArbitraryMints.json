@@ -21080,7 +21080,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-20T20:14:07.273Z",
+  "updatedAt": "2021-12-20T23:42:26.861Z",
   "devdoc": {
     "author": "nfttank.eth",
     "details": "This is an alternative implementation to OpenZeppelin's ERC721. ERC721Slim is focussing on reducing the gas costs by reducing efforts in writing methods. With that, reading methods might do an extra mile which is a fair trade off for significant lower cas costs. Heavily inspired by squeebo_nft and GoldenXnft",
