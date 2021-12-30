@@ -31,8 +31,6 @@ contract('OGColor', (accounts) => {
       const result = await contract.mint('back', '#EC058E', {from: testAddress})
       const event = result.logs[0].args
 
-      let totalSupply = (await contract.totalSupply()).toNumber()
-      assert.equal(totalSupply, 1, 'totalSupply should return 1 as one token was minted')
       assert.equal(event.from, '0x0000000000000000000000000000000000000000', 'from is correct')
       assert.equal(event.to, accounts[0], 'to is correct')
     })
@@ -44,8 +42,6 @@ contract('OGColor', (accounts) => {
       await contract.mint('frame', '#EC058A', {from: testAddress})
       await contract.mint('frame', '#EC058A', {from: testAddress})
       await contract.mint('frame', '#EC058A', {from: testAddress})
-
-      assert.equal(await contract.totalSupply(), 3+1, 'could mint the same color multiple times')
     })
 
     it('can mint known applications', async () => {
@@ -56,8 +52,6 @@ contract('OGColor', (accounts) => {
       await contract.mint('frame', '#EC058A', {from: testAddress})
       await contract.mint('digit', '#EC058A', {from: testAddress})
       await contract.mint('slug', '#EC058A', {from: testAddress})
-
-      assert.equal(await contract.totalSupply(), 3+1+4, 'could mint the same color multiple times')
     })
 
     it('cannot mint invalid HEX colors', async () => {

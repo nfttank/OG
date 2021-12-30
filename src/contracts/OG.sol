@@ -33,34 +33,48 @@ import './interfaces/GotTokenInterface.sol';
 import './interfaces/OGColorInterface.sol';
 import './libs/Customizer.sol';
 import './libs/Digits.sol';
+import './ERC/HumbleERC721Enumerable.sol';
 
 /**
  * @title OG
  * @author nfttank.eth
  */
-contract OG is ERC721Enumerable, Ownable {
+contract OG is HumbleERC721Enumerable, Ownable {
 
     mapping(address => string) private _supportedSlugs;
     mapping(string => address) private _trustedContracts;
-    mapping(uint256 => string) private _custom;
     address[] private _supportedCollections;
-    bool _paused;
+    address[] private _ogDozen;
+    bool private _paused;
+    uint16 private _dozenUnlockMinSupply;
 
     constructor() ERC721("OG", "OG") Ownable() {
         _trustedContracts["gottoken"] = address(0);
         _trustedContracts["ogcolor"] = address(0);
+        _paused = true;
     }
 
     function setPaused(bool paused) external onlyOwner {
         _paused = paused;
     }
 
+    function setOgDozen(address[] calldata ogDozen, uint16 dozenUnlockMinSupply) external onlyOwner {
+         _ogDozen = ogDozen;
+         _dozenUnlockMinSupply = dozenUnlockMinSupply;
+    }
+
+    function isOgDozen(address a) public view returns (bool) {
+        for (uint16 i = 0; i < _ogDozen.length; i++) {
+            if (a == _ogDozen[i]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     function addSupportedCollection(address contractAddress) external onlyOwner {
          _supportedCollections.push(contractAddress);
-    }
-    
-    function getSupportedCollections() external view onlyOwner returns (address[] memory) {
-        return _supportedCollections;
     }
 
     function clearSupportedCollections() external onlyOwner {
@@ -71,21 +85,9 @@ contract OG is ERC721Enumerable, Ownable {
         _supportedSlugs[contractAddress] = string(Base64.decode(base64EncodedSvgSlug));
     }
 
-    function setCustom(uint256 tokenId, string calldata base64EncodedSvg) external onlyOwner {
-        _custom[tokenId] = string(Base64.decode(base64EncodedSvg));
-    }
-
-    function resetCustom(uint256 tokenId) external onlyOwner {
-        delete _custom[tokenId];
-    }
-
     function setTrustedContractAddresses(address gotTokenAddress, address ogColorAddress) external onlyOwner {
         _trustedContracts["gottoken"] = gotTokenAddress;
         _trustedContracts["ogcolor"] = ogColorAddress;
-    }
-    
-    function getTrustedContractAddress(string calldata contractName) external view onlyOwner returns (address) {
-        return _trustedContracts[contractName];
     }
     
     function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
@@ -111,11 +113,7 @@ contract OG is ERC721Enumerable, Ownable {
         // don't apply colors on this string, this should be kept white
         parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
 
-        string memory digits = _custom[tokenId];
-        if (bytes(digits).length == 0)
-            digits = Digits.generateDigits(tokenId);
-
-        parts[5] = digits;
+        parts[5] = Digits.generateDigits(tokenId);
           
         if (hasCollection)  
             parts[6] = _supportedSlugs[supportedCollection];
@@ -133,20 +131,66 @@ contract OG is ERC721Enumerable, Ownable {
         string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
-    
-    function mint(uint16[] calldata tokenIds) public payable {
-        require(!_paused, "Minting is paused");
-        require(tokenIds.length <= 5, "You can mint a maximum of 5" );
-        require(msg.value >= 0.01 ether * tokenIds.length, "Not enough ETH sent, check price");
 
+    function mint(uint256[] calldata tokenIds) public {
+
+        address sender = _msgSender();
+        uint256 senderBalance = balanceOf(sender);
+
+        require(!_paused, "Minting is paused");
+        require(senderBalance + tokenIds.length <= 10, "Minting is limited to max. 10 per wallet");
         require(totalSupply() + tokenIds.length <= 10000, "Exceeds maximum supply");
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
-           require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, string(abi.encodePacked("Token Id ", Strings.toString(tokenIds[i]), " invalid"))); 
+            require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, "Token Id invalid");
+            require(canMint(sender, tokenIds[i]), "Can't mint token yet");
         }
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
-            _safeMint(_msgSender(), tokenIds[i]);
+            _safeMint(sender, tokenIds[i]);
         }
+    }
+
+    function canMint(address sender, uint256 tokenId) public view returns (bool) {
+
+        if (tokenId > 12) {
+            return true;
+        }
+        else if (tokenId <= 12 && tokenId > 1) {
+            return totalSupply() >= _dozenUnlockMinSupply && isOgDozen(sender);
+        } else if (tokenId == 1) {
+            return  _exists(2) &&
+                    _exists(3) &&
+                    _exists(4) &&
+                    _exists(5) &&
+                    _exists(6) &&
+                    _exists(7) &&
+                    _exists(8) &&
+                    _exists(9) &&
+                    _exists(10) &&
+                    _exists(11) &&
+                    _exists(12) &&
+                    isOgDozen(sender);
+        } else {
+            return _exists(1);
+        }
+    }
+
+    function suggestFreeIds() public view returns (uint256[] memory) {
+        
+        uint256[] memory freeIds = new uint256[](10);
+        uint16 count = 0;
+
+        // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
+        for (uint256 id = 10000; id > 13; id--) {
+            if (!_exists(id - 1)) {
+                freeIds[count] = id - 1;
+                count++;
+                if (count >= 10) {
+                    break;
+                }
+            }
+        }
+        return freeIds;
     }
 }

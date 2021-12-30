@@ -3,7 +3,6 @@
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -12,8 +11,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * There are four different applications (back, frame, digit, slug), but only a few colors to mint.
  * @author nfttank.eth
  */
-contract OGColor is ERC721Enumerable, ReentrancyGuard, Ownable {
+contract OGColor is ERC721, ReentrancyGuard, Ownable {
     
+    uint256 private _tokenId;
+
     mapping(uint256 => string) private _colors;
     mapping(uint256 => string) private _applications;
     
@@ -27,17 +28,16 @@ contract OGColor is ERC721Enumerable, ReentrancyGuard, Ownable {
 
     function mint(string calldata application, string calldata hexColor) public nonReentrant {
 
-        // take the next free token index, no need to define it externally
-        uint256 tokenId = totalSupply();
-
-        require(tokenId < 255, "No free tokens available.");
+        require(_tokenId + 1 < 255, "No free tokens available.");
         require(isValidApplication(application), "Application invalid, allowed are 'back', 'frame', 'digit' and 'slug'.");
         require(isValidHexColor(hexColor), "Color invalid, use hex format like '#224466'.");
 
-        _colors[tokenId] = hexColor;
-        _applications[tokenId] = application;
+        _tokenId++;
+
+        _colors[_tokenId] = hexColor;
+        _applications[_tokenId] = application;
         
-        _safeMint(_msgSender(), tokenId);
+        _safeMint(_msgSender(), _tokenId);
     }
 
     function isValidApplication(string calldata hexColor) private pure returns (bool) {

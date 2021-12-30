@@ -4,24 +4,20 @@ OG numbers, on chain rendered numeric NFTs. Rendered images are public domain by
 # Rules
 
 * OG #1-12 can only be minted by the punk holders within the [12 topsales](https://www.larvalabs.com/cryptopunks/topsales): The "OG dozen".
-* (OG #1-12 are minted black and will unravel after the first sale)
 * #0 can be minted for free by anyone after OG #1-12 are minted.
 * The collection name will appear if the wallet contains a matching NFT with the given id
 * Colors can be customized by owning an ogcolor NFT.
 
 TODO
-* Whitelisting of the OG dozen
+* Whitelisting of the OG dozen --> OK
 * Color replacement (background, circle, slug, numbers) --> OK
-* withdraw
-* pickrandom, like one or many of all/<100/<1000 etc. OGs
 * ERC optimizations? 
    * https://nftchance.medium.com/the-cannibalization-of-nfts-by-openzeppelin-by-insanely-high-gas-prices-cd2c9a7c1e7
    * https://etherscan.io/address/0x0f78c6eee3c89ff37fd9ef96bd685830993636f2#code
 
 
 # Checks
-* ONLYOWNER = CONTRACT OWNER OR ITEM OWNER?
-* limit onlyOwner methods like addSupportedCollection(), setSupportedCollectionSlug(), setTrustedContractAddresses(), & getTrustedContractAddress().
+* limit onlyOwner methods like addSupportedCollection(), setSupportedCollectionSlug(), setTrustedContractAddresses(), & getTrustedContractAddress(), setOgDozen(), setPaused()
 * set setTrustedContractAddresses() with the correct contract addresses for the corresponding net (Mainnet, etc.)
 
 # Add or update supported collections
