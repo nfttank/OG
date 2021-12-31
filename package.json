@@ -27,6 +27,7 @@
     "react-tokeninput": "^2.5.0",
     "truffle": "5.0.5",
     "truffle-flattener": "^1.4.2",
+    "truffle-hdwallet-provider": "^1.0.17",
     "web3": "1.0.0-beta.55",
     "yarn": "^1.22.17"
   },
@@ -46,5 +47,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "truffle-plugin-verify": "^0.5.20"
+  }
 }

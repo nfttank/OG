@@ -3,6 +3,7 @@
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "../interfaces/GotTokenInterface.sol";
 import "../interfaces/OGColorInterface.sol";
 
@@ -60,5 +61,54 @@ library Customizer {
         }
 
         return address(0);
+    }
+
+    function suggestFreeIds(IERC721Enumerable callingContract, uint16 desiredCount) public view returns (uint256[] memory) {
+        
+        uint256[] memory freeIds = new uint256[](desiredCount);
+        uint16 approach = 0;
+        uint16 count = 0;
+        uint256 totalSupply = callingContract.totalSupply();
+
+        // try to find some random free ids
+        for (uint16 i = 0; i < desiredCount; i++) {
+
+            uint256 rnd = random(approach++, totalSupply);
+            if (rnd > 12 && safeOwnerOf(callingContract, rnd) == address(0)) {
+                freeIds[count++] = rnd;
+                if (count >= desiredCount) {
+                    return freeIds;
+                }
+            }
+
+            // if we have a lot of minted tokens, it might get hard to find random numbers, so stop
+            if (approach > 100)
+                break;
+        }
+
+        // we tried so hard and got so far - but we did not find random free ids, so take free ones sequentially
+        count = 0;
+        // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
+        for (uint256 id = totalSupply; id > 13; id--) {
+            if (id > 13 && safeOwnerOf(callingContract, id) == address(0)) {
+                freeIds[count] = id - 1;
+                count++;
+                if (count >= desiredCount) {
+                    break;
+                }
+            }
+        }
+
+        return freeIds;
+    }
+
+    /**
+    * @dev I am aware that these are only pseudo random numbers and that they can be predicted.
+    * However, exploiting this method won't get an attacker much benefit as these random numbers
+    * are just used to suggest some free token ids to mint.
+    * Anyone can choose his favorite ids while minting.
+    */
+    function random(uint256 seed, uint256 maxValue) public view returns (uint256) {
+        return uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp, seed))) % maxValue;      
     }
 }

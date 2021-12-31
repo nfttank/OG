@@ -90,7 +90,33 @@ Ape Gang uses long Ids like 4981676894159712808201908443964193325271219637660871
 
 */
 
-# Deployment
+# Contract deployment
+Contracts can be deployed with truffle migrate:
+```truffle migrate --reset --network rinkeby```
+
+# Etherscan Verification
+This repository is set up to trigger a contract verification on Etherscan via Truffle.
+
+Api keys and Secrets have to be defined in the secrets.json file (ignored in this git repository).
+
+```json
+{
+  "infuraProjectId": "...",
+  "infuraProjectSecret": "...",
+  "mnemonic": "one two three ... twelve",
+  "etherscanApiKey": "..."
+}
+```
+The wallet mnemonic can be created with https://iancoleman.io/bip39/ once and will be reused then. This wallet is the owner of the contract.
+
+``````
+// redeploy and verify
+clear; truffle migrate --reset --network rinkeby; npx truffle run verify OG OGColor GotToken Digits Customizer --network rinkeby```
+
+More information:
+ - https://forum.openzeppelin.com/t/how-to-verify-with-hardhat-or-truffle-a-smart-contract-using-openzeppelin-contracts/4119
+
+# Website deployment
 - Install Node
 - Install yarn `npm install --global yarn`
 - **Only once** Install gh-pages `yarn add gh-pages`

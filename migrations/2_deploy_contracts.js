@@ -6,14 +6,10 @@ module.exports = function(deployer) {
   let customizer = artifacts.require("Customizer")
   let og = artifacts.require("OG")
 
-  deployer.deploy(gotToken)
-  deployer.deploy(ogColor)
-  deployer.deploy(digits)
-  deployer.deploy(customizer)
-
   deployer.link(digits, og)
   deployer.link(customizer, og)
 
   deployer.deploy(og)
-
+  deployer.deploy(gotToken)
+  deployer.deploy(ogColor)
 };

@@ -175,22 +175,8 @@ contract OG is HumbleERC721Enumerable, Ownable {
             return _exists(1);
         }
     }
-
-    function suggestFreeIds() public view returns (uint256[] memory) {
-        
-        uint256[] memory freeIds = new uint256[](10);
-        uint16 count = 0;
-
-        // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
-        for (uint256 id = 10000; id > 13; id--) {
-            if (!_exists(id - 1)) {
-                freeIds[count] = id - 1;
-                count++;
-                if (count >= 10) {
-                    break;
-                }
-            }
-        }
-        return freeIds;
+    
+    function suggestFreeIds(uint16 desiredCount) public view returns (uint256[] memory) {
+        return Customizer.suggestFreeIds(this, desiredCount);
     }
 }

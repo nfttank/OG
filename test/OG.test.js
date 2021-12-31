@@ -141,35 +141,18 @@ contract('OG', (accounts) => {
 
 
   describe('suggestFreeIds', async () => {
-    it('starts with 9999 to lower', async () => {
-      let freeIds = await contract.suggestFreeIds()
+    it('returns free ids', async () => {
+      let freeIds = await contract.suggestFreeIds(1)
+      freeIds.length.should.equal(1)
+      freeIds = await contract.suggestFreeIds(5)
+      freeIds.length.should.equal(5)
+      freeIds = await contract.suggestFreeIds(10)
       freeIds.length.should.equal(10)
-      freeIds[0].toNumber().should.equal(9999)
-      freeIds[1].toNumber().should.equal(9998)
-      freeIds[2].toNumber().should.equal(9997)
-      freeIds[3].toNumber().should.equal(9996)
-      freeIds[4].toNumber().should.equal(9995)
-      freeIds[5].toNumber().should.equal(9994)
-      freeIds[6].toNumber().should.equal(9993)
-      freeIds[7].toNumber().should.equal(9992)
-      freeIds[8].toNumber().should.equal(9991)
-      freeIds[9].toNumber().should.equal(9990)
-    })
-
-    it('skips minted ids', async () => {
-      await contract.mint([9999, 9989])
-      let freeIds = await contract.suggestFreeIds()
-      freeIds.length.should.equal(10)
-      freeIds[0].toNumber().should.equal(9998)
-      freeIds[1].toNumber().should.equal(9997)
-      freeIds[2].toNumber().should.equal(9996)
-      freeIds[3].toNumber().should.equal(9995)
-      freeIds[4].toNumber().should.equal(9994)
-      freeIds[5].toNumber().should.equal(9993)
-      freeIds[6].toNumber().should.equal(9992)
-      freeIds[7].toNumber().should.equal(9991)
-      freeIds[8].toNumber().should.equal(9990)
-      freeIds[9].toNumber().should.equal(9988)
+      
+      for (let i = 0; i < freeIds.length; i++) {
+        let canMint = await contract.canMint(accounts[0], freeIds[i])
+        canMint.should.equal(true)
+      }
     })
   })
 
