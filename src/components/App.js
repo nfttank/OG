@@ -33,41 +33,65 @@ class App extends Component {
     const networkId = await web3.eth.net.getId()
     const networkData = OG.networks[networkId]
     if (networkData) {
+
       const abi = OG.abi
       const contractAddress = networkData.address
       const contract = new web3.eth.Contract(abi, contractAddress)
       this.setState({ contract })
-      const totalSupply = await contract.methods.totalSupply().call()
-      this.setState({ totalSupply })
-
-      const tokenCount = await contract.methods.balanceOf(this.state.account).call()
-
-      for (var i = 0; i < tokenCount; i++) {
-        const og = await contract.methods.tokenOfOwnerByIndex(this.state.account, i).call()
-        this.setState({ ogs: this.state.ogs.concat(og)})
-        const svg = await contract.methods.renderSvg(og).call()
-        this.setState({ svgs: this.state.svgs.concat(svg)})
+ 
+      if (networkId === 1) {
+        this.setState({ storeUrl: "https://opensea.io/assets/" + contract.address })
       }
+      else {
+        this.setState({ storeUrl: "https://testnets.opensea.io/assets/" + contract.address })
+      }
+
+      await this.loadTokens()
 
     } else {
       window.alert('Smart contract not deployed to detected network.')
     }
   }
 
-  mint = () => {
+  async loadTokens() {
+    
+    const totalSupply = await this.state.contract.methods.totalSupply().call()
+    this.setState({ totalSupply })
 
-   // window.alert(this.state.tokenInput)
+    const tokenCount = await this.state.contract.methods.balanceOf(this.state.account).call()
 
-    // for (var i = 0; i < this.state.tokenInput.length; i++) {
-    //   this.state.contract.methods.mint(this.state.tokenInput[i]).send({ from: this.state.account })
-    //     .once('receipt', (receipt) => {
-    //       // this.setState({ ogs: this.state.ogs.concat(tokens[i])})
-    //       // const svg = this.state.contract.methods.renderSvg(tokens[i]).send({ from: this.state.account })
-    //       // this.setState({ svgs: this.state.svgs.concat(svg)})
-    //     })
-    // }
+    let ids = []
+    let svgs = []
 
-    // this.state.contract.methods.mintMultiple(this.state.tokenInput).send({ from: this.state.account })
+    for (var i = 0; i < tokenCount; i++) {
+      const ogId = await this.state.contract.methods.tokenOfOwnerByIndex(this.state.account, i).call()
+      ids = ids.concat(ogId)
+      const svg = await this.state.contract.methods.renderSvg(ogId).call()
+      svgs = svgs.concat(svg)
+    }
+
+    this.setState({ ownedOgIds: ids})
+    this.setState({ ownedOgSvgs: svgs})
+
+  }
+
+  mint = async () => {
+
+    const tagValues = this.state.tags.map(t => t.value)
+    window.alert(tagValues)
+
+    await this.state.contract.methods.mint(tagValues).send({ from: this.state.account })
+
+    await this.loadTokens()
+
+    // this.state.contract.methods.mint(this.state.tokenInput).send({ from: this.state.account })
+    //   .once('receipt', (receipt) => {
+    //     // this.setState({ ogs: this.state.ogs.concat(tokens[i])})
+    //     // const svg = this.state.contract.methods.renderSvg(tokens[i]).send({ from: this.state.account })
+    //     // this.setState({ svgs: this.state.svgs.concat(svg)})
+    //   })
+
+    //await this.state.contract.methods.mint(this.state.tokenInput).send({ from: this.state.account })
     // .once('receipt', (receipt) => {
     //   window.alert(receipt)
     //   this.setState({ ogs: this.state.ogs.concat(this.state.tokenInput)})
@@ -76,7 +100,13 @@ class App extends Component {
     //     const svg = this.state.contract.methods.renderSvg(this.state.tokenInput[i]).send({ from: this.state.account })
     //     this.setState({ svgs: this.state.svgs.concat(svg)})
     //   }
-    // })
+    //})
+  }
+
+  suggest = async () => {
+    const seed = new Date().getMilliseconds()
+    const suggested = await this.state.contract.methods.suggestFreeIds(5, seed).call()
+     this.setState({ tags: suggested.map(s => ({ value: s, label: s.toString() })) })
   }
 
   constructor(props) {
@@ -85,22 +115,25 @@ class App extends Component {
       account: '',
       contract: null,
       totalSupply: 0,
-      ogs: [],
-      svgs: [],
-      tokenInput: []
+      storeUrl: '',
+      ownedOgIds: [],
+      ownedOgSvgs: [],
+      ownedOgUris: [],
+      tokenInput: [],
+      tags: [],
     }
   }
 
   handleChange = (value) => {
-    console.log('Value received from onChange: ' + value)
+    //console.log('Value received from onChange: ' + value)
   }
 
   tagAdd = (tag) => {
-    this.setState({tokenInput: this.state.tokenInput.concat(tag.value)})
+    //this.setState({tokenInput: this.state.tokenInput.concat(tag.value)})
   }
 
   tagDelete = (deletedTag, restTags) => {
-    this.setState({tokenInput: restTags})
+    //this.setState({tokenInput: restTags})
   }
 
   render() {
@@ -117,6 +150,7 @@ class App extends Component {
           </a>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+              <small className="text-white"><span id="account">{this.state.storeUrl}</span></small>
               <small className="text-white"><span id="account">{this.state.account}</span></small>
             </li>
           </ul>
@@ -128,31 +162,36 @@ class App extends Component {
                 <h1>Issue Token</h1>
                 <form onSubmit={(event) => {
                   event.preventDefault()
-                  this.mint()
                 }}>
                 {/* https://github.com/celebryts/react-autocomplete-tags */}
                 <Autocomplete
+                  tags={this.state.tags}
                   onChange={this.handleChange}
                   onAdd={this.tagAdd}
                   onDelete={this.tagDelete}
                 />
-                <input
-                  type='submit'
-                  className='btn btn-block btn-primary'
-                  value='mint'
-                />
-                <a>{this.state.tokenInput.map(t => t + ', ')}</a>
+                <button className='btn btn-block btn-secondary' onClick={this.suggest}>
+                  Suggest
+                </button>
+                <button className='btn btn-block btn-primary' onClick={this.mint}>
+                  Mint
+                </button>
                 </form>
               </div>
             </main>
           </div>
           <hr />
           <div className="row text-center">
-            {this.state.svgs.map((svg, index) => {
+            {
+              this.state.ownedOgSvgs.map((svg, index) => {
               return (
-                <div key={index} className="col-md-3 mb-3">
-                  <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', 'height=\'1000\' transform=\'scale(0.3)\'')}} />
-                </div>
+                  <div div key={index} className="col-md-3 mb-3">
+                    <a href={this.state.storeUrl + "/" + this.state.ownedOgIds[index].toString()}>
+                      <span class="span-link"></span>
+                    </a>
+                    {/* eliminate height and width to do scaling */}
+                    <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', '').replace('width=\'1000\'', '')}} />
+                  </div>
               )
             })}
           </div>
