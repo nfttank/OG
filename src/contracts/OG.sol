@@ -101,7 +101,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
         string[8] memory parts;
 
-        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'>";
+        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000' viewBox='0 0 1000 1000'>";
         parts[1] = string(abi.encodePacked("<defs><linearGradient id='backColor'><stop stop-color='", backColor, "'/></linearGradient><linearGradient id='frameColor'><stop stop-color='", frameColor, "'/></linearGradient><linearGradient id='digitColor'><stop stop-color='", digitColor, "'/></linearGradient><linearGradient id='slugColor'><stop stop-color='", slugColor, "'/></linearGradient></defs>"));
         parts[2] = "<mask id='_mask'>";
         
@@ -139,7 +139,6 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
         require(!_paused, "Minting is paused");
         require(senderBalance + tokenIds.length <= 10, "Minting is limited to max. 10 per wallet");
-        require(totalSupply() + tokenIds.length <= 10000, "Exceeds maximum supply");
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
             require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, "Token Id invalid");

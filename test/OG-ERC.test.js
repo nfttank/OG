@@ -46,18 +46,18 @@ contract('OG-ERC', (accounts) => {
     it('tokenOfOwnerByIndex after mint', async () => {
 
       for (let i = 0; i < ids1.length; i++) {
-        let index = await contract.tokenOfOwnerByIndex(testAddress1, i)
-        assert.equal(index, ids1[i])
+        let id = await contract.tokenOfOwnerByIndex(testAddress1, i)
+        assert.equal(id, ids1[i])
       }
 
       for (let i = 0; i < ids2.length; i++) {
-        let index = await contract.tokenOfOwnerByIndex(testAddress2, i)
-        assert.equal(index, ids2[i])
+        let id = await contract.tokenOfOwnerByIndex(testAddress2, i)
+        assert.equal(id, ids2[i])
       }
 
       for (let i = 0; i < ids3.length; i++) {
-        let index = await contract.tokenOfOwnerByIndex(testAddress1, i + ids1.length) // add the offset of ids1 to the index as this account owns them too
-        assert.equal(index, ids3[i])
+        let id = await contract.tokenOfOwnerByIndex(testAddress1, i + ids1.length) // add the offset of ids1 to the index as this account owns them too
+        assert.equal(id, ids3[i])
       }
     })
 
@@ -87,28 +87,30 @@ contract('OG-ERC', (accounts) => {
       balance.toNumber().should.equal(0 + 2)
     })
 
-    it('tokenOfOwnerByIndex after transfers', async () => {
-
-      let token = await contract.tokenOfOwnerByIndex(testAddress3, 0)
-      token.toNumber().should.equal(ids1[0])
-
-      token = await contract.tokenOfOwnerByIndex(testAddress3, 1)
-      token.toNumber().should.equal(ids1[1])
-    })
-  })
-
-  /*
-  describe('*** dump ***', async () => {
-    it('dumps', async () => {
-
-      const fs = require('fs')
-
-      for (let i = 1; i < 10000; i+=8) {
-        const svg = await contract.renderSvg(i)
-        fs.writeFile('C:\\temp\\OG\\' + i + '.svg', svg, (err) => {})
+    it('tokens arrived at destination address', async () => {
+      // 0+1 have been added to the new owner
+      for (let i = 0; i < 2; i++) {
+        let id = await contract.tokenOfOwnerByIndex(testAddress3, i)
+        assert.equal(id.toNumber(), ids1[i])
       }
     })
-  })
- */
 
+    it('tokens left source address', async () => {
+
+      let ids1Without1And2 = ids1.slice(2)
+      ids1Without1And2.includes(ids1[0]).should.equal(false, "because the first id should not be in the sliced array")
+      ids1Without1And2.includes(ids1[1]).should.equal(false, "because the second id should not be in the sliced array")
+      ids1Without1And2.includes(ids1[2]).should.equal(true, "because the third id should be in the sliced array")
+
+      let receiverIds = ids1Without1And2.concat(ids3)
+
+      for (let i = 0; i < receiverIds.length; i++) {
+        let id = await contract.tokenOfOwnerByIndex(testAddress1, i)
+        receiverIds.includes(id.toNumber()).should.equal(true, "because the receiver should contain token " + id + " (run " + i + ")")
+      }
+
+      // make sure there are no more than those tested above
+      await contract.tokenOfOwnerByIndex(testAddress1, receiverIds.length).should.be.rejected
+    })
+  })
 })

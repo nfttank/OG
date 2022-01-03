@@ -24,6 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 secrets.json
-
-# abis
-src/abis
