@@ -109,9 +109,10 @@ Api keys and Secrets have to be defined in the secrets.json file (ignored in thi
 ```
 The wallet mnemonic can be created with https://iancoleman.io/bip39/ once and will be reused then. This wallet is the owner of the contract.
 
-``````
+```
 // redeploy and verify
-clear; truffle migrate --reset --network rinkeby; npx truffle run verify OG OGColor GotToken Digits Customizer --network rinkeby```
+clear; truffle migrate --reset --network rinkeby; npx truffle run verify OG OGColor GotToken Digits Customizer --network rinkeby
+```
 
 More information:
  - https://forum.openzeppelin.com/t/how-to-verify-with-hardhat-or-truffle-a-smart-contract-using-openzeppelin-contracts/4119

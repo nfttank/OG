@@ -6,6 +6,9 @@ module.exports = function(deployer) {
   let customizer = artifacts.require("Customizer")
   let og = artifacts.require("OG")
 
+  deployer.deploy(digits)
+  deployer.deploy(customizer)
+
   deployer.link(digits, og)
   deployer.link(customizer, og)
 

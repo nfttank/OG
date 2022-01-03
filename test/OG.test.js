@@ -142,11 +142,16 @@ contract('OG', (accounts) => {
 
   describe('suggestFreeIds', async () => {
     it('returns free ids', async () => {
-      let freeIds = await contract.suggestFreeIds(1)
+      
+      const seed = 111;
+      
+      let freeIds = await contract.suggestFreeIds(1, seed)
       freeIds.length.should.equal(1)
-      freeIds = await contract.suggestFreeIds(5)
+      
+      freeIds = await contract.suggestFreeIds(5, seed)
       freeIds.length.should.equal(5)
-      freeIds = await contract.suggestFreeIds(10)
+
+      freeIds = await contract.suggestFreeIds(10, seed)
       freeIds.length.should.equal(10)
       
       for (let i = 0; i < freeIds.length; i++) {

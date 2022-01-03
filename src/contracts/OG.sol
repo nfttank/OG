@@ -175,8 +175,8 @@ contract OG is HumbleERC721Enumerable, Ownable {
             return _exists(1);
         }
     }
-    
-    function suggestFreeIds(uint16 desiredCount) public view returns (uint256[] memory) {
-        return Customizer.suggestFreeIds(this, desiredCount);
+
+    function suggestFreeIds(uint16 desiredCount, uint256 seed) public view returns (uint256[] memory) {
+        return Customizer.suggestFreeIds(this, desiredCount, 13, 10000, seed);
     }
 }

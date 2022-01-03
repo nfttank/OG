@@ -3,7 +3,6 @@
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "../interfaces/GotTokenInterface.sol";
 import "../interfaces/OGColorInterface.sol";
 
@@ -63,18 +62,20 @@ library Customizer {
         return address(0);
     }
 
-    function suggestFreeIds(IERC721Enumerable callingContract, uint16 desiredCount) public view returns (uint256[] memory) {
-        
+    function suggestFreeIds(IERC721 callingContract, uint16 desiredCount, uint256 minValue, uint256 maxValue, uint256 seed) public view returns (uint256[] memory) {
+        require(desiredCount > 0 && desiredCount < 11, "Desired count too low or too large");
+        require(minValue >= 0, "Min value too low or too large");
+        require(maxValue > 0 && maxValue > minValue, "Max value too low or too large");
+
         uint256[] memory freeIds = new uint256[](desiredCount);
         uint16 approach = 0;
         uint16 count = 0;
-        uint256 totalSupply = callingContract.totalSupply();
-
+        
         // try to find some random free ids
         for (uint16 i = 0; i < desiredCount; i++) {
 
-            uint256 rnd = random(approach++, totalSupply);
-            if (rnd > 12 && safeOwnerOf(callingContract, rnd) == address(0)) {
+            uint256 rnd = random(approach++ + seed, maxValue);
+            if (rnd >= minValue && safeOwnerOf(callingContract, rnd) == address(0)) {
                 freeIds[count++] = rnd;
                 if (count >= desiredCount) {
                     return freeIds;
@@ -89,8 +90,8 @@ library Customizer {
         // we tried so hard and got so far - but we did not find random free ids, so take free ones sequentially
         count = 0;
         // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
-        for (uint256 id = totalSupply; id > 13; id--) {
-            if (id > 13 && safeOwnerOf(callingContract, id) == address(0)) {
+        for (uint256 id = maxValue; id > minValue; id--) {
+            if (safeOwnerOf(callingContract, id) == address(0)) {
                 freeIds[count] = id - 1;
                 count++;
                 if (count >= desiredCount) {
