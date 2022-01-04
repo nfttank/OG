@@ -1,8 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Web3 from 'web3'
 import './App.css'
-import OG from '../abis/OG.json'
-import Autocomplete from '@celebryts/react-autocomplete-tags'
+import OG from '../src/abis/OG.json'
+//import Autocomplete from '@celebryts/react-autocomplete-tags'
+import { Footer, Blog, /*Possibility, Features, WhatGPT3,*/ Header } from './containers';
+import {  Navbar } from './components';
+import './App.css';
 
 class App extends Component {
 
@@ -40,9 +43,11 @@ class App extends Component {
       this.setState({ contract })
  
       if (networkId === 1) {
+        this.setState({ contractUrl: "https://etherscan.io/address/" + contract.address })
         this.setState({ storeUrl: "https://opensea.io/assets/" + contract.address })
       }
       else {
+        this.setState({ contractUrl: "https://rinkeby.etherscan.io/address/" + contract.address })
         this.setState({ storeUrl: "https://testnets.opensea.io/assets/" + contract.address })
       }
 
@@ -56,7 +61,7 @@ class App extends Component {
   async loadTokens() {
     
     const totalSupply = await this.state.contract.methods.totalSupply().call()
-    this.setState({ totalSupply })
+    this.setState({ totalSupply: 2 })
 
     const tokenCount = await this.state.contract.methods.balanceOf(this.state.account).call()
 
@@ -115,6 +120,9 @@ class App extends Component {
       account: '',
       contract: null,
       totalSupply: 0,
+      ogTwitterUrl: 'https://twitter.com/og_nft_official',
+      tankTwitterUrl: 'https://twitter.com/nfttank',
+      contractUrl: '',
       storeUrl: '',
       ownedOgIds: [],
       ownedOgSvgs: [],
@@ -124,79 +132,80 @@ class App extends Component {
     }
   }
 
-  handleChange = (value) => {
-    //console.log('Value received from onChange: ' + value)
-  }
-
-  tagAdd = (tag) => {
-    //this.setState({tokenInput: this.state.tokenInput.concat(tag.value)})
-  }
-
-  tagDelete = (deletedTag, restTags) => {
-    //this.setState({tokenInput: restTags})
-  }
-
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <a
-            className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="https://nfttank.github.io/OG/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            OG by Tank
-          </a>
-          <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-              <small className="text-white"><span id="account">{this.state.storeUrl}</span></small>
-              <small className="text-white"><span id="account">{this.state.account}</span></small>
-            </li>
-          </ul>
-        </nav>
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
-              <div className="content mr-auto ml-auto">
-                <h1>Issue Token</h1>
-                <form onSubmit={(event) => {
-                  event.preventDefault()
-                }}>
-                {/* https://github.com/celebryts/react-autocomplete-tags */}
-                <Autocomplete
-                  tags={this.state.tags}
-                  onChange={this.handleChange}
-                  onAdd={this.tagAdd}
-                  onDelete={this.tagDelete}
-                />
-                <button className='btn btn-block btn-secondary' onClick={this.suggest}>
-                  Suggest
-                </button>
-                <button className='btn btn-block btn-primary' onClick={this.mint}>
-                  Mint
-                </button>
-                </form>
-              </div>
-            </main>
+      // <div>
+      //   <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      //     <a
+      //       className="navbar-brand col-sm-3 col-md-2 mr-0"
+      //       href="https://nfttank.github.io/OG/"
+      //       target="_blank"
+      //       rel="noopener noreferrer"
+      //     >
+      //       OG by Tank
+      //     </a>
+      //     <ul className="navbar-nav px-3">
+      //       <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+      //         <small className="text-white"><span id="account">{this.state.storeUrl}</span></small>
+      //         <small className="text-white"><span id="account">{this.state.account}</span></small>
+      //       </li>
+      //     </ul>
+      //   </nav>
+      //   <div className="container-fluid mt-5">
+      //     <div className="row">
+      //       <main role="main" className="col-lg-12 d-flex text-center">
+      //         <div className="content mr-auto ml-auto">
+      //           <h1>Issue Token</h1>
+      //           <form onSubmit={(event) => {
+      //             event.preventDefault()
+      //           }}>
+      //           {/* https://github.com/celebryts/react-autocomplete-tags */}
+      //           <Autocomplete
+      //             tags={this.state.tags}
+      //             onChange={this.handleChange}
+      //             onAdd={this.tagAdd}
+      //             onDelete={this.tagDelete}
+      //           />
+      //           <button className='btn btn-block btn-secondary' onClick={this.suggest}>
+      //             Suggest
+      //           </button>
+      //           <button className='btn btn-block btn-primary' onClick={this.mint}>
+      //             Mint
+      //           </button>
+      //           </form>
+      //         </div>
+      //       </main>
+      //     </div>
+      //     <hr />
+      //     <div className="row text-center">
+      //       {
+      //         this.state.ownedOgSvgs.map((svg, index) => {
+      //         return (
+      //             <div div key={index} className="col-md-3 mb-3">
+      //               <a href={this.state.storeUrl + "/" + this.state.ownedOgIds[index].toString()}>
+      //                 <span class="span-link"></span>
+      //               </a>
+      //               {/* eliminate height and width to do scaling */}
+      //               <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', '').replace('width=\'1000\'', '')}} />
+      //             </div>
+      //         )
+      //       })}
+      //     </div>
+      //   </div>
+      // </div>
+        <div className="App">
+          <div className="gradient__bg">
+            <Navbar data={this.state} />
+            <Header data={this.state} />
           </div>
-          <hr />
-          <div className="row text-center">
-            {
-              this.state.ownedOgSvgs.map((svg, index) => {
-              return (
-                  <div div key={index} className="col-md-3 mb-3">
-                    <a href={this.state.storeUrl + "/" + this.state.ownedOgIds[index].toString()}>
-                      <span class="span-link"></span>
-                    </a>
-                    {/* eliminate height and width to do scaling */}
-                    <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', '').replace('width=\'1000\'', '')}} />
-                  </div>
-              )
-            })}
-          </div>
+          {/* <Brand />
+          <WhatGPT3 />
+          <Features />
+          <Possibility />
+          <CTA />*/ }
+          <Blog />
+          <Footer />
         </div>
-      </div>
     );
   }
 }
