@@ -30,6 +30,8 @@ class App extends Component {
   async loadBlockchainData() {
     const web3 = window.web3
 
+    this.setState({ mintFunction: this.mintRandom })
+
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
 
@@ -59,33 +61,47 @@ class App extends Component {
   }
 
   async loadTokens() {
-    
+
+    const balance = await this.state.contract.methods.balanceOf(this.state.account).call()
+    this.setState({ balance: balance})
+
     const totalSupply = await this.state.contract.methods.totalSupply().call()
-    this.setState({ totalSupply: 2 })
+    this.setState({ totalSupply: totalSupply })
 
-    const tokenCount = await this.state.contract.methods.balanceOf(this.state.account).call()
+    this.setState({ walletLoaded: true })
+    
 
-    let ids = []
-    let svgs = []
+    const randomId = Math.floor(Math.random() * 10000)
+    const s = await this.state.contract.methods.renderSvg(randomId).call()
+    this.setState({ featuredOg: { id: randomId, svg: s }})
 
-    for (var i = 0; i < tokenCount; i++) {
+
+    this.setState({ ownedOgs: []})
+
+    for (var i = 0; i < balance; i++) {
       const ogId = await this.state.contract.methods.tokenOfOwnerByIndex(this.state.account, i).call()
-      ids = ids.concat(ogId)
-      const svg = await this.state.contract.methods.renderSvg(ogId).call()
-      svgs = svgs.concat(svg)
+      const ogSvg = await this.state.contract.methods.renderSvg(ogId).call()
+
+      this.setState({ ownedOgs: this.state.ownedOgs.concat({id: ogId, svg: ogSvg})})
     }
-
-    this.setState({ ownedOgIds: ids})
-    this.setState({ ownedOgSvgs: svgs})
-
   }
 
-  mint = async () => {
+  mintRandom = async () => {
 
-    const tagValues = this.state.tags.map(t => t.value)
-    window.alert(tagValues)
+    const balance = await this.state.contract.methods.balanceOf(this.state.account).call()
+    
+    const maxPerWallet = 10;
+    let count = maxPerWallet - balance;
+    if (count <= 0) {
+      window.alert("You already own " + balance + " OG tokens. This is amazing, thank you! But minting is limited to " + maxPerWallet + " per wallet.")
+      return
+    } else if (count > 5) {
+      count = 5
+    }
 
-    await this.state.contract.methods.mint(tagValues).send({ from: this.state.account })
+    const seed = new Date().getMilliseconds()
+    const suggested = await this.state.contract.methods.suggestFreeIds(count, seed).call()
+    await this.state.contract.methods.mint(suggested).send({ from: this.state.account })
 
     await this.loadTokens()
 
@@ -108,25 +124,27 @@ class App extends Component {
     //})
   }
 
-  suggest = async () => {
-    const seed = new Date().getMilliseconds()
-    const suggested = await this.state.contract.methods.suggestFreeIds(5, seed).call()
-     this.setState({ tags: suggested.map(s => ({ value: s, label: s.toString() })) })
-  }
+  // suggest = async () => {
+  //   const seed = new Date().getMilliseconds()
+  //   const suggested = await this.state.contract.methods.suggestFreeIds(5, seed).call()
+  //    this.setState({ tags: suggested.map(s => ({ value: s, label: s.toString() })) })
+  // }
 
   constructor(props) {
     super(props)
     this.state = {
+      mintFunction: null,
       account: '',
       contract: null,
+      balance: 0,
       totalSupply: 0,
+      walletLoaded: false,
+      featuredOg: {},
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
       tankTwitterUrl: 'https://twitter.com/nfttank',
       contractUrl: '',
       storeUrl: '',
-      ownedOgIds: [],
-      ownedOgSvgs: [],
-      ownedOgUris: [],
+      ownedOgs: [],
       tokenInput: [],
       tags: [],
     }
@@ -203,8 +221,8 @@ class App extends Component {
           <Features />
           <Possibility />
           <CTA />*/ }
-          <Blog />
-          <Footer />
+          <Blog data={this.state} />
+          <Footer data={this.state} />
         </div>
     );
   }

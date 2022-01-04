@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/4227.png';
+import logo from '../../assets/OG.svg';
 import './navbar.css';
 
 const Navbar = (props) => {
@@ -8,7 +8,7 @@ const Navbar = (props) => {
     <div className="gpt3__navbar">
       <div className="gpt3__navbar-links">
         <div className="gpt3__navbar-links_logo">
-          <img href="{props.data.tankTwitterUrl}" src={logo} />
+      <h1 className="gradient__text">&#35;iamanumber</h1>
         </div>
       </div>
       <div className="gpt3__navbar-sign">

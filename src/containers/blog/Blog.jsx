@@ -1,21 +1,26 @@
 import React from 'react';
+import { OgImg } from '../../components';
 import './blog.css';
 
-const Blog = () => (
+const Blog = (props) => (
   <div className="gpt3__blog section__padding" id="blog">
     <div className="gpt3__blog-heading">
-      <h1 className="gradient__text">My OGs</h1>
+      <h1 className="gradient__text">
+        {
+          props.data.walletLoaded ? 
+            (
+              props.data.balance == 0 
+                ? "No OGs yet :(" 
+                : (props.data.balance == 1 ? "You own an amazing OG" : "You own " + props.data.balance + " amazing OGs")
+            )
+            : "Checking wallet ..."
+        }</h1>
     </div>
     <div className="gpt3__blog-container">
-      {/* <div className="gpt3__blog-container_groupA">
-        <Article imgUrl={blog01} date="Sep 26, 2021" text="GPT-3 and Open  AI is the future. Let us exlore how it is?" />
-      </div> */}
-      {/* <div className="gpt3__blog-container_groupB">
-        <Article imgUrl={blog02} date="Sep 26, 2021" text="GPT-3 and Open  AI is the future. Let us exlore how it is?" />
-        <Article imgUrl={blog03} date="Sep 26, 2021" text="GPT-3 and Open  AI is the future. Let us exlore how it is?" />
-        <Article imgUrl={blog04} date="Sep 26, 2021" text="GPT-3 and Open  AI is the future. Let us exlore how it is?" />
-        <Article imgUrl={blog05} date="Sep 26, 2021" text="GPT-3 and Open  AI is the future. Let us exlore how it is?" />
-      </div> */}
+    {
+      props.data.ownedOgs.map((og) => {
+      return (<OgImg data={{storeUrl: props.data.storeUrl, id: og.id, svg: og.svg}} />)
+    })}
     </div>
   </div>
 );

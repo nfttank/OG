@@ -26,10 +26,20 @@
 }
 
 .gpt3__footer-copyright p {
-    font-size: 22px;
+    /* font-size: 18px;
     font-family: var(--font-family);
     line-height: 15px;
-    color: #fff;
+    color: #fff; */
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--color-text);
+}
+
+.gpt3__footer-avatar {
+    padding: 1rem;
+    height: 150px;
+    width: 150px;
+    border-radius: 50px;
 }
 
 @media screen and (max-width: 850px) {
