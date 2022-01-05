@@ -17,11 +17,6 @@
     margin-right: 2rem;
 }
 
-.og__navbar-links_logo img {
-    height: 100px;
-    border-radius: 500px;
-}
-
 .og__navbar-links_container {
     display: flex;
     flex-direction: row;
@@ -54,8 +49,8 @@
     background: var(--color-button);
     font-family: var(--font-family);
     font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: 12px;
+    line-height: 18px;
     border: none;
     outline: none;
     cursor: pointer;
@@ -64,7 +59,6 @@
 
 .og__navbar-menu {
     margin-left: 1rem;
-
     display: none;
     position: relative;
 }

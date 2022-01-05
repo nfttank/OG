@@ -18,9 +18,23 @@ const Header = (props) => (
       <p className="gradient__text">We are one big community and OG is a big, fat <b>thank you</b> for being a number with me.</p>
       <p></p>
       <div className="og__header-content__input">
-        <button onClick={props.data.mintFunction} type="button">Mint 5 random OG numbers ({10000 - props.data.totalSupply} left)</button>
+        <button onClick={props.data.mintFunction} type="button">
+          {
+            props.data.soldOut
+            ? "Sold out 🥳"
+            : (
+              props.data.walletLoaded ? 
+              (
+                props.data.remainingMintsForWallet == 0 
+                  ? "Wallet limit of " + props.data.maxPerWallet + " reached."
+                  : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet == 1 ? "" : "s") + " (" + (10000 - props.data.totalSupply).toString() + " left)"
+              )
+              : "Mint OG"
+            )
+          }
+        </button>
       </div>
-      <p className="smalltext">(You can choose custom numbers too, check our Discord)</p>
+      <p className="smalltext">Minting is limited to {props.data.maxPerWallet} per wallet.<br/>You can choose custom numbers too, check our Discord.</p>
     </div>
 
     <OgImg className="og__header-image" data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg}} />
@@ -29,14 +43,3 @@ const Header = (props) => (
 );
 
 export default Header;
-
-
-
-
-      {/* <p>The rules</p>
-      <ul>
-        <li>The <b>OG dozen</b> from <b>1-12</b> can only be minted by the top 12 CryptoPunk holders</li>
-        <li>The <b>OG dozen</b> can be minted after 5000 OGs were minted.</li>
-        <li>Everyone can mint any number for free.</li>
-        <li>Minting is limited to a maximum of <b>10</b> per wallet</li>
-      </ul> */}

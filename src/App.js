@@ -2,8 +2,7 @@ import React, { Component, useState } from 'react'
 import Web3 from 'web3'
 import './App.css'
 import OG from '../src/abis/OG.json'
-//import Autocomplete from '@celebryts/react-autocomplete-tags'
-import { Footer, Balance, /*Possibility, Features, Whatog,*/ Header } from './containers';
+import { Footer, Balance, Header } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -53,6 +52,9 @@ class App extends Component {
         this.setState({ storeUrl: "https://testnets.opensea.io/assets/" + contract.address })
       }
 
+      const remainingMints = await this.getRemainingMintsForWallet()
+      this.setState({ remainingMintsForWallet: remainingMints })
+
       await this.loadTokens()
 
     } else {
@@ -67,14 +69,13 @@ class App extends Component {
 
     const totalSupply = await this.state.contract.methods.totalSupply().call()
     this.setState({ totalSupply: totalSupply })
+    this.setState({ soldOut: totalSupply >= 10000})
 
     this.setState({ walletLoaded: true })
     
-
     const randomId = Math.floor(Math.random() * 10000)
-    const s = await this.state.contract.methods.renderSvg(randomId).call()
-    this.setState({ featuredOg: { id: randomId, svg: s }})
-
+    const featuredSvg = await this.state.contract.methods.renderSvg(randomId).call()
+    this.setState({ featuredOg: { id: randomId, svg: featuredSvg }})
 
     this.setState({ ownedOgs: []})
 
@@ -86,24 +87,39 @@ class App extends Component {
     }
   }
 
-  mintRandom = async () => {
-
+  getRemainingMintsForWallet = async() => {
+    
     const balance = await this.state.contract.methods.balanceOf(this.state.account).call()
     
-    const maxPerWallet = 10;
-    let count = maxPerWallet - balance;
-    if (count <= 0) {
-      window.alert("You already own " + balance + " OG tokens. This is amazing, thank you! But minting is limited to " + maxPerWallet + " per wallet.")
-      return
+    let count = this.state.maxPerWallet - balance;
+
+    if (count < 0) {
+      return 0
     } else if (count > 5) {
-      count = 5
+      return 5
     }
 
-    const seed = new Date().getMilliseconds()
-    const suggested = await this.state.contract.methods.suggestFreeIds(count, seed).call()
-    await this.state.contract.methods.mint(suggested).send({ from: this.state.account })
+    const totalSupply = await this.state.contract.methods.totalSupply().call()
+    const available = 10000 - totalSupply
+    if (count > available)
+      return available
 
-    await this.loadTokens()
+    return count
+  }
+
+  mintRandom = async() => {
+
+    const count = await this.getRemainingMintsForWallet()
+
+    const canMint = count > 0 && !this.state.soldOut
+
+    if (canMint) {
+      const seed = new Date().getMilliseconds()
+      const suggested = await this.state.contract.methods.suggestFreeIds(count, seed).call()
+      await this.state.contract.methods.mint(suggested).send({ from: this.state.account })
+
+      await this.loadTokens()
+    }
 
     // this.state.contract.methods.mint(this.state.tokenInput).send({ from: this.state.account })
     //   .once('receipt', (receipt) => {
@@ -124,23 +140,22 @@ class App extends Component {
     //})
   }
 
-  // suggest = async () => {
-  //   const seed = new Date().getMilliseconds()
-  //   const suggested = await this.state.contract.methods.suggestFreeIds(5, seed).call()
-  //    this.setState({ tags: suggested.map(s => ({ value: s, label: s.toString() })) })
-  // }
-
   constructor(props) {
     super(props)
     this.state = {
       mintFunction: null,
+      connectFunction: null,
+      remainingMintsForWallet: 0,
+      soldOut: false,
       account: '',
       contract: null,
       balance: 0,
       totalSupply: 0,
+      maxPerWallet: 10,
       walletLoaded: false,
       featuredOg: {},
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
+      discordUrl: 'https://discord.com/invite/kTvaHARW',
       tankTwitterUrl: 'https://twitter.com/nfttank',
       contractUrl: '',
       storeUrl: '',
@@ -152,65 +167,6 @@ class App extends Component {
 
   render() {
     return (
-      // <div>
-      //   <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      //     <a
-      //       className="navbar-brand col-sm-3 col-md-2 mr-0"
-      //       href="https://nfttank.github.io/OG/"
-      //       target="_blank"
-      //       rel="noopener noreferrer"
-      //     >
-      //       OG by Tank
-      //     </a>
-      //     <ul className="navbar-nav px-3">
-      //       <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-      //         <small className="text-white"><span id="account">{this.state.storeUrl}</span></small>
-      //         <small className="text-white"><span id="account">{this.state.account}</span></small>
-      //       </li>
-      //     </ul>
-      //   </nav>
-      //   <div className="container-fluid mt-5">
-      //     <div className="row">
-      //       <main role="main" className="col-lg-12 d-flex text-center">
-      //         <div className="content mr-auto ml-auto">
-      //           <h1>Issue Token</h1>
-      //           <form onSubmit={(event) => {
-      //             event.preventDefault()
-      //           }}>
-      //           {/* https://github.com/celebryts/react-autocomplete-tags */}
-      //           <Autocomplete
-      //             tags={this.state.tags}
-      //             onChange={this.handleChange}
-      //             onAdd={this.tagAdd}
-      //             onDelete={this.tagDelete}
-      //           />
-      //           <button className='btn btn-block btn-secondary' onClick={this.suggest}>
-      //             Suggest
-      //           </button>
-      //           <button className='btn btn-block btn-primary' onClick={this.mint}>
-      //             Mint
-      //           </button>
-      //           </form>
-      //         </div>
-      //       </main>
-      //     </div>
-      //     <hr />
-      //     <div className="row text-center">
-      //       {
-      //         this.state.ownedOgSvgs.map((svg, index) => {
-      //         return (
-      //             <div div key={index} className="col-md-3 mb-3">
-      //               <a href={this.state.storeUrl + "/" + this.state.ownedOgIds[index].toString()}>
-      //                 <span class="span-link"></span>
-      //               </a>
-      //               {/* eliminate height and width to do scaling */}
-      //               <div dangerouslySetInnerHTML={{__html: svg.replace('height=\'1000\'', '').replace('width=\'1000\'', '')}} />
-      //             </div>
-      //         )
-      //       })}
-      //     </div>
-      //   </div>
-      // </div>
         <div className="App">
           <div className="gradient__bg">
             <Navbar data={this.state} />
