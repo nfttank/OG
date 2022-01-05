@@ -5,7 +5,7 @@ import './footer.css';
 const Footer = (props) => (
   <div className="og__footer section__padding">
     <div className="og__footer-heading">
-      <h1 className="gradient__text">We are web3.</h1>
+      <h2 className="gradient__text">We are web3.</h2>
     </div>
 
     <div className="og__footer-copyright">

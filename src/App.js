@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react'
 import Web3 from 'web3'
 import './App.css'
 import OG from '../src/abis/OG.json'
-import { Footer, Balance, Header } from './containers';
+import { Footer, Balance, Header, Rules } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -172,6 +172,7 @@ class App extends Component {
             <Navbar data={this.state} />
             <Header data={this.state} />
           </div>
+          <Rules />
           <Balance data={this.state} />
           <Footer data={this.state} />
         </div>

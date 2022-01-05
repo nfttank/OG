@@ -25,9 +25,9 @@ const Header = (props) => (
             : (
               props.data.walletLoaded ? 
               (
-                props.data.remainingMintsForWallet == 0 
+                props.data.remainingMintsForWallet === 0 
                   ? "Wallet limit of " + props.data.maxPerWallet + " reached."
-                  : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet == 1 ? "" : "s") + " (" + (10000 - props.data.totalSupply).toString() + " left)"
+                  : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet === 1 ? "" : "s") + " (" + (10000 - props.data.totalSupply).toString() + " left)"
               )
               : "Mint OG"
             )
