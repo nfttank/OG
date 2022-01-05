@@ -6,7 +6,7 @@
 .og__header-image {
     flex: 1;
     justify-content: center;
-    align-items: center;
+    align-self: center;
 }
 
 .og__header-content {
@@ -115,4 +115,15 @@
         font-size: 12px;
         line-height: 16px;
     }
+
+
+}
+
+@media screen and (min-width: 1500px) {
+
+    /* make the text part wider to prevent the freatured OG from getting to prominent */
+    .og__header-content {
+        flex: 2;
+    }
+    
 }

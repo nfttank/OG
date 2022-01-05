@@ -36,9 +36,9 @@ const Header = (props) => (
       </div>
       <p className="smalltext">Minting is limited to {props.data.maxPerWallet} per wallet.<br/>You can choose custom numbers too, check our Discord.</p>
     </div>
-
-    <OgImg className="og__header-image" data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg}} />
-    
+    <div className="og__header-image">
+      <OgImg data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg}} />
+    </div>
   </div>
 );
 

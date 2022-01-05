@@ -34,8 +34,6 @@
 .og__rules-content img {
     max-width: 100%;
     max-height: 300px;
-    margin: auto;
-    display: block;
     border-radius: 15px;
 }
 
