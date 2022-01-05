@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import './App.css'
 import OG from '../src/abis/OG.json'
 //import Autocomplete from '@celebryts/react-autocomplete-tags'
-import { Footer, Blog, /*Possibility, Features, WhatGPT3,*/ Header } from './containers';
+import { Footer, Blog, /*Possibility, Features, Whatog,*/ Header } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -217,7 +217,7 @@ class App extends Component {
             <Header data={this.state} />
           </div>
           {/* <Brand />
-          <WhatGPT3 />
+          <Whatog />
           <Features />
           <Possibility />
           <CTA />*/ }

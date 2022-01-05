@@ -5,13 +5,13 @@ import './navbar.css';
 const Navbar = (props) => {
 
   return (
-    <div className="gpt3__navbar">
-      <div className="gpt3__navbar-links">
-        <div className="gpt3__navbar-links_logo">
+    <div className="og__navbar">
+      <div className="og__navbar-links">
+        <div className="og__navbar-links_logo">
       <h1 className="gradient__text">&#35;iamanumber</h1>
         </div>
       </div>
-      <div className="gpt3__navbar-sign">
+      <div className="og__navbar-sign">
         {   props.data.account === '' &&
                 <button>Connect</button>
         }

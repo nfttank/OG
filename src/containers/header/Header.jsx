@@ -3,8 +3,8 @@ import { OgImg } from '../../components';
 import './header.css';
 
 const Header = (props) => (
-  <div className="gpt3__header section__padding" id="home">
-    <div className="gpt3__header-content">
+  <div className="og__header section__padding" id="home">
+    <div className="og__header-content">
       <h1 className="gradient__text">OG by Tank</h1>
       <p>
         We are punks. We are apes. We are cats, dogs, wolfs, toads and even fucking pickles.<br/>
@@ -17,13 +17,13 @@ const Header = (props) => (
       </p>
       <p className="gradient__text">We are one big community and OG is a big, fat <b>thank you</b> for being a number with me.</p>
       <p></p>
-      <div className="gpt3__header-content__input">
+      <div className="og__header-content__input">
         <button onClick={props.data.mintFunction} type="button">Mint 5 random OG numbers ({10000 - props.data.totalSupply} left)</button>
       </div>
       <p className="smalltext">(You can choose custom numbers too, check our Discord)</p>
     </div>
 
-    <OgImg className="gpt3__header-image" data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg}} />
+    <OgImg className="og__header-image" data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg}} />
     
   </div>
 );
