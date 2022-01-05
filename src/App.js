@@ -3,7 +3,7 @@ import Web3 from 'web3'
 import './App.css'
 import OG from '../src/abis/OG.json'
 //import Autocomplete from '@celebryts/react-autocomplete-tags'
-import { Footer, Blog, /*Possibility, Features, Whatog,*/ Header } from './containers';
+import { Footer, Balance, /*Possibility, Features, Whatog,*/ Header } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -216,12 +216,7 @@ class App extends Component {
             <Navbar data={this.state} />
             <Header data={this.state} />
           </div>
-          {/* <Brand />
-          <Whatog />
-          <Features />
-          <Possibility />
-          <CTA />*/ }
-          <Blog data={this.state} />
+          <Balance data={this.state} />
           <Footer data={this.state} />
         </div>
     );

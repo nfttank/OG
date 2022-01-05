@@ -1,10 +1,10 @@
 import React from 'react';
 import { OgImg } from '../../components';
-import './blog.css';
+import './balance.css';
 
-const Blog = (props) => (
-  <div className="og__blog section__padding" id="blog">
-    <div className="og__blog-heading">
+const Balance = (props) => (
+  <div className="og__balance section__padding" id="balance">
+    <div className="og__balance-heading">
       <h1 className="gradient__text">
         {
           props.data.walletLoaded ? 
@@ -16,7 +16,7 @@ const Blog = (props) => (
             : "Checking wallet ..."
         }</h1>
     </div>
-    <div className="og__blog-container">
+    <div className="og__balance-container">
     {
       props.data.ownedOgs.map((og) => {
       return (<OgImg data={{storeUrl: props.data.storeUrl, id: og.id, svg: og.svg}} />)
@@ -25,4 +25,4 @@ const Blog = (props) => (
   </div>
 );
 
-export default Blog;
+export default Balance;
