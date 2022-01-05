@@ -1,37 +1,22 @@
-OG numbers, on chain rendered numeric NFTs. Rendered images are public domain by Creative Commons Zero v1.0 Universal (CC0-1.0). Feel free to use them in any way you want <3
+# OG by Tank
 
+This repository contains the contracts and the minting website for OG NFT.
 
-# Rules
+## Checks
+* limit onlyOwner methods like `addSupportedCollection()`, `setSupportedCollectionSlug()`, `setTrustedContractAddresses()`, & `getTrustedContractAddress()`, `setOgDozen()`, `setPaused()`
+* set `setTrustedContractAddresses()` with the correct contract addresses for the corresponding net (Mainnet, etc.)
 
-* OG #1-12 can only be minted by the punk holders within the [12 topsales](https://www.larvalabs.com/cryptopunks/topsales): The "OG dozen".
-* #0 can be minted for free by anyone after OG #1-12 are minted.
-* The collection name will appear if the wallet contains a matching NFT with the given id
-* Colors can be customized by owning an ogcolor NFT.
+## Add or update supported collections
+* add **new** collections with `addSupportedCollection()` if required
+* set a SVG element with `setSupportedCollectionSlug()` if required 
+  * convert texts to paths with InkScape, for example
+  * remove unnecessary path variables like aria-label, style. Keep transform and add fill="rgb(255,255,255)"
+  * convert the path to base64
+  
 
-TODO
-* Whitelisting of the OG dozen --> OK
-* Color replacement (background, circle, slug, numbers) --> OK
-* ERC optimizations? 
-   * https://nftchance.medium.com/the-cannibalization-of-nfts-by-openzeppelin-by-insanely-high-gas-prices-cd2c9a7c1e7
-   * https://etherscan.io/address/0x0f78c6eee3c89ff37fd9ef96bd685830993636f2#code
+## External Mainnet Contracts
 
-
-# Checks
-* limit onlyOwner methods like addSupportedCollection(), setSupportedCollectionSlug(), setTrustedContractAddresses(), & getTrustedContractAddress(), setOgDozen(), setPaused()
-* set setTrustedContractAddresses() with the correct contract addresses for the corresponding net (Mainnet, etc.)
-
-# Add or update supported collections
-* add **new** collections with addSupportedCollection() if required
-* set a SVG element with setSupportedCollectionSlug() if required
-
-# Workflows
-* Convert slugs to paths with InkScape.
-* remove unnecessary path variables like aria-label, style. Keep transform and add fill="rgb(255,255,255)"
-* convert the path <g> ... to </g> to base64
-* update or add the slug on the contract with setSupportedCollectionSlug()
-
-# External Contracts
-
+```
 address constant CryptoPunksContractMainnet = 0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8;
 address constant BoredApesContractMainnet = 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D; 
 address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB9396471050C; 
@@ -39,19 +24,19 @@ address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3f
 address constant MetaHeroCoreContractMainnet = 0xFb10b1717C92e9cc2d634080c3c337808408D9E1;
 address constant MetaHeroGenerativeContractMainnet = 0x6dc6001535e15b9def7b0f6A20a2111dFA9454E2;
 address constant NounsContractMainnet = 0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03;
+```
 
-Whitelist: Top 100 All Time Collections on OpenSea 08.11.2021
+## Top 100 All Time Collections on OpenSea 08.11.2021
 
-
-CryptoPunks 0-9999 #638596
+CryptoPunks 0-9999
 https://opensea.io/assets/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/0
-Bored Apes 0-9999 #EF972C
+Bored Apes 0-9999
 https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/0
-Cool Cats 0-9932 #A0D7F5
+Cool Cats 0-9932
 https://opensea.io/assets/0x1a92f7381b9f03921564a437210bb9396471050c/0
-Cryptoadz 1-6969 #657F1F
+Cryptoadz 1-6969
 https://opensea.io/assets/0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6/1
-MetaHero Universe: Identities 1-36 #E35050
+MetaHero Universe: Identities 1-36
 https://opensea.io/assets/0xfb10b1717c92e9cc2d634080c3c337808408d9e1/1
 Pudgy Penguins 0-8887
 https://opensea.io/assets/0xbd3531da5cf5857e7cfaa92426877b022e612cf8/0
@@ -90,14 +75,14 @@ Ape Gang uses long Ids like 4981676894159712808201908443964193325271219637660871
 
 */
 
-# Contract deployment
+## Contract deployment
 Contracts can be deployed with truffle migrate:
 ```truffle migrate --reset --network rinkeby```
 
-# Etherscan Verification
+## Etherscan Verification
 This repository is set up to trigger a contract verification on Etherscan via Truffle.
 
-Api keys and Secrets have to be defined in the secrets.json file (ignored in this git repository).
+Api keys and secrets have to be defined in the secrets.json file (ignored in this git repository).
 
 ```json
 {
