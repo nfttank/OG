@@ -13,7 +13,7 @@ contract GotToken {
     /**
      * @dev Checks whether a given address (possibleOwner) owns a given token by its contract address and the token id itself.
      * This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract
-     * (with a custom implementation because it does not implement the ERC721 standard).
+     * (with a custom implementation because CryptoPunks do not implement the ERC721 standard).
      *
      * Does not throw errors but returns false if the real token owner could not be found or the token does not exist.
      *
@@ -34,7 +34,7 @@ contract GotToken {
     /**
      * @dev Checks whether a given address (possibleOwner) owns a given token by its contract address and the token id itself.
      * This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract
-     * (with a custom implementation because it does not implement the ERC721 standard).
+     * (with a custom implementation because CryptoPunks do not implement the ERC721 standard).
      *
      * Might revert execution if the contract address does not exist on the current net.
      *
@@ -65,7 +65,7 @@ contract GotToken {
     /**
      * @dev Checks whether a given address (possibleOwner) owns a given token by given contract addresses and the token id itself.
      * This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract
-     * (with a custom implementation because it does not implement the ERC721 standard).
+     * (with a custom implementation because CryptoPunks do not implement the ERC721 standard).
      * Does not throw errors but returns false if the real token owner could not be found or the token does not exist.
      * 
      * Returns an array with the results at the given index of the array.

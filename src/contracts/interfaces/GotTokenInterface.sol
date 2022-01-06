@@ -4,7 +4,7 @@
 pragma solidity 0.8.0;
 
 /**
- * @title The interface to access the GotToken contract to check of an address owns a given token of a given contract
+ * @title The interface to access the GotToken contract to check if an address owns a given token of a given contract
  * @author nfttank.eth
  */
 interface GotTokenInterface {

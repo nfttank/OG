@@ -4,7 +4,7 @@
 pragma solidity 0.8.0;
 
 /**
- * @title The interface to access the OGColor contract to get the colors to render the SVG
+ * @title The interface to access the OGColor contract to get the colors to render OG svgs
  * @author nfttank.eth
  */
 interface OGColorInterface {
