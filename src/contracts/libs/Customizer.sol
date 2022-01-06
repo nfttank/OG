@@ -20,20 +20,23 @@ library Customizer {
         return ownerOfToken;
     }
 
-    function getColors(IERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
+    function getColors(IERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory back, string memory frame, string memory digit, string memory slug) {
 
         address ownerOfToken = safeOwnerOf(callingContract, tokenId);
         if (ownerOfToken != address(0)) {
             if (ogColorContractAddress != address(0)) {
                 OGColorInterface ogColorContract = OGColorInterface(ogColorContractAddress);
-                try ogColorContract.getColors(ownerOfToken, tokenId) returns (string memory extBackColor, string memory extFrameColor, string memory extDigitColor, string memory extSlugColor) {
-                    return (extBackColor, extFrameColor, extDigitColor, extSlugColor);
+                try ogColorContract.getColors(ownerOfToken, tokenId) returns (string memory extBack, string memory extFrame, string memory extDigit, string memory extSlug) {
+                    return (extBack, extFrame, extDigit, extSlug);
                 }
                 catch { }
             }
         }
         
-        return ("#FFFFFF", "#000000", "#000000", "#FFFFFF");
+        return ("<linearGradient id='back'><stop stop-color='#FFFFFF'/></linearGradient>",
+                "<linearGradient id='frame'><stop stop-color='#000000'/></linearGradient>",
+                "<linearGradient id='digit'><stop stop-color='#000000'/></linearGradient>",
+                "<linearGradient id='slug'><stop stop-color='#FFFFFF'/></linearGradient>");
     }
     
     function getOwnedSupportedCollection(IERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) external view returns (address) {

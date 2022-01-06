@@ -8,5 +8,5 @@ pragma solidity 0.8.0;
  * @author nfttank.eth
  */
 interface OGColorInterface {
-    function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor);
+    function getColors(address forAddress, uint256 tokenId) external view returns (string memory back, string memory frame, string memory digit, string memory slug);
 }

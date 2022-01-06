@@ -3,7 +3,6 @@
 pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
@@ -11,7 +10,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * There are four different applications (back, frame, digit, slug), but only a few colors to mint.
  * @author nfttank.eth
  */
-contract OGColor is ERC721, ReentrancyGuard, Ownable {
+contract OGColor is ERC721, Ownable {
     
     uint256 private _tokenId;
 
@@ -26,54 +25,25 @@ contract OGColor is ERC721, ReentrancyGuard, Ownable {
     constructor() ERC721("OGColor", "OGCOLOR") Ownable() {
     }
 
-    function mint(string calldata application, string calldata hexColor) public nonReentrant {
+    function mint(string calldata application, string calldata defintion) public {
 
         require(_tokenId + 1 < 255, "No free tokens available.");
         require(isValidApplication(application), "Application invalid, allowed are 'back', 'frame', 'digit' and 'slug'.");
-        require(isValidHexColor(hexColor), "Color invalid, use hex format like '#224466'.");
 
         _tokenId++;
 
-        _colors[_tokenId] = hexColor;
+        _colors[_tokenId] = defintion;
         _applications[_tokenId] = application;
         
         _safeMint(_msgSender(), _tokenId);
     }
 
-    function isValidApplication(string calldata hexColor) private pure returns (bool) {
-        bytes32 k = keccak256(bytes(hexColor));
+    function isValidApplication(string calldata application) private pure returns (bool) {
+        bytes32 k = keccak256(bytes(application));
         return k == keccak256("back") 
             || k == keccak256("frame")
             || k == keccak256("digit") 
             || k == keccak256("slug");
-    }
-    
-    function isValidHexColor(string calldata hexColor) public pure returns (bool) {
-        
-        bytes memory hexColorBytes = bytes(hexColor);
-        
-        if (hexColorBytes.length != 7) // #ffffff
-            return false;
-        
-        for (uint16 i = 0; i < hexColorBytes.length; i++) {
-            
-            int16 char = int16(uint16(uint8(hexColorBytes[i])));
-            
-            if (i == 0) {
-                if (char != 35) // #
-                    return false;
-            }
-            else {
-                int16 num1 = char - 48; // charIndex - 48 is the numeric value
-                int16 num2 = char - 65; // charIndex - 65 uppercase letters
-                int16 num3 = char - 97; // charIndex - 97 lowercase letters
-                bool isHex = (num1 >= 0 && num1 <= 9) || (num2 >= 0 && num2 <= 5) || (num3 >= 0 && num3 <= 5); // 0-9 or A-H or a-h
-                if (!isHex)
-                     return false;
-            }
-        }
-        
-        return true;
     }
     
     function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override {
@@ -130,28 +100,45 @@ contract OGColor is ERC721, ReentrancyGuard, Ownable {
     function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
 
         string[] memory colors = tokenId < 99999 ? _backColorsForAddress[forAddress] : new string[](0); // pseudo use of tokenId to prevent warnings. We still want the tokenId in the method arguments to be able to modify colors by the tokenId in the future.
-        string memory back = getColorFromArray(colors, "#FFFFFF");
+        string memory back = getColorFromArray(colors, "#FFFFFF", "back");
         
         colors = _frameColorsForAddress[forAddress];
-        string memory frame = getColorFromArray(colors, "#000000");
+        string memory frame = getColorFromArray(colors, "#000000", "frame");
         
         colors = _digitColorsForAddress[forAddress];
-        string memory digit = getColorFromArray(colors, "#000000");
+        string memory digit = getColorFromArray(colors, "#000000", "digit");
         
         colors = _slugColorsForAddress[forAddress];
-        string memory slug = getColorFromArray(colors, "#FFFFFF");
+        string memory slug = getColorFromArray(colors, "#FFFFFF", "slug");
         
         return (back, frame, digit, slug);
     }
 
-    function getColorFromArray(string[] memory colors, string memory fallbackValue) internal pure returns (string memory) {
+    function getColorFromArray(string[] memory colors, string memory fallbackValue, string memory application) internal pure returns (string memory) {
+
+        string memory color;
 
         // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
         for (uint256 i = colors.length; i > 0; i--) {
-            if (bytes(colors[i - 1]).length > 0)
-                return colors[i - 1];
+            if (bytes(colors[i - 1]).length > 0) {
+                color = colors[i - 1];
+                break;
+            }
         }
 
-        return fallbackValue;
+        if (bytes(color).length == 0) {
+            color = fallbackValue;
+        }
+
+        // turn hex colors like #527862 into a linear gradient
+        if (bytes(color).length <= 7) {
+            return string(abi.encodePacked("<linearGradient id='", application, "'><stop stop-color='", color, "'/></linearGradient>"));
+        }
+
+        return color;
+    }
+
+    function getColorDefinition(string memory application, string memory color) internal pure returns (string memory) {
+        
     }
 }

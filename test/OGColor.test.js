@@ -1,3 +1,5 @@
+const { assert } = require('chai')
+
 const OGColor = artifacts.require('./contracts/OGColor.sol')
 
 require('chai')
@@ -54,10 +56,6 @@ contract('OGColor', (accounts) => {
       await contract.mint('slug', '#EC058A', {from: testAddress})
     })
 
-    it('cannot mint invalid HEX colors', async () => {
-      await contract.mint('back', '#ZAZAZA').should.be.rejected;
-    })
-
     it('cannot mint unknown applications', async () => {
       await contract.mint('fore', '#EC058A').should.be.rejected;
     })
@@ -65,7 +63,7 @@ contract('OGColor', (accounts) => {
 
   describe('color retrieval', async () => {
 
-    it('get minted colors', async () => {
+    it('get minted colors as full gradients', async () => {
 
       const testAddress = accounts[1];
 
@@ -77,10 +75,10 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#AAAAAA')
-      assert.equal(result[1], '#BBBBBB')
-      assert.equal(result[2], '#CCCCCC')
-      assert.equal(result[3], '#DDDDDD')
+      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#AAAAAA'/></linearGradient>")
+      expect(result[1]).to.include("<linearGradient id='frame'><stop stop-color='#BBBBBB'/></linearGradient>")
+      expect(result[2]).to.include("<linearGradient id='digit'><stop stop-color='#CCCCCC'/></linearGradient>")
+      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#DDDDDD'/></linearGradient>")
     })
 
     it('gets default values if nothing was minted', async () => {
@@ -89,10 +87,33 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#FFFFFF')
-      assert.equal(result[1], '#000000')
-      assert.equal(result[2], '#000000')
-      assert.equal(result[3], '#FFFFFF')
+      expect(result[0]).to.include('#FFFFFF')
+      expect(result[1]).to.include('#000000')
+      expect(result[2]).to.include('#000000')
+      expect(result[3]).to.include('#FFFFFF')
+    })
+
+    it('returns full linear gradient definitions for default colors', async () => {
+
+      const testAddress = accounts[2];
+
+      let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
+
+      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#FFFFFF'/></linearGradient>")
+      expect(result[1]).to.include("<linearGradient id='frame'><stop stop-color='#000000'/></linearGradient>")
+      expect(result[2]).to.include("<linearGradient id='digit'><stop stop-color='#000000'/></linearGradient>")
+      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#FFFFFF'/></linearGradient>")
+    })
+
+    it('gets complex gradients', async () => {
+
+      const testAddress = accounts[9];
+
+      const gradient = '<linearGradient id="back" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#Aa44ff" /><stop offset="100%" style="stop-color:#ff4455" /></linearGradient>'
+      await contract.mint('back', gradient, {from: testAddress})
+
+      let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
+      assert.equal(result[0], gradient)
     })
 
     it('resets sold colors', async () => {
@@ -117,10 +138,10 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#FFFFFF')
-      assert.equal(result[1], '#000000')
-      assert.equal(result[2], '#CCCCC0')
-      assert.equal(result[3], '#DDDDD0')
+      expect(result[0]).to.include('#FFFFFF')
+      expect(result[1]).to.include('#000000')
+      expect(result[2]).to.include('#CCCCC0')
+      expect(result[3]).to.include('#DDDDD0')
     })
 
     it('resets sold colors with fall backs to other colors available', async () => {
@@ -154,17 +175,17 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#AAAAA2') // token1_1 was sold, but token2_1 was minted later so it should be still in use
-      assert.equal(result[1], '#BBBBB1') // token2_2 was sold, so token2_1 should be used
-      assert.equal(result[2], '#000000') // token3_1 and token3_2 were sold so it should be the default color
-      assert.equal(result[3], '#DDDDD2') // token4_1 and token4_2 are available, token4_2 was minted later so it should be used
+      expect(result[0]).to.include('#AAAAA2') // token1_1 was sold, but token2_1 was minted later so it should be still in use
+      expect(result[1]).to.include('#BBBBB1') // token2_2 was sold, so token2_1 should be used
+      expect(result[2]).to.include('#000000') // token3_1 and token3_2 were sold so it should be the default color
+      expect(result[3]).to.include('#DDDDD2') // token4_1 and token4_2 are available, token4_2 was minted later so it should be used
 
       result = await contract.getColors(receiverAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#AAAAA1') // transferred from testAddress
-      assert.equal(result[1], '#BBBBB2') // transferred from testAddress
-      assert.equal(result[2], '#CCCCC2') // first token3_1 and then token3_2 transferred from testAddress
-      assert.equal(result[3], '#FFFFFF') // nothing transferred, default color
+      expect(result[0]).to.include('#AAAAA1') // transferred from testAddress
+      expect(result[1]).to.include('#BBBBB2') // transferred from testAddress
+      expect(result[2]).to.include('#CCCCC2') // first token3_1 and then token3_2 transferred from testAddress
+      expect(result[3]).to.include('#FFFFFF') // nothing transferred, default color
     })
 
     it('resets multiple levels deep', async () => {
@@ -194,7 +215,7 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      assert.equal(result[0], '#AAAAA2')
+      expect(result[0]).to.include('#AAAAA2')
     })
   })
 })

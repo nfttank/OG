@@ -93,7 +93,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
     function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
         
-        (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor)
+        (string memory back, string memory frame, string memory digit, string memory slug)
             = Customizer.getColors(this, _trustedContracts["ogcolor"], tokenId);
         
         address supportedCollection = Customizer.getOwnedSupportedCollection(this, _trustedContracts["gottoken"], _supportedCollections, tokenId);
@@ -102,7 +102,9 @@ contract OG is HumbleERC721Enumerable, Ownable {
         string[8] memory parts;
 
         parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000' viewBox='0 0 1000 1000'>";
-        parts[1] = string(abi.encodePacked("<defs><linearGradient id='backColor'><stop stop-color='", backColor, "'/></linearGradient><linearGradient id='frameColor'><stop stop-color='", frameColor, "'/></linearGradient><linearGradient id='digitColor'><stop stop-color='", digitColor, "'/></linearGradient><linearGradient id='slugColor'><stop stop-color='", slugColor, "'/></linearGradient></defs>"));
+        
+        // OGColor delivers whole definitions like <linearGradient id='back'><stop stop-color='#FFAAFF'/></linearGradient>
+        parts[1] = string(abi.encodePacked("<defs>", back, frame, digit, slug, "</defs>"));
         parts[2] = "<mask id='_mask'>";
         
         if (hasCollection)
@@ -111,7 +113,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
            parts[3] = "";
             
         // don't apply colors on this string, this should be kept white
-        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#backColor)' mask='url(#_mask)' stroke-width='130' stroke='url(#frameColor)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
+        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#back)' mask='url(#_mask)' stroke-width='130' stroke='url(#frame)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
 
         parts[5] = Digits.generateDigits(tokenId);
           

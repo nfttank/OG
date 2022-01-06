@@ -10,7 +10,8 @@ This repository contains the contracts and the minting website for OG NFT.
 * add **new** collections with `addSupportedCollection()` if required
 * set a SVG element with `setSupportedCollectionSlug()` if required 
   * convert texts to paths with InkScape, for example
-  * remove unnecessary path variables like aria-label, style. Keep transform and add fill="rgb(255,255,255)"
+  * keep transform and add fill='url(#slug)'
+  * remove unnecessary path variables like aria-label, style. 
   * convert the path to base64
   
 
