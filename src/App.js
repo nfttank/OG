@@ -76,6 +76,12 @@ class App extends Component {
     const randomId = Math.floor(Math.random() * 10000)
     const featuredSvg = await this.state.contract.methods.renderSvg(randomId).call()
     this.setState({ featuredOg: { id: randomId, svg: featuredSvg }})
+    
+    // ownerOf might crash and abort the methods execution
+    try {
+      const owner = await this.state.contract.methods.ownerOf(randomId).call()
+      this.setState({ featuredOgExists: owner !== '' })
+    } catch {}
 
     this.setState({ ownedOgs: []})
 
@@ -154,6 +160,7 @@ class App extends Component {
       maxPerWallet: 10,
       walletLoaded: false,
       featuredOg: {},
+      featuredOgExists: false,
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
       discordUrl: 'https://discord.com/invite/kTvaHARW',
       tankTwitterUrl: 'https://twitter.com/nfttank',
