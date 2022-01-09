@@ -75,18 +75,22 @@ contract OGColor is ERC721, Ownable {
 
     function getAttributesForColor(uint256 tokenId) private view returns (string memory) {
 
+        bytes memory ax = '#c8fbfb';
+        bytes memory ap = '#856f56';
+        bytes memory zz = '#7da269';
+
         string memory traits = string(abi.encodePacked('{ "trait_type": "Application", "value": "', _applications[tokenId], '" }'));
 
-        string memory color = _colors[tokenId];
+        bytes memory color = bytes(_colors[tokenId]);
         string memory type_;
 
-        if (stringEquals(color, '#c8fbfb')) {
+        if (stringContains(color, ax)) {
             type_ = 'Alien';
-        } else if (stringEquals(color, '#7da269')) {
-            type_ = 'Zombie';
-        } else if (stringEquals(color, '#856f56')) {
+        } else if (stringContains(color, ap)) {
             type_ = 'Ape';
-        } 
+        } else if (stringContains(color, zz)) {
+            type_ = 'Zombie';
+        }
 
         if (bytes(type_).length > 0) {
             traits = string(abi.encodePacked(traits, (bytes(traits).length > 0 ? ', ' : ''), '{ "trait_type": "Type", "value": "', type_, '" }'));
@@ -97,23 +101,32 @@ contract OGColor is ERC721, Ownable {
 
     function getOgAttributes(address forAddress, uint256 tokenId) external view returns (string memory) {
         
-
         (string memory back, string memory frame, string memory digit, string memory slug) = this.getColors(forAddress, tokenId);
 
-        if (stringEquals(back, '#c8fbfb') || stringEquals(frame, '#c8fbfb') || stringEquals(digit, '#c8fbfb') || stringEquals(slug, '#c8fbfb')) {
+        bytes memory b = bytes(back);
+        bytes memory f = bytes(frame);
+        bytes memory d = bytes(digit);
+        bytes memory s = bytes(slug);
+
+        bytes memory ax = '#c8fbfb';
+        bytes memory ap = '#856f56';
+        bytes memory zz = '#7da269';
+
+        if (stringContains(b, ax) || stringContains(f, ax) || stringContains(d, ax) || stringContains(s, ax)) {
             return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Alien" }]'));
         }
 
-        if (stringEquals(back, '#7da269') || stringEquals(frame, '#7da269') || stringEquals(digit, '#7da269') || stringEquals(slug, '#7da269')) {
-           return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Zombie" }]'));
+        if (stringContains(b, ap) || stringContains(f, ap) || stringContains(d, ap) || stringContains(s, ap)) {
+            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Ape" }]'));
         }
 
-        if (stringEquals(back, '#856f56') || stringEquals(frame, '#856f56') || stringEquals(digit, '#856f56') || stringEquals(slug, '#856f56')) {
-            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Ape" }]'));
+        if (stringContains(b, zz) || stringContains(f, zz) || stringContains(d, zz) || stringContains(s, zz)) {
+           return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Zombie" }]'));
         }
 
         return '';
     }
+
 
     function isValidApplication(string calldata application) private pure returns (bool) {
         bytes32 k = keccak256(bytes(application));
@@ -157,21 +170,41 @@ contract OGColor is ERC721, Ownable {
 
     function removeColor(string[] storage colors, string memory exceptColor) private {
 
+        bytes memory except = bytes(exceptColor);
+
         // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
         for (uint256 i = colors.length; i > 0; i--) {
-            if (stringEquals(colors[i - 1], exceptColor)) {
+            if (bytesEquals(bytes(colors[i - 1]), except)) {
                 delete colors[i - 1];
                 return;
             }
         }
     }
 
-    function stringEquals(string memory a, string memory b) internal pure returns(bool) {
-        return bytesEquals(bytes(a), bytes(b));
-    }
     
     function bytesEquals(bytes memory a, bytes memory b) internal pure returns(bool) {
         return (a.length == b.length) && (keccak256(a) == keccak256(b));
+    }
+
+    function stringContains(bytes memory where, bytes memory what) internal pure returns (bool) {
+
+        require(where.length >= what.length);
+
+        bool found = false;
+        for (uint i = 0; i <= where.length - what.length; i++) {
+            bool flag = true;
+            for (uint j = 0; j < what.length; j++)
+                if (where [i + j] != what [j]) {
+                    flag = false;
+                    break;
+                }
+            if (flag) {
+                found = true;
+                break;
+            }
+        }
+
+        return found;
     }
 
     function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {

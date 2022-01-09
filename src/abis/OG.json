@@ -29463,10 +29463,10 @@
         2433
       ],
       "Customizer": [
-        5434
+        5558
       ],
       "Digits": [
-        6052
+        6176
       ],
       "ERC165": [
         2660
@@ -29481,7 +29481,7 @@
         2056
       ],
       "GotTokenInterface": [
-        4919
+        5043
       ],
       "HumbleERC721Enumerable": [
         2990
@@ -29511,7 +29511,7 @@
         3894
       ],
       "OGColorInterface": [
-        4947
+        5071
       ],
       "Ownable": [
         104
@@ -29606,7 +29606,7 @@
         "id": 3225,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 4920,
+        "sourceUnit": 5044,
         "src": "1168:44:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -29617,7 +29617,7 @@
         "id": 3226,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 4948,
+        "sourceUnit": 5072,
         "src": "1214:43:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -29628,7 +29628,7 @@
         "id": 3227,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 5435,
+        "sourceUnit": 5559,
         "src": "1259:31:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -29639,7 +29639,7 @@
         "id": 3228,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 6053,
+        "sourceUnit": 6177,
         "src": "1292:27:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -32095,10 +32095,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "3461:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -32109,7 +32109,7 @@
                       "lValueRequested": false,
                       "memberName": "getColors",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5068,
+                      "referencedDeclaration": 5192,
                       "src": "3461:20:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_uint256_$returns$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$",
@@ -32272,10 +32272,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "3577:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -32286,7 +32286,7 @@
                       "lValueRequested": false,
                       "memberName": "getOwnedSupportedCollection",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5238,
+                      "referencedDeclaration": 5362,
                       "src": "3577:38:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_array$_t_address_$dyn_memory_ptr_$_t_uint256_$returns$_t_address_$",
@@ -33320,10 +33320,10 @@
                           "name": "Digits",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6052,
+                          "referencedDeclaration": 6176,
                           "src": "4898:6:19",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_Digits_$6052_$",
+                            "typeIdentifier": "t_type$_t_contract$_Digits_$6176_$",
                             "typeString": "type(library Digits)"
                           }
                         },
@@ -33334,7 +33334,7 @@
                         "lValueRequested": false,
                         "memberName": "generateDigits",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 6051,
+                        "referencedDeclaration": 6175,
                         "src": "4898:21:19",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_delegatecall_pure$_t_uint256_$returns$_t_string_memory_ptr_$",
@@ -34473,10 +34473,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "5465:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -34487,7 +34487,7 @@
                       "lValueRequested": false,
                       "memberName": "getColorAttributes",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5128,
+                      "referencedDeclaration": 5252,
                       "src": "5465:29:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_uint256_$returns$_t_string_memory_ptr_$",
@@ -38296,10 +38296,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "7575:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -38310,7 +38310,7 @@
                       "lValueRequested": false,
                       "memberName": "suggestFreeIds",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5406,
+                      "referencedDeclaration": 5530,
                       "src": "7575:25:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_uint16_$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
@@ -38473,10 +38473,10 @@
         2433
       ],
       "Customizer": [
-        5434
+        5558
       ],
       "Digits": [
-        6052
+        6176
       ],
       "ERC165": [
         2660
@@ -38491,7 +38491,7 @@
         2056
       ],
       "GotTokenInterface": [
-        4919
+        5043
       ],
       "HumbleERC721Enumerable": [
         2990
@@ -38521,7 +38521,7 @@
         3894
       ],
       "OGColorInterface": [
-        4947
+        5071
       ],
       "Ownable": [
         104
@@ -38616,7 +38616,7 @@
         "id": 3225,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 4920,
+        "sourceUnit": 5044,
         "src": "1168:44:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -38627,7 +38627,7 @@
         "id": 3226,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 4948,
+        "sourceUnit": 5072,
         "src": "1214:43:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -38638,7 +38638,7 @@
         "id": 3227,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 5435,
+        "sourceUnit": 5559,
         "src": "1259:31:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -38649,7 +38649,7 @@
         "id": 3228,
         "nodeType": "ImportDirective",
         "scope": 3895,
-        "sourceUnit": 6053,
+        "sourceUnit": 6177,
         "src": "1292:27:19",
         "symbolAliases": [],
         "unitAlias": ""
@@ -41105,10 +41105,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "3461:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -41119,7 +41119,7 @@
                       "lValueRequested": false,
                       "memberName": "getColors",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5068,
+                      "referencedDeclaration": 5192,
                       "src": "3461:20:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_uint256_$returns$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$_t_string_memory_ptr_$",
@@ -41282,10 +41282,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "3577:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -41296,7 +41296,7 @@
                       "lValueRequested": false,
                       "memberName": "getOwnedSupportedCollection",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5238,
+                      "referencedDeclaration": 5362,
                       "src": "3577:38:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_array$_t_address_$dyn_memory_ptr_$_t_uint256_$returns$_t_address_$",
@@ -42330,10 +42330,10 @@
                           "name": "Digits",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6052,
+                          "referencedDeclaration": 6176,
                           "src": "4898:6:19",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_contract$_Digits_$6052_$",
+                            "typeIdentifier": "t_type$_t_contract$_Digits_$6176_$",
                             "typeString": "type(library Digits)"
                           }
                         },
@@ -42344,7 +42344,7 @@
                         "lValueRequested": false,
                         "memberName": "generateDigits",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 6051,
+                        "referencedDeclaration": 6175,
                         "src": "4898:21:19",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_delegatecall_pure$_t_uint256_$returns$_t_string_memory_ptr_$",
@@ -43483,10 +43483,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "5465:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -43497,7 +43497,7 @@
                       "lValueRequested": false,
                       "memberName": "getColorAttributes",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5128,
+                      "referencedDeclaration": 5252,
                       "src": "5465:29:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_address_$_t_uint256_$returns$_t_string_memory_ptr_$",
@@ -47306,10 +47306,10 @@
                         "name": "Customizer",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 5434,
+                        "referencedDeclaration": 5558,
                         "src": "7575:10:19",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5434_$",
+                          "typeIdentifier": "t_type$_t_contract$_Customizer_$5558_$",
                           "typeString": "type(library Customizer)"
                         }
                       },
@@ -47320,7 +47320,7 @@
                       "lValueRequested": false,
                       "memberName": "suggestFreeIds",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5406,
+                      "referencedDeclaration": 5530,
                       "src": "7575:25:19",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_delegatecall_view$_t_contract$_IERC721_$1700_$_t_uint16_$_t_uint256_$_t_uint256_$_t_uint256_$returns$_t_array$_t_uint256_$dyn_memory_ptr_$",
@@ -47573,11 +47573,11 @@
         }
       },
       "links": {
-        "Digits": "0x2EF1A9895fD7224D6825811292e04f781eEeAB37",
-        "Customizer": "0x4EB57C0281BBf94Da4A47E29dEA66f52BA5c2986"
+        "Digits": "0x2C4EC39077BFD1D91e5D31c0AA6130Baa5C6241e",
+        "Customizer": "0x8e86a2b75293a84c2Aeffe352Dc9af2a707F0e84"
       },
-      "address": "0xd7b2EB9d43D625B8Bf8904517a6F7507bBa163c5",
-      "transactionHash": "0x2a00cf9d8adb1a51d6cb753647a93a98264811677a6a6081158133646d6d99ed"
+      "address": "0x0b582E4ef5B0256b283E1273bF721971f2C7AC8d",
+      "transactionHash": "0xea7ddc743c9cdf6490fb8775a66d176ed1fea5770f2af8fd810a8cde5ed50b71"
     },
     "5777": {
       "events": {
@@ -47686,7 +47686,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-09T10:22:53.755Z",
+  "updatedAt": "2022-01-09T22:43:04.310Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "nfttank.eth",
