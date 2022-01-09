@@ -130,7 +130,9 @@ contract OG is HumbleERC721Enumerable, Ownable {
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
     
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        string memory attributes = Customizer.getColorAttributes(this, _trustedContracts["ogcolor"], tokenId);
+        attributes = bytes(attributes).length > 0 ? string(abi.encodePacked(attributes, ", ")) : "";
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "" ,', attributes, ' "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
 

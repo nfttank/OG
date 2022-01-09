@@ -1,0 +1,44 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000' viewBox='0 0 1000 1000'>
+  <defs>
+    <linearGradient id='back'>
+      <stop stop-color='#FFFFFF' />
+    </linearGradient>
+    <linearGradient id="frame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,  151,  100);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(190,  226,  150);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="digit" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,  151,  100);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(190,  226,  150);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id='slug'>
+      <stop stop-color='#FFFFFF' />
+    </linearGradient>
+  </defs>
+  <mask id='_mask'>
+    <circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' />
+  </mask>
+  <g fill='url(#digit)'>
+  <circle cx='500' cy='500' r='450' fill='url(#back)' mask='url(#_mask)' stroke-width='130' stroke='url(#frame)'
+    stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />
+  <path transform='translate(275
+  254) scale(0.6
+  0.6)'
+    d=' M 284.201 204.819 L 253.162 204.819 L 253.162 129.166 L 191.27 129.166 L 171.125 204.819 L 116.186 204.819 L 201.265 0 L 110.039 0 L 0 264.986 L 0 281.784 L 164.901 281.784 L 164.901 343.5 L 253.167 343.5 L 253.167 281.784 L 284.206 281.784 L 284.201 204.819 Z '
+    />
+  <path transform='translate(566
+  254) scale(0.6
+  0.6)'
+    d=' M 156.002 264.058 C 227.642 181.076 243.236 148.719 243.236 106.57 C 243.236 43.685 194.177 0 123.127 0 C 49.79 0 5.4 44.768 5.4 112.494 L 5.4 118.689 L 93.943 118.689 L 93.943 112.217 C 93.943 92.054 105.407 79.371 124.209 79.371 C 141.365 79.371 153.333 91.55 153.333 109.713 C 153.333 138.469 134.772 164.157 0 323.111 L 0 343.5 L 249.124 343.5 L 249.124 264.058 L 156.002 264.058 Z '
+     />
+  <path transform='translate(286
+  541) scale(0.6
+  0.6)'
+    d=' M 156.002 264.058 C 227.642 181.076 243.236 148.719 243.236 106.57 C 243.236 43.685 194.177 0 123.127 0 C 49.79 0 5.4 44.768 5.4 112.494 L 5.4 118.689 L 93.943 118.689 L 93.943 112.217 C 93.943 92.054 105.407 79.371 124.209 79.371 C 141.365 79.371 153.333 91.55 153.333 109.713 C 153.333 138.469 134.772 164.157 0 323.111 L 0 343.5 L 249.124 343.5 L 249.124 264.058 L 156.002 264.058 Z '
+     />
+  <path transform='translate(562
+  541) scale(0.6
+  0.6)' d=' M 0 0 L 0 80.487 L 141.739 80.487 L 36.736 343.5 L 133.629 343.5 L 263.798 13.399 L 263.798 0 L 0 0 Z '
+    fill='url(#digit)' />
+    </g>
+</svg>

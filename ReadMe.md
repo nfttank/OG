@@ -1,3 +1,7 @@
+TODO
+* getogattributes DOES NMOT WOTK YET because colors are returned in this way:  <linearGradient id='slug'><stop stop-color='#7da269'/></linearGradient>
+* gradients not per number but globally?
+
 # OG by Tank
 
 This repository contains the contracts and the minting website for OG NFT.
@@ -13,6 +17,10 @@ This repository contains the contracts and the minting website for OG NFT.
   * keep transform and add fill='url(#slug)'
   * remove unnecessary path variables like aria-label, style. 
   * convert the path to base64
+
+## OGColors
+* when minting OGColor, prevent rbg(x,x,x) because of the commas the EtherScan replaces with line breaks
+* when minting OGColor with complex svg fills like gradients, use the correct element names like frame, back, etc.
   
 
 ## External Mainnet Contracts

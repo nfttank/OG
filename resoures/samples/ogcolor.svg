@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'>
+    <defs>
+        <linearGradient id='back'>
+            <stop stop-color='#bb4411' />
+        </linearGradient>
+    </defs>
+    <mask id='_mask'>
+        <circle vector-effect='non-scaling-stroke' cx='150' cy='150' r='125' fill='white' stroke='none' />
+    </mask>
+    <circle vector-effect='non-scaling-stroke' cx='150' cy='150' r='125' fill='url(#back)' mask='url(#_mask)' />
+</svg>

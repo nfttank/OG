@@ -4,6 +4,7 @@ pragma solidity 0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "base64-sol/base64.sol";
 
 /**
  * @title Defines colors for OG NFTs. When minting, a color and an application (which part of the OG NFT to colorize) has to be defined.
@@ -12,7 +13,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  */
 contract OGColor is ERC721, Ownable {
     
-    uint256 private _tokenId;
+    uint256 private _totalSupply;
 
     mapping(uint256 => string) private _colors;
     mapping(uint256 => string) private _applications;
@@ -25,17 +26,93 @@ contract OGColor is ERC721, Ownable {
     constructor() ERC721("OGColor", "OGCOLOR") Ownable() {
     }
 
-    function mint(string calldata application, string calldata defintion) public {
+    /**
+    * @dev It's recommended to use lower case color strings like #ffffff instead of #FFFFFF
+    */
+    function mint(string calldata application, string calldata color) public {
 
-        require(_tokenId + 1 < 255, "No free tokens available.");
+        require(_totalSupply + 1 < 9999, "No free tokens available.");
         require(isValidApplication(application), "Application invalid, allowed are 'back', 'frame', 'digit' and 'slug'.");
 
-        _tokenId++;
+        uint256 newId = _totalSupply;
 
-        _colors[_tokenId] = defintion;
-        _applications[_tokenId] = application;
+        _colors[newId] = color;
+        _applications[newId] = application;
         
-        _safeMint(_msgSender(), _tokenId);
+        _safeMint(_msgSender(), newId);
+
+        _totalSupply++;
+    }
+
+    function totalSupply() public view virtual returns (uint256) {
+        return _totalSupply;
+    }
+
+    function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        require(_exists(tokenId), "Token does not exist");
+        
+        string[] memory parts = new string[](7);
+
+        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'>";
+        parts[1] = string(abi.encodePacked("<defs>", formatColor(_colors[tokenId], _applications[tokenId]), "</defs>"));
+        parts[2] = "<mask id='_mask'>";
+        parts[3] = "    <circle vector-effect='non-scaling-stroke' cx='150' cy='150' r='125' fill='white' stroke='none' />";
+        parts[4] = "</mask>";
+        parts[5] = string(abi.encodePacked("<circle vector-effect='non-scaling-stroke' cx='150' cy='150' r='125' fill='url(#", _applications[tokenId], ")' mask='url(#_mask)' />"));
+        parts[6] = "</svg>";
+        
+        return string(abi.encodePacked(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]));
+    }
+
+    function tokenURI(uint256 tokenId) override public view returns (string memory) {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        require(_exists(tokenId), "Token does not exist");
+    
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG Color", "description": "", ', getAttributesForColor(tokenId), ', "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        return string(abi.encodePacked('data:application/json;base64,', json));
+    }
+
+    function getAttributesForColor(uint256 tokenId) private view returns (string memory) {
+
+        string memory traits = string(abi.encodePacked('{ "trait_type": "Application", "value": "', _applications[tokenId], '" }'));
+
+        string memory color = _colors[tokenId];
+        string memory type_;
+
+        if (stringEquals(color, '#c8fbfb')) {
+            type_ = 'Alien';
+        } else if (stringEquals(color, '#7da269')) {
+            type_ = 'Zombie';
+        } else if (stringEquals(color, '#856f56')) {
+            type_ = 'Ape';
+        } 
+
+        if (bytes(type_).length > 0) {
+            traits = string(abi.encodePacked(traits, (bytes(traits).length > 0 ? ', ' : ''), '{ "trait_type": "Type", "value": "', type_, '" }'));
+        }
+
+        return string(abi.encodePacked('"attributes": [', traits, ']'));
+    }
+
+    function getOgAttributes(address forAddress, uint256 tokenId) external view returns (string memory) {
+        
+
+        (string memory back, string memory frame, string memory digit, string memory slug) = this.getColors(forAddress, tokenId);
+
+        if (stringEquals(back, '#c8fbfb') || stringEquals(frame, '#c8fbfb') || stringEquals(digit, '#c8fbfb') || stringEquals(slug, '#c8fbfb')) {
+            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Alien" }]'));
+        }
+
+        if (stringEquals(back, '#7da269') || stringEquals(frame, '#7da269') || stringEquals(digit, '#7da269') || stringEquals(slug, '#7da269')) {
+           return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Zombie" }]'));
+        }
+
+        if (stringEquals(back, '#856f56') || stringEquals(frame, '#856f56') || stringEquals(digit, '#856f56') || stringEquals(slug, '#856f56')) {
+            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Ape" }]'));
+        }
+
+        return '';
     }
 
     function isValidApplication(string calldata application) private pure returns (bool) {
@@ -130,15 +207,16 @@ contract OGColor is ERC721, Ownable {
             color = fallbackValue;
         }
 
+        return formatColor(color, application);
+    }
+
+    function formatColor(string memory color, string memory application) internal pure returns (string memory) {
+
         // turn hex colors like #527862 into a linear gradient
         if (bytes(color).length <= 7) {
             return string(abi.encodePacked("<linearGradient id='", application, "'><stop stop-color='", color, "'/></linearGradient>"));
         }
 
         return color;
-    }
-
-    function getColorDefinition(string memory application, string memory color) internal pure returns (string memory) {
-        
     }
 }

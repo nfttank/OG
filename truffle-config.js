@@ -18,7 +18,7 @@ module.exports = {
       network_id: 4,
       gas: 29000000,
       gasPrice: 10000000000,
-      //skipDryRun: true
+      skipDryRun: true
     }
   },
   contracts_directory: './src/contracts/',

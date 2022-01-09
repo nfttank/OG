@@ -3,15 +3,14 @@
         <linearGradient id='backColor'>
             <stop stop-color='#FFFFFF' />
         </linearGradient>
+        <linearGradient id='frameColor'>
+            <stop stop-color='#000000' />
+        </linearGradient>
         <linearGradient id='digitColor'>
             <stop stop-color='#000000' />
         </linearGradient>
         <linearGradient id='slugColor'>
             <stop stop-color='#FFFFFF' />
-        </linearGradient>
-        <linearGradient id="frameColor" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#Aa44ff" />
-            <stop offset="100%" style="stop-color:#ff4455" />
         </linearGradient>
     </defs>
     <mask id='_mask'>

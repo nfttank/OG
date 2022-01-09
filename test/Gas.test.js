@@ -21,6 +21,7 @@ contract('Gas estimates', (accounts) => {
 
   before(async () => {
     ogContract = await OG.deployed()
+    await ogContract.setPaused(false);
     ogColorContract = await OGColor.deployed()
   })
 
@@ -28,16 +29,14 @@ contract('Gas estimates', (accounts) => {
     it('gas estimates', async () => {
       logGas("pause true", await ogContract.setPaused.estimateGas(true))
       logGas("pause false", await ogContract.setPaused.estimateGas(false))
-      logGas("mint 1", await ogContract.mint.estimateGas([1]))
-      logGas("mint 5", await ogContract.mint.estimateGas([2,3,4,5,6]))
-      logGas("mint 10", await ogContract.mint.estimateGas([7,8,9,10,11,12,13,14,15,16]))
+      logGas("mint 1", await ogContract.mint.estimateGas([100]))
+      logGas("mint 5", await ogContract.mint.estimateGas([200,300,400,500,600]))
+      logGas("mint 10", await ogContract.mint.estimateGas([700,800,900,1000,1100,1200,1300,1400,1500,1600]))
       logGas("add supported collection", await ogContract.addSupportedCollection.estimateGas('0xc256A0467EcCce3391a0c1c02bD8151337196482'))
       logGas("clear supported collection", await ogContract.clearSupportedCollections.estimateGas())
       logGas("set supported collection slug 10 chars", await ogContract.setSupportedCollectionSlug.estimateGas('0xc256A0467EcCce3391a0c1c02bD8151337196482', 'MTIzNDU2Nzg5MA=='))
       logGas("set supported collection slug 200 chars", await ogContract.setSupportedCollectionSlug.estimateGas('0xc256A0467EcCce3391a0c1c02bD8151337196482', 'MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTA='))
-      logGas("set custom 10 chars", await ogContract.setCustom.estimateGas(1, 'MTIzNDU2Nzg5MA=='))
-      logGas("reset custom", await ogContract.resetCustom.estimateGas(1))
-      logGas("set trusted contracts", await ogContract.setTrustedogContractAddresses.estimateGas('0xc256A0467EcCce3391a0c1c02bD8151337196482', '0xEc7CaAe7738a5B64e98Dc9FF3566D2ca2503aE21'))
+      logGas("set trusted contracts", await ogContract.setTrustedContractAddresses.estimateGas('0xc256A0467EcCce3391a0c1c02bD8151337196482', '0xEc7CaAe7738a5B64e98Dc9FF3566D2ca2503aE21'))
     })
   })
 
@@ -47,7 +46,7 @@ contract('Gas estimates', (accounts) => {
       await ogColorContract.mint('back', '#FFFFFF');
 
       logGas("mint", await ogColorContract.mint.estimateGas('back', '#FFFFFF'))
-      logGas("transfer", await ogColorContract.transferFrom.estimateGas(accounts[0], accounts[1], 1))
+      logGas("transfer", await ogColorContract.transferFrom.estimateGas(accounts[0], accounts[1], 0))
     })
   })
 })

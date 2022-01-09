@@ -38,6 +38,22 @@ library Customizer {
                 "<linearGradient id='digit'><stop stop-color='#000000'/></linearGradient>",
                 "<linearGradient id='slug'><stop stop-color='#FFFFFF'/></linearGradient>");
     }
+
+    function getColorAttributes(IERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory) {
+
+        address ownerOfToken = safeOwnerOf(callingContract, tokenId);
+        if (ownerOfToken != address(0)) {
+            if (ogColorContractAddress != address(0)) {
+                OGColorInterface ogColorContract = OGColorInterface(ogColorContractAddress);
+                try ogColorContract.getOgAttributes(ownerOfToken, tokenId) returns (string memory extAttributes) {
+                    return extAttributes;
+                }
+                catch { }
+            }
+        }
+        
+        return "";
+    }
     
     function getOwnedSupportedCollection(IERC721 callingContract, address gotTokenContractAddress, address[] memory supportedCollections, uint256 tokenId) external view returns (address) {
         

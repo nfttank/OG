@@ -1,5 +1,4 @@
 const { assert } = require('chai')
-
 const OGColor = artifacts.require('./contracts/OGColor.sol')
 
 require('chai')
@@ -217,5 +216,57 @@ contract('OGColor', (accounts) => {
 
       expect(result[0]).to.include('#AAAAA2')
     })
+  })
+
+  it('has attributes', async () => {
+
+    const testAddress = accounts[9];
+
+    // mint four tokens
+    const result1 = await contract.mint('back', '#aaaaaa', {from: testAddress}) 
+    const result2 = await contract.mint('frame', '#bbbbbb', {from: testAddress}) 
+    const result3 = await contract.mint('digit', '#cccccc', {from: testAddress}) 
+    const result4 = await contract.mint('slug', '#dddddd', {from: testAddress}) 
+    
+    // determine the tokenIds
+    const tokenId1 = result1.logs[0].args.tokenId
+    const tokenId2 = result2.logs[0].args.tokenId
+    const tokenId3 = result3.logs[0].args.tokenId
+    const tokenId4 = result4.logs[0].args.tokenId
+
+    // sell some tokens
+    const meta1 = await contract.tokenURI(tokenId1.toNumber())
+    const meta2 = await contract.tokenURI(tokenId2.toNumber())
+    const meta3 = await contract.tokenURI(tokenId3.toNumber())
+    const meta4 = await contract.tokenURI(tokenId4.toNumber())
+
+    expect(Buffer.from(meta1.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "back"')
+    expect(Buffer.from(meta2.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "frame"')
+    expect(Buffer.from(meta3.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "digit"')
+    expect(Buffer.from(meta4.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "slug"')
+  })
+
+  it('has secret color attributes', async () => {
+
+    const testAddress = accounts[9];
+
+    // mint four tokens
+    const result1 = await contract.mint('back', '#c8fbfb', {from: testAddress}) 
+    const result2 = await contract.mint('frame', '#7da269', {from: testAddress}) 
+    const result3 = await contract.mint('digit', '#856f56', {from: testAddress}) 
+    
+    // determine the tokenIds
+    const tokenId1 = result1.logs[0].args.tokenId
+    const tokenId2 = result2.logs[0].args.tokenId
+    const tokenId3 = result3.logs[0].args.tokenId
+
+    // sell some tokens
+    const meta1 = await contract.tokenURI(tokenId1.toNumber())
+    const meta2 = await contract.tokenURI(tokenId2.toNumber())
+    const meta3 = await contract.tokenURI(tokenId3.toNumber())
+
+    expect(Buffer.from(meta1.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Alien')
+    expect(Buffer.from(meta2.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Zombie')
+    expect(Buffer.from(meta3.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Ape')
   })
 })
