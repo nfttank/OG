@@ -101,7 +101,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
         string[8] memory parts;
 
-        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000' viewBox='0 0 1000 1000'>";
+        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1000' height='1000' viewBox='0 0 1000 1000'>";
         
         // OGColor delivers whole definitions like <linearGradient id='back'><stop stop-color='#FFAAFF'/></linearGradient>
         parts[1] = string(abi.encodePacked("<defs>", back, frame, digit, slug, "</defs>"));
