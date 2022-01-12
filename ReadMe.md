@@ -1,7 +1,3 @@
-TODO
-* getogattributes DOES NMOT WOTK YET because colors are returned in this way:  <linearGradient id='slug'><stop stop-color='#7da269'/></linearGradient>
-* gradients not per number but globally?
-
 # OG by Tank
 
 This repository contains the contracts and the minting website for OG NFT.
