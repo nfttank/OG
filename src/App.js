@@ -20,6 +20,9 @@ class App extends Component {
       connected: false,
       soldOut: false,
       signerAddress: '',
+      provider: null,
+      signer: null,
+      stateChangingSigner: null,
       contract: null,
       balance: 0,
       totalSupply: 0,
@@ -154,9 +157,15 @@ class App extends Component {
     if (canMint) {
       const seed = new Date().getMilliseconds()
       const suggested = await app.state.contract.suggestFreeIds(count, seed)
-      //await app.state.contract.methods.mint(suggested).send({ from: app.state.signerAddress })
 
-      //await app.loadTokens()
+      if (app.state.stateChangingSigner === null)
+      {
+        app.setState({ stateChangingSigner: app.state.contract.connect(app.state.signer)});
+      }
+
+      await app.state.stateChangingSigner.mint(suggested)
+
+      // TODO refresh
     }
   }
 
