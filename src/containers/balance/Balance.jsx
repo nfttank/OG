@@ -20,7 +20,7 @@ const Balance = (props) => (
     <div className="og__balance-container">
     {
       props.data.ownedOgs.map((og) => {
-      return (<OgImg key={og.id} data={{storeUrl: props.data.storeUrl, id: og.id, svg: og.svg, useLink: true}} />)
+      return (<OgImg key={og.id} data={{storeUrl: props.data.looksRareUrl, id: og.id, svg: og.svg, useLink: true}} />)
     })}
     </div>
   </div>

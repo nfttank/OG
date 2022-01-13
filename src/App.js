@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import './App.css'
@@ -34,7 +34,8 @@ class App extends Component {
       discordUrl: 'https://discord.com/invite/kTvaHARW',
       tankTwitterUrl: 'https://twitter.com/nfttank',
       contractUrl: '',
-      storeUrl: '',
+      openSeaUrl: '',
+      looksRareUrl: '',
       ownedOgs: [],
     }
   }
@@ -43,18 +44,20 @@ class App extends Component {
 
     const networkId = this.state.network.id
     const networkName = this.state.network.name
-    const networkAddress = OG.networks[networkId].address
+    const contractAddress = OG.networks[networkId].address
 
     this.setState({ mintFunction: () => this.mintRandom(this) })
     this.setState({ connectFunction: () => this.connect(this.state.network) })
 
     if (networkId === 1) {
-      this.setState({ contractUrl: "https://etherscan.io/address/" + networkAddress })
-      this.setState({ storeUrl: "https://opensea.io/assets/" + networkAddress })
+      this.setState({ contractUrl: "https://etherscan.io/address/" + contractAddress })
+      this.setState({ openSeaUrl: "https://opensea.io/assets/" + contractAddress })
+      this.setState({ looksRareUrl: "https://looksrare.org/collections/" + contractAddress })
     }
     else {
-      this.setState({ contractUrl: "https://" + networkName + ".etherscan.io/address/" + networkAddress })
-      this.setState({ storeUrl: "https://testnets.opensea.io/assets/" + networkAddress })
+      this.setState({ contractUrl: "https://" + networkName + ".etherscan.io/address/" + contractAddress })
+      this.setState({ openSeaUrl: "https://testnets.opensea.io/assets/" + contractAddress })
+      this.setState({ looksRareUrl: "https://looksrare.org/collections/" + contractAddress })
     }
   }
 
@@ -97,7 +100,7 @@ class App extends Component {
 
     const totalSupply = await this.state.contract.totalSupply()
     this.setState({ totalSupply: totalSupply })
-    this.setState({ soldOut: totalSupply >= 10000})
+    this.setState({ soldOut: true || totalSupply >= 10000})
 
     this.setState({ walletLoaded: true })
     
@@ -127,11 +130,10 @@ class App extends Component {
     
     let count = this.state.maxPerWallet - balance;
 
-    if (count < 0) {
+    if (count < 0)
       return 0
-    } else if (count > 5) {
+    else if (count > 5)
       return 5
-    }
 
     const totalSupply = await this.state.contract.totalSupply()
     const available = 10000 - totalSupply
@@ -159,9 +161,7 @@ class App extends Component {
       const suggested = await app.state.contract.suggestFreeIds(count, seed)
 
       if (app.state.stateChangingSigner === null)
-      {
-        app.setState({ stateChangingSigner: app.state.contract.connect(app.state.signer)});
-      }
+        app.setState({ stateChangingSigner: app.state.contract.connect(app.state.signer)})
 
       await app.state.stateChangingSigner.mint(suggested)
 

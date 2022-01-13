@@ -29,7 +29,6 @@
     "truffle": "5.0.5",
     "truffle-flattener": "^1.4.2",
     "truffle-hdwallet-provider": "^1.0.17",
-    "web3": "1.0.0-beta.55",
     "web3modal": "^1.9.5",
     "yarn": "^1.22.17"
   },
