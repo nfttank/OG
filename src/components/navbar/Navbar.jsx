@@ -11,11 +11,11 @@ const Navbar = (props) => {
         </div>
       </div>
       <div className="og__navbar-sign">
-        {   props.data.account === '' &&
-                <button >Not connected</button>
+        {   props.data.connected === false &&
+                <button onClick={props.data.connectFunction}>Connect</button>
         }
-        {   props.data.account !== '' &&
-                <button>{props.data.account}</button>
+        {   props.data.connected === true &&
+                <button>{props.data.signerAddress}</button>
         }
         <a href={props.data.storeUrl} target="_blank" rel="noopener noreferrer">OpenSea</a>
         <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer">Twitter</a>
