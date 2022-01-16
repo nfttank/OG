@@ -17,10 +17,10 @@ const Navbar = (props) => {
         {   props.data.connected === true &&
                 <button>{props.data.signerAddress}</button>
         }
+        <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer">Twitter</a>
         <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer">LooksRare</a>
         <a href={props.data.openSeaUrl} target="_blank" rel="noopener noreferrer">OpenSea</a>
-        <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer">Twitter</a>
-        <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer">Discord</a>
         <a href={props.data.contractUrl} target="_blank" rel="noopener noreferrer">Contract</a>
       </div>
     </div>

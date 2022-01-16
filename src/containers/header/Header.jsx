@@ -23,18 +23,22 @@ const Header = (props) => (
             props.data.soldOut
             ? "Sold out 🥳"
             : (
-              props.data.walletLoaded ? 
-              (
-                props.data.remainingMintsForWallet === 0 
-                  ? "Wallet limit of " + props.data.maxPerWallet + " reached."
-                  : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet === 1 ? "" : "s") + " (" + (10000 - props.data.totalSupply).toString() + " left)"
+                props.data.walletLoaded ? 
+                (
+                  props.data.remainingMintsForWallet === 0 
+                    ? "Wallet limit of " + props.data.maxPerWallet + " reached."
+                    : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet === 1 ? "" : "s")
+                )
+                : "Mint OG"
               )
-              : "Mint OG"
-            )
           }
         </button>
       </div>
-      <p className="smalltext">Minting is limited to {props.data.maxPerWallet} per wallet.<br/>You can choose custom numbers too, check our Discord.</p>
+      <p className="smalltext">Minting is limited to {props.data.maxPerWallet} per wallet. {
+        props.data.walletLoaded
+        ? <span className="gradient__text"><b>{(10000 - props.data.totalSupply).toString()} left.</b></span>
+        : ""
+      }<br/>You can choose custom numbers too, check our Discord.</p>
     </div>
     <div className="og__header-image">
       <OgImg data={{storeUrl: props.data.looksRareUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg, useLink: props.data.featuredOgExists}} />

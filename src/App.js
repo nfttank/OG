@@ -6,6 +6,7 @@ import OG from './abis/OG.json'
 import { Footer, Balance, Header, Rules } from './containers';
 import {  Navbar } from './components';
 import './App.css';
+import OG1 from './assets/OG1.svg';
 
 class App extends Component {
 
@@ -41,6 +42,14 @@ class App extends Component {
   }
 
   async componentWillMount() {
+
+    const svg = await (await fetch(OG1)).text()
+    this.setState({ featuredOg: { id: 1, svg: svg }})
+    
+    if (!window.ethereum) {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask.')
+      return
+    }
 
     const networkId = this.state.network.id
     const networkName = this.state.network.name
@@ -78,7 +87,6 @@ class App extends Component {
     const provider = new ethers.providers.Web3Provider(instance);
     const signer = provider.getSigner();
     
-    // The Contract object
     const contract = new ethers.Contract(OG.networks[this.state.network.id].address, OG.abi, provider);
 
     this.setState({ provider: provider })
@@ -100,13 +108,14 @@ class App extends Component {
 
     const totalSupply = await this.state.contract.totalSupply()
     this.setState({ totalSupply: totalSupply })
-    this.setState({ soldOut: true || totalSupply >= 10000})
+    this.setState({ soldOut: totalSupply >= 10000})
 
     this.setState({ walletLoaded: true })
     
     const randomId = Math.floor(Math.random() * 10000)
     const featuredSvg = await this.state.contract.renderSvg(randomId)
     this.setState({ featuredOg: { id: randomId, svg: featuredSvg }})
+    console.log(this.state.featuredOg)
     
     // ownerOf might crash and abort the methods execution
     try {
