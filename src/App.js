@@ -3,10 +3,10 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import './App.css'
 import OG from './abis/OG.json'
+import OG1 from './assets/OG1.svg';
 import { Footer, Balance, Header, Rules } from './containers';
 import {  Navbar } from './components';
 import './App.css';
-import OG1 from './assets/OG1.svg';
 
 class App extends Component {
 
@@ -128,7 +128,7 @@ class App extends Component {
     for (var i = 0; i < balance; i++) {
       const ogId = await this.state.contract.tokenOfOwnerByIndex(this.state.signerAddress, i)
       const ogSvg = await this.state.contract.renderSvg(ogId)
-
+      
       this.setState({ ownedOgs: this.state.ownedOgs.concat({id: ogId, svg: ogSvg})})
     }
   }

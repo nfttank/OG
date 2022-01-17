@@ -8,14 +8,14 @@ const Header = (props) => (
       <h1 className="gradient__text">OG by Tank</h1>
       <p>
         We are punks. We are apes. We are cats, dogs, wolfs, toads and even fucking pickles.<br/>
-        We are kidding around but we are the future of web3 and decentralization.<br/>
+        We think we are just fooling around but we are already shaping the future of the internet.<br/>
       </p>
       <p> And yet we fight each other.</p>
       <p>
         Whatever profile picture we are hiding behind:<br/>
         In the end, it's a number that identifies us on the blockchain, no matter in which collection.<br/>
       </p>
-      <p className="gradient__text">We are one big community and OG is a big, fat <b>thank you</b> for being a number with me.</p>
+      <p className="gradient__text"><b>We are one big community and OG is a big, fat thank you for being a number with me.</b></p>
       <p></p>
       <div className="og__header-content__input">
         <button onClick={props.data.mintFunction} type="button">

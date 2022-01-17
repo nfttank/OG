@@ -15,13 +15,13 @@ const Navbar = (props) => {
                 <button onClick={props.data.connectFunction}>Connect</button>
         }
         {   props.data.connected === true &&
-                <button>{props.data.signerAddress}</button>
+                <button>{props.data.signerAddress.substring(0, 7)}...{props.data.signerAddress.substring(props.data.signerAddress.length-7)}</button>
         }
-        <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer">Twitter</a>
-        <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer">LooksRare</a>
-        <a href={props.data.openSeaUrl} target="_blank" rel="noopener noreferrer">OpenSea</a>
-        <a href={props.data.contractUrl} target="_blank" rel="noopener noreferrer">Contract</a>
+        <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer" title="Discord">D</a>
+        <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer" title="Twitter">T</a>
+        <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer" title="LooksRare">L</a>
+        <a href={props.data.openSeaUrl} target="_blank" rel="noopener noreferrer" title="OpenSea">O</a>
+        <a href={props.data.contractUrl} target="_blank" rel="noopener noreferrer" title="Contract on Etherscan">E</a>
       </div>
     </div>
   );

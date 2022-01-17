@@ -1,9 +1,14 @@
+@font-face {
+    font-family: 'logofont';
+    src: local('logofont'), url(../../assets/logos/logos.woff) format('woff');
+  }
+
 .og__navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 2rem 6rem;
+    padding: 4rem 25%;
 }
 
 .og__navbar-links {
@@ -32,14 +37,13 @@
 .og__navbar-sign a,
 .og__navbar-menu_container a {
     color: #fff;
-    font-family: var(--font-family);
+    font-family: logofont;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 28px;
     line-height: 25px;
-    text-transform: capitalize;
-
     margin: 0 1rem;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .og__navbar-sign button,
@@ -103,15 +107,21 @@
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 2000px) {
     .og__navbar {
-        padding: 2rem 4rem;
+      padding: 4rem 15%;
+    }
+  }
+
+@media screen and (max-width: 1600px) {
+    .og__navbar {
+        padding: 4rem 10%;
     }
 }
 
 @media screen and (max-width: 550px) {
     .og__navbar {
-        padding: 2rem;
+        padding: 4rem 2rem;
     }
 
     .og__navbar-sign {
@@ -124,5 +134,7 @@
 
     .og__navbar-menu_container-links-sign {
         display: block;
-    }
+    } 
 }
+
+

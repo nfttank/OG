@@ -118,12 +118,3 @@
 
 
 }
-
-@media screen and (min-width: 1500px) {
-
-    /* make the text part wider to prevent the freatured OG from getting to prominent */
-    .og__header-content {
-        flex: 2;
-    }
-    
-}
