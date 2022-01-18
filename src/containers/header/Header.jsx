@@ -41,7 +41,7 @@ const Header = (props) => (
       }<br/>You can choose custom numbers too, check our Discord.</p>
     </div>
     <div className="og__header-image">
-      <OgImg data={{storeUrl: props.data.looksRareUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg, useLink: props.data.featuredOgExists}} />
+      <OgImg data={{storeUrl: props.data.storeUrl, id: props.data.featuredOg.id, svg: props.data.featuredOg.svg, useLink: props.data.featuredOgExists}} />
     </div>
   </div>
 );

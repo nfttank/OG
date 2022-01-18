@@ -35,6 +35,7 @@ class App extends Component {
       discordUrl: 'https://discord.com/invite/kTvaHARW',
       tankTwitterUrl: 'https://twitter.com/nfttank',
       contractUrl: '',
+      storeUrl: '',
       openSeaUrl: '',
       looksRareUrl: '',
       ownedOgs: [],
@@ -68,6 +69,8 @@ class App extends Component {
       this.setState({ openSeaUrl: "https://testnets.opensea.io/assets/" + contractAddress })
       this.setState({ looksRareUrl: "https://looksrare.org/collections/" + contractAddress })
     }
+
+    this.setState({ storeUrl: networkId === 1 ? this.state.looksRareUrl : this.state.openSeaUrl }) 
   }
 
   async connect(network) {
