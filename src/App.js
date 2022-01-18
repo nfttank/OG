@@ -4,7 +4,7 @@ import Web3Modal from "web3modal";
 import './App.css'
 import OG from './abis/OG.json'
 import OG1 from './assets/OG1.svg';
-import { Footer, Balance, Header, Rules } from './containers';
+import { Footer, Balance, Header, Rules, Faq } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -189,6 +189,7 @@ class App extends Component {
           {   this.state.connected &&
                 <Balance data={this.state} />
           }
+          <Faq />
           <Footer data={this.state} />
         </div>
     );

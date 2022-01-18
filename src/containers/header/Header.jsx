@@ -7,15 +7,15 @@ const Header = (props) => (
     <div className="og__header-content">
       <h1 className="gradient__text">OG by Tank</h1>
       <p>
-        We are punks. We are apes. We are cats, dogs, wolfs, toads and even fucking pickles.<br/>
-        We think we are just fooling around but we are already shaping the future of the internet.<br/>
+        We are punks. We are apes. We are cats, dogs, toads and even fucking pickles.<br/>
+        We are just fooling around but we are already shaping the future of the internet.
       </p>
-      <p> And yet we fight each other.</p>
       <p>
-        Whatever profile picture we are hiding behind:<br/>
-        In the end, it's a number that identifies us on the blockchain, no matter in which collection.<br/>
+        Whatever profile picture we are spinning up:<br/>
+        In the end, it's a number that identifies us within the collection we are most proud of.<br/>
       </p>
-      <p className="gradient__text"><b>We are one big community and OG is a big, fat thank you for being a number with me.</b></p>
+      <p>But we are more than different collections competing with each other.</p>
+      <p className="gradient__text"><b>We are one big community and OG is a big fat *thank you* for being a number with me.</b></p>
       <p></p>
       <div className="og__header-content__input">
         <button onClick={props.data.mintFunction} type="button">
@@ -34,7 +34,7 @@ const Header = (props) => (
           }
         </button>
       </div>
-      <p className="smalltext">Minting is limited to {props.data.maxPerWallet} per wallet. {
+      <p className="smalltext">Mints are free but limited to {props.data.maxPerWallet} per wallet. {
         props.data.walletLoaded
         ? <span className="gradient__text"><b>{(10000 - props.data.totalSupply).toString()} left.</b></span>
         : ""
