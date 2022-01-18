@@ -37,6 +37,7 @@ class App extends Component {
       contractUrl: '',
       storeUrl: '',
       openSeaUrl: '',
+      openSeaStorefrontUrl: 'https://testnets.opensea.io/collection/og-rc1',
       looksRareUrl: '',
       ownedOgs: [],
     }
