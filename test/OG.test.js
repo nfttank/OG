@@ -161,6 +161,7 @@ contract('OG', (accounts) => {
     })
   })
 
+  /*
   describe('*** dump ***', async () => {
     it('dumps', async () => {
 
@@ -177,5 +178,5 @@ contract('OG', (accounts) => {
       }
     })
   })
-
+  */
 })
