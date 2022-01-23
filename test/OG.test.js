@@ -161,18 +161,21 @@ contract('OG', (accounts) => {
     })
   })
 
-  /*
   describe('*** dump ***', async () => {
     it('dumps', async () => {
 
       const fs = require('fs')
-        
+
       for (let i = 1; i < 10000; i+=8) {
-        const svg = await contract.renderSvg(i)
-        fs.writeFile('C:\\temp\\OG\\' + i + '.svg', svg, (err) => {})
+        try {
+          const svg = await contract.renderSvg(i)
+          fs.writeFile('C:\\temp\\OG\\' + i + '.svg', svg, (err) => {})
+        } catch (err) { 
+          // because we used a fake contract address for GotToken, already minted
+          // OGs cannot be rendered in the tests here. Just skip them when dumping.
+         }
       }
     })
   })
- */
 
 })
