@@ -46143,11 +46143,11 @@
         }
       },
       "links": {
-        "Digits": "0xA2f2363abc22C988E4599D7371344A8b4C64f1a1",
-        "Customizer": "0xF942228F2c5d4Dc267C598423B145F645435874E"
+        "Digits": "0xc9250492d1Ba4B727D47cc88b952929Cd344369F",
+        "Customizer": "0x4f8037645119c026e449C63762A3e39401D0DEEE"
       },
-      "address": "0xF7F6D6d12b130BC3aB3F16CDed0e1f5828D923c2",
-      "transactionHash": "0x1770f964aa67f833b9cec1fbdd8eccf5018853602a190b825be3decd69bc66a8"
+      "address": "0x5683bC04CcE4F64a1238Ba3f341322a719194850",
+      "transactionHash": "0x7dbb731553be35f74bcd47fd5691c223247f89d01135b7b83e471c9c5575f7db"
     },
     "5777": {
       "events": {
@@ -46256,7 +46256,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-24T22:52:45.806Z",
+  "updatedAt": "2022-01-24T23:43:11.157Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "nfttank.eth",
