@@ -134,10 +134,10 @@ library Digits {
                 }
             } else if (numberDigitCount == 3) {
                 if (currentIndex == 1 || currentIndex == 2) {
-                    x += 8;
+                    x += 7;
                 }
             } else if (numberDigitCount == 4) {
-                x += 10;
+                x += 8;
             }
         }
     }
