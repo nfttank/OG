@@ -3,7 +3,7 @@
 This repository contains the contracts and the minting website for OG NFT.
 
 ## Checks
-* limit onlyOwner methods like `addSupportedCollection()`, `setSupportedCollectionSlug()`, `setTrustedContractAddresses()`, & `getTrustedContractAddress()`, `setOgDozen()`, `setPaused()`
+* limit onlyOwner methods like `addSupportedCollection()`, `setSupportedCollectionSlug()`, `setTrustedContractAddresses()`, & `getTrustedContractAddress()`, `setUnlockSupply()`, `setPaused()`
 * set `setTrustedContractAddresses()` with the correct contract addresses for the corresponding net (Mainnet, etc.)
 
 ## Add or update supported collections

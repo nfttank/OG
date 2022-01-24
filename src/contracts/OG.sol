@@ -44,33 +44,22 @@ contract OG is HumbleERC721Enumerable, Ownable {
     mapping(address => string) private _supportedSlugs;
     mapping(string => address) private _trustedContracts;
     address[] private _supportedCollections;
-    address[] private _ogDozen;
     bool private _paused;
-    uint16 private _dozenUnlockMinSupply;
+    uint16 private _unlockSupply;
 
     constructor() ERC721("OG", "OG") Ownable() {
         _trustedContracts["gottoken"] = address(0);
         _trustedContracts["ogcolor"] = address(0);
         _paused = true;
+        _unlockSupply = 5000;
     }
 
     function setPaused(bool paused) external onlyOwner {
         _paused = paused;
     }
 
-    function setOgDozen(address[] calldata ogDozen, uint16 dozenUnlockMinSupply) external onlyOwner {
-         _ogDozen = ogDozen;
-         _dozenUnlockMinSupply = dozenUnlockMinSupply;
-    }
-
-    function isOgDozen(address a) public view returns (bool) {
-        for (uint16 i = 0; i < _ogDozen.length; i++) {
-            if (a == _ogDozen[i]) {
-                return true;
-            }
-        }
-
-        return false;
+    function setUnlockSupply(uint16 unlockSupply) external onlyOwner {
+         _unlockSupply = unlockSupply;
     }
 
     function addSupportedCollection(address contractAddress) external onlyOwner {
@@ -137,16 +126,16 @@ contract OG is HumbleERC721Enumerable, Ownable {
     }
 
     function mint(uint256[] calldata tokenIds) public {
+        require(!_paused, "Minting is paused");
 
         address sender = _msgSender();
-        uint256 senderBalance = balanceOf(sender);
-
-        require(!_paused, "Minting is paused");
-        require(senderBalance + tokenIds.length <= 10, "Minting is limited to max. 10 per wallet");
+        
+        if (sender != owner())
+            require(balanceOf(sender) + tokenIds.length <= 10, "Minting is limited to max. 10 per wallet");
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
             require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, "Token Id invalid");
-            require(canMint(sender, tokenIds[i]), "Can't mint token yet");
+            require(canMint(tokenIds[i]), "Can't mint token yet");
         }
 
         for (uint16 i = 0; i < tokenIds.length; i++) {
@@ -154,13 +143,13 @@ contract OG is HumbleERC721Enumerable, Ownable {
         }
     }
 
-    function canMint(address sender, uint256 tokenId) public view returns (bool) {
+    function canMint(uint256 tokenId) public view returns (bool) {
 
         if (tokenId > 12) {
             return true;
         }
         else if (tokenId <= 12 && tokenId > 1) {
-            return totalSupply() >= _dozenUnlockMinSupply && isOgDozen(sender);
+            return totalSupply() >= _unlockSupply;
         } else if (tokenId == 1) {
             return  _exists(2) &&
                     _exists(3) &&
@@ -172,8 +161,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
                     _exists(9) &&
                     _exists(10) &&
                     _exists(11) &&
-                    _exists(12) &&
-                    isOgDozen(sender);
+                    _exists(12);
         } else {
             return _exists(1);
         }

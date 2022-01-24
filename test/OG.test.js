@@ -47,98 +47,65 @@ contract('OG', (accounts) => {
     })
   })
 
-  describe('og dozen', async () => {
-    it('determines correctly', async () => {
-      const dozenUnlockMinSupply = 100
-      await contract.setOgDozen([accounts[5]], dozenUnlockMinSupply)
-      let value = await contract.isOgDozen(accounts[5])
-      value.should.equal(true)
-      value = await contract.isOgDozen(accounts[4])
-      value.should.equal(false)
-
-    })
-
-    it('determines after reset', async () => {
-      const dozenUnlockMinSupply = 100
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
-      let value = await contract.isOgDozen(accounts[5])
-      value.should.equal(false)
-      value = await contract.isOgDozen(accounts[4])
-      value.should.equal(true)
-      value = await contract.isOgDozen(accounts[6])
-      value.should.equal(true)
-      value = await contract.isOgDozen(accounts[7])
-      value.should.equal(true)
-    })
-  })
-
   describe('canMint', async () => {
-    it('keeps non-dozens out', async () => {
-      const dozenUnlockMinSupply = 0
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
-      let value = await contract.canMint(accounts[1], 500)
+    it('cant mint 2-12 when unlock supply is not reached', async () => {
+
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply + 1)
+
+      let value = await contract.canMint(500)
       value.should.equal(true)
-      value = await contract.canMint(accounts[1], 13)
+      value = await contract.canMint(13)
       value.should.equal(true)
-      value = await contract.canMint(accounts[1], 12)
+      value = await contract.canMint(12)
       value.should.equal(false)
-      value = await contract.canMint(accounts[1], 11)
+      value = await contract.canMint(11)
       value.should.equal(false)
     })
 
-    it('allows dozens', async () => {
-      const dozenUnlockMinSupply = 0
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
-      let value = await contract.canMint(accounts[4], 500)
+    it('can mint 2-12 when unlock supply is reached', async () => {
+      
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply)
+      
+      let value = await contract.canMint(500)
       value.should.equal(true)
-      value = await contract.canMint(accounts[4], 13)
+      value = await contract.canMint(13)
       value.should.equal(true)
-      value = await contract.canMint(accounts[4], 12)
+      value = await contract.canMint(12)
       value.should.equal(true)
-      value = await contract.canMint(accounts[4], 11)
+      value = await contract.canMint(11)
       value.should.equal(true)
-      value = await contract.canMint(accounts[4], 1)
+      value = await contract.canMint(1)
       value.should.equal(false) // requires 2-12 to be minted
     })
 
-    it('requires unlock of min supply', async () => {
-
-      const dozenUnlockMinSupply = await contract.totalSupply()
-
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
-      let value = await contract.canMint(accounts[4], 2)
-      value.should.equal(true)
-      
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply + 1)
-      value = await contract.canMint(accounts[4], 2)
-      value.should.equal(false)
-    })
-
-    it('allows minting of 1', async () => {
-      const dozenUnlockMinSupply = 0
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
+    it('can mint 1 if 2-12 is minted', async () => {
+     
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply)
 
       await contract.mint([2, 3, 4, 5], {from: accounts[4]});
       await contract.mint([6, 7, 8, 9], {from: accounts[6]});
       await contract.mint([10, 11, 12], {from: accounts[7]});
 
-      let value = await contract.canMint(accounts[4], 1)
+      let value = await contract.canMint(1)
       value.should.equal(true) // requires 2-12 to be minted
 
-      value = await contract.canMint(accounts[4], 0)
+      value = await contract.canMint(0)
       value.should.equal(false) // requires 1 to be minted
     })
 
-    it('allows minting of 0', async () => {
-      const dozenUnlockMinSupply = 0
-      await contract.setOgDozen([accounts[4], accounts[6], accounts[7]], dozenUnlockMinSupply)
+    it('can mint 0 if 1 is minted', async () => {
+     
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply)
 
       await contract.mint([1], {from: accounts[7]});
-      const value = await contract.canMint(accounts[4], 0)
+      const value = await contract.canMint(0)
       value.should.equal(true)
     })
   })
-
 
   describe('suggestFreeIds', async () => {
     it('returns free ids', async () => {
@@ -155,7 +122,7 @@ contract('OG', (accounts) => {
       freeIds.length.should.equal(10)
       
       for (let i = 0; i < freeIds.length; i++) {
-        let canMint = await contract.canMint(accounts[0], freeIds[i])
+        let canMint = await contract.canMint(freeIds[i])
         canMint.should.equal(true)
       }
     })

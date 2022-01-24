@@ -1,5 +1,4 @@
 import React from 'react';
-import ogdozen from '../../assets/ogdozen.png';
 import './rules.css';
 
 const Rules = (props) => (
@@ -13,13 +12,13 @@ const Rules = (props) => (
     </div>
     <div className="og__rules-content">
       <h2 className="gradient__text">OG dozen</h2>
-      <p>The numbers <b>1</b> to <b>12</b> are reserved for what we call the "OG dozen".<br/>
-      We start with the 12 holders of the largest CryptoPunk sales. But we as a community can vote others in.</p>
-      <img alt='The top 12 CryptoPunk sales' src={ogdozen} />
-      <p>
-      <span className="gradient__text">But Tank, reserves suck!</span><br/>
-      Yes but you and every holder wins if this project gets attention from the accounts we all look up to.<br/>
-      </p>
+      <p>The numbers <span className="gradient__text"><b>1</b></span> to <span className="gradient__text"><b>12</b></span> are called the "OG dozen" and can be minted once 50% of all tokens are minted.</p>
+      <p>Once this limit is reached, the contract will automatically unlock the tokens <span className="gradient__text"><b>2-12</b></span>.<br/>
+      Be prepared and make sure you moved some OG tokens to another wallet so you can mint more.</p>
+      <p className="gradient__text"><b>What about token 1?</b></p>
+      <p>Needless to say <span className="gradient__text"><b>1</b></span> is the most special token.<br/>
+      It gets available to mint once the tokens <span className="gradient__text"><b>2-12</b></span> are minted.<br/><br/>
+      Timing is everything.</p>
     </div>
   </div>
 );

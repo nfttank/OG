@@ -109,7 +109,7 @@ library Customizer {
         // we tried so hard and got so far - but we did not find random free ids, so take free ones sequentially
         count = 0;
         // https://ethereum.stackexchange.com/questions/63653/why-i-cannot-loop-through-array-backwards-in-solidity/63654
-        for (uint256 id = maxValue; id > minValue; id--) {
+        for (uint256 id = maxValue; id >= 0; id--) {
             if (safeOwnerOf(callingContract, id) == address(0)) {
                 freeIds[count] = id - 1;
                 count++;
