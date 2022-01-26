@@ -68,6 +68,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
     function clearSupportedCollections() external onlyOwner {
          delete _supportedCollections;
+         delete _supportedSlugs;
     }
     
     function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) external onlyOwner {
