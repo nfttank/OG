@@ -15,7 +15,10 @@ class App extends Component {
     this.state = {
       network: { name: 'rinkeby', id: 4 },
       //network: { name: 'mainnet', id: 1 },
+      mintCountAdd: null,
+      mintCount: 5,
       mintFunction: null,
+      mintOgDozenFunction: null,
       connectFunction: null,
       remainingMintsForWallet: 0,
       connected: false,
@@ -57,7 +60,9 @@ class App extends Component {
     const networkName = this.state.network.name
     const contractAddress = OG.networks[networkId].address
 
-    this.setState({ mintFunction: () => this.mintRandom(this) })
+    this.setState({ mintCountAdd: (value) => this.mintCountAdd(value)})
+    this.setState({ mintFunction: () => this.mint(this, this.state.mintCount) })
+    this.setState({ mintOgDozenFunction: () => this.mint(this, 10) })
     this.setState({ connectFunction: () => this.connect(this.state.network) })
 
     if (networkId === 1) {
@@ -90,7 +95,7 @@ class App extends Component {
 
     const provider = new ethers.providers.Web3Provider(instance);
     const signer = provider.getSigner();
-    
+
     const contract = new ethers.Contract(OG.networks[this.state.network.id].address, OG.abi, provider);
 
     this.setState({ provider: provider })
@@ -101,6 +106,9 @@ class App extends Component {
 
     const remainingMints = await this.getRemainingMintsForWallet()
     this.setState({ remainingMintsForWallet: remainingMints })
+
+    if (this.state.mintCount > remainingMints)
+      this.setState({ mintCount: remainingMints })
 
     await this.loadTokens()
   }
@@ -123,8 +131,8 @@ class App extends Component {
     
     // ownerOf might crash and abort the methods execution
     try {
-      const owner = await this.state.contract.ownerOf(randomId)
-      this.setState({ featuredOgExists: owner !== '' })
+      const exists = await this.state.contract.exists(randomId)
+      this.setState({ featuredOgExists: exists })
     } catch {}
 
     this.setState({ ownedOgs: []})
@@ -145,8 +153,8 @@ class App extends Component {
 
     if (count < 0)
       return 0
-    else if (count > 5)
-      return 5
+    else if (count > 10)
+      return 10
 
     const totalSupply = await this.state.contract.totalSupply()
     const available = 10000 - totalSupply
@@ -156,31 +164,33 @@ class App extends Component {
     return count
   }
 
-  mintRandom = async(app) => {
-
+  async mint (app, count) {
 
     if (app.state.contract == null)
       await app.connect(app.state.network);
 
-    if (app.state.contract == null)
+    if (app.state.contract == null || app.state.remainingMintsForWallet <= 0)
       return;
 
-    const count = await app.getRemainingMintsForWallet()
-
-    const canMint = count > 0 && !app.state.soldOut
+    const canMint = count > 0 && count < 11 && !app.state.soldOut
 
     if (canMint) {
-      const seed = new Date().getMilliseconds()
-      const suggested = await app.state.contract.suggestFreeIds(count, seed)
 
-      if (app.state.stateChangingSigner === null)
+      if (app.state.stateChangingSigner == null)
         app.setState({ stateChangingSigner: app.state.contract.connect(app.state.signer)})
-
-      await app.state.stateChangingSigner.mint(suggested)
+      
+      await app.state.stateChangingSigner.mint(count)
 
       // TODO refresh
     }
   }
+
+
+  async mintCountAdd(value) {
+    let newCount =  this.state.mintCount + value
+    this.setState({mintCount: Math.max(this.state.remainingMintsForWallet, (Math.min(newCount, this.state.remainingMintsForWallet))) })
+  }
+
 
   render() {
     return (

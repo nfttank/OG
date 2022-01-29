@@ -1,8 +1,10 @@
 import React from 'react';
+import { injected } from 'web3modal';
 import { OgImg } from '../../components';
 import './header.css';
 
 const Header = (props) => (
+
   <div className="og__header section__padding" id="home">
     <div className="og__header-content">
       <h1 className="gradient__text">OG by Tank</h1>
@@ -18,6 +20,7 @@ const Header = (props) => (
       <p className="gradient__text"><b>We are one big community and OG is a big fat *thank you* for being a number with me.</b></p>
       <p></p>
       <div className="og__header-content__input">
+        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button className="og__header-content__input_plusminus" onClick={() => props.data.mintCountAdd(-5)} type="button">-</button> }
         <button onClick={props.data.mintFunction} type="button">
           {
             props.data.soldOut
@@ -27,12 +30,13 @@ const Header = (props) => (
                 (
                   props.data.remainingMintsForWallet === 0 
                     ? "Wallet limit of " + props.data.maxPerWallet + " reached."
-                    : "Mint " + props.data.remainingMintsForWallet.toString() + " random OG number" + (props.data.remainingMintsForWallet === 1 ? "" : "s")
+                    : "Mint " + props.data.mintCount.toString()
                 )
                 : "Mint OG"
               )
           }
         </button>
+        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button onClick={() => props.data.mintCountAdd(+5)} type="button">+</button> }
       </div>
       <p className="smalltext">Mints are free but limited to {props.data.maxPerWallet} per wallet. {
         props.data.walletLoaded

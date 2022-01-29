@@ -45,9 +45,9 @@
     margin-top: 0.5rem;
 }
 
+
+
 .og__header-content__input button {
-    flex: 0.6;
-    width: 100%;
     min-height: 50px;
     font-family: var(--font-family);
     font-weight: 400;
@@ -55,6 +55,7 @@
     line-height: 28px;
     background: var(--color-button);
     border: 2px solid var(--color-button);
+    margin: 2px;
     padding: 0 1rem;
     color: #fff;
     cursor: pointer;
@@ -62,7 +63,6 @@
 
     border-radius: 5px;
 }
-
 
 
 @media screen and (max-width: 1050px) {

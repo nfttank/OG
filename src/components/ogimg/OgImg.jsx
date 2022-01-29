@@ -15,8 +15,6 @@ const OgImg = (props) => {
 
   const link = props.data.useLink ? props.data.storeUrl + "/" + props.data.id : ""
 
-  console.log(">"+cleanSvg)
-
   return (
     <div className="og-image" >
       {
