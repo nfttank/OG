@@ -186,7 +186,7 @@ class App extends Component {
 
   async mintCountAdd(value) {
     let newCount =  this.state.mintCount + value
-    this.setState({mintCount: Math.max(this.state.remainingMintsForWallet, (Math.min(newCount, this.state.remainingMintsForWallet))) })
+    this.setState({mintCount: Math.max(Math.min(5, this.state.remainingMintsForWallet), (Math.min(newCount, this.state.remainingMintsForWallet))) })
   }
 
 
