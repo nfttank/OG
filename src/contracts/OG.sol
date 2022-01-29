@@ -46,6 +46,8 @@ contract OG is HumbleERC721Enumerable, Ownable {
     address[] private _supportedCollections;
     bool private _paused;
     uint16 private _unlockSupply;
+    uint256 private _currentId = 12; // increases, starting with 13
+    uint256 private _currentDozenId = 13; // decreases, starting with 12
 
     constructor() ERC721("OG", "OG") Ownable() {
         _trustedContracts["gottoken"] = address(0);
@@ -68,7 +70,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
     function clearSupportedCollections() external onlyOwner {
          delete _supportedCollections;
-         delete _supportedSlugs;
+         // delete _supportedSlugs; not required as they can be overwritten with setSupportedCollectionSlug and won't be used if not tracked in _supportedCollections
     }
     
     function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) external onlyOwner {
@@ -126,53 +128,46 @@ contract OG is HumbleERC721Enumerable, Ownable {
         return string(abi.encodePacked('data:application/json;base64,', json));
     }
 
-    function mint(uint256[] calldata tokenIds) public {
+    function mint(uint16 count) public {
+
         require(!_paused, "Minting is paused");
+        require(_currentId < 9999, "Maximum amount of sequential mints reached");
+
+        address sender = _msgSender();
+        
+        if (sender != owner()) {
+            require(count > 0 && count <= 10, "Minting is limited to max. 10 per wallet");
+            require(balanceOf(sender) + count <= 10, "Minting is limited to max. 10 per wallet");
+        }            
+
+        for (uint16 i = 0; i < count; i++) {
+            uint256 newId = ++_currentId;
+            if (newId <= 9999) {
+                _safeMint(sender, newId);
+            }
+        }
+    }
+
+    function mintOgDozen() public {
+
+        require(!_paused, "Minting is paused");
+        require(canMintOgDozen(), "Unlock supply has not yet been reached to mint OG dozen tokens.");
+
+        require(_currentDozenId > 0+1 && _currentDozenId <= 12+1, "No OG dozen tokens available anymore");
 
         address sender = _msgSender();
         
         if (sender != owner())
-            require(balanceOf(sender) + tokenIds.length <= 10, "Minting is limited to max. 10 per wallet");
+            require(balanceOf(sender) + 1 <= 10, "Minting is limited to max. 10 per wallet");
 
-        for (uint16 i = 0; i < tokenIds.length; i++) {
-            require(tokenIds[i] >= 0 && tokenIds[i] <= 9999, "Token Id invalid");
-            require(canMint(tokenIds[i]), "Can't mint token yet");
-        }
-
-        for (uint16 i = 0; i < tokenIds.length; i++) {
-            _safeMint(sender, tokenIds[i]);
-        }
-    }
-
-    function canMint(uint256 tokenId) public view returns (bool) {
-
-        if (tokenId > 12) {
-            return true;
-        }
-        else if (tokenId <= 12 && tokenId > 1) {
-            return totalSupply() >= _unlockSupply;
-        } else if (tokenId == 1) {
-            return  _exists(2) &&
-                    _exists(3) &&
-                    _exists(4) &&
-                    _exists(5) &&
-                    _exists(6) &&
-                    _exists(7) &&
-                    _exists(8) &&
-                    _exists(9) &&
-                    _exists(10) &&
-                    _exists(11) &&
-                    _exists(12);
-        } else {
-            return _exists(1);
-        }
-    }
-
-    function suggestFreeIds(uint16 desiredCount, uint256 seed) public view returns (uint256[] memory) {
-        return Customizer.suggestFreeIds(this, desiredCount, 13, 10000, seed);
+        _safeMint(sender, --_currentDozenId);
     }
 
     function exists(uint256 tokenId) external view returns (bool) {
         return _exists(tokenId);
+    }
+
+    function canMintOgDozen() public view returns (bool) {
+        return totalSupply() >= _unlockSupply;
     }
 }

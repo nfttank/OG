@@ -28,103 +28,79 @@ contract('OG', (accounts) => {
   describe('minting', async () => {
     it('is not possible when paused', async () => {
       await contract.setPaused(true)
-      await contract.mint([100]).should.be.rejected
+      await contract.mint(1).should.be.rejected
       await contract.setPaused(false)
     })
 
     it('is possible when not paused 1', async () => {
       await contract.setPaused(false)
-      const result = await contract.mint([100])
-      const tokenId = result.logs[0].args.tokenId
-      assert.equal(tokenId, 100)
+      const result = await contract.mint(1)
+      const tokenId = result.logs[0].args.tokenId.toNumber()
+      expect(tokenId).to.equal(13)
     })
 
-    it('is limited to 10', async () => {
+    it('is limited to 10 per wallet', async () => {
       const testAddress = accounts[8];
-      await contract.mint([101, 102, 103, 104, 105], {from: testAddress}).should.be.fulfilled
-      await contract.mint([106, 107, 108, 109, 110], {from: testAddress}).should.be.fulfilled
-      await contract.mint([111], {from: testAddress}).should.be.rejected
+      const ______ = await contract.mint(5, {from: testAddress}).should.be.fulfilled
+      const result = await contract.mint(5, {from: testAddress}).should.be.fulfilled
+      await contract.mint(1, {from: testAddress}).should.be.rejected
+
+      const lastTokenId = result.logs[result.logs.length-1].args.tokenId.toNumber()
+      expect(lastTokenId).to.equal(13+10)
+    })
+
+    it('owner can mint more than 10', async () => {
+      
+      const contractOwner = accounts[0];
+
+      // mint to 100
+      let result = await contract.mint(100-(13+10), {from: contractOwner}).should.be.fulfilled
+      let lastTokenId = result.logs[result.logs.length-1].args.tokenId.toNumber()
+      expect(lastTokenId).to.equal(100)
     })
   })
 
-  describe('canMint', async () => {
-    it('cant mint 2-12 when unlock supply is not reached', async () => {
+  describe('minting OG dozen', async () => {
 
+    it('is not possible below unlock supply', async () => {
       const totalSupply = await contract.totalSupply()
       await contract.setUnlockSupply(totalSupply + 1)
-
-      let value = await contract.canMint(500)
-      value.should.equal(true)
-      value = await contract.canMint(13)
-      value.should.equal(true)
-      value = await contract.canMint(12)
-      value.should.equal(false)
-      value = await contract.canMint(11)
-      value.should.equal(false)
+      await contract.mintOgDozen().should.be.rejected
     })
 
-    it('can mint 2-12 when unlock supply is reached', async () => {
-      
-      const totalSupply = await contract.totalSupply()
-      await contract.setUnlockSupply(totalSupply)
-      
-      let value = await contract.canMint(500)
-      value.should.equal(true)
-      value = await contract.canMint(13)
-      value.should.equal(true)
-      value = await contract.canMint(12)
-      value.should.equal(true)
-      value = await contract.canMint(11)
-      value.should.equal(true)
-      value = await contract.canMint(1)
-      value.should.equal(false) // requires 2-12 to be minted
-    })
-
-    it('can mint 1 if 2-12 is minted', async () => {
-     
+    it('is possible over unlock supply', async () => {
       const totalSupply = await contract.totalSupply()
       await contract.setUnlockSupply(totalSupply)
 
-      await contract.mint([2, 3, 4, 5], {from: accounts[4]});
-      await contract.mint([6, 7, 8, 9], {from: accounts[6]});
-      await contract.mint([10, 11, 12], {from: accounts[7]});
-
-      let value = await contract.canMint(1)
-      value.should.equal(true) // requires 2-12 to be minted
-
-      value = await contract.canMint(0)
-      value.should.equal(false) // requires 1 to be minted
-    })
-
-    it('can mint 0 if 1 is minted', async () => {
-     
-      const totalSupply = await contract.totalSupply()
-      await contract.setUnlockSupply(totalSupply)
-
-      await contract.mint([1], {from: accounts[7]});
-      const value = await contract.canMint(0)
-      value.should.equal(true)
+      for (let i = 12; i > 0; i--) { // 12 down to 1
+        console.log(i)
+        const result = await contract.mintOgDozen()
+        const tokenId = result.logs[0].args.tokenId.toNumber()
+        expect(tokenId).to.equal(i)
+      }
     })
   })
 
-  describe('suggestFreeIds', async () => {
-    it('returns free ids', async () => {
-      
-      const seed = 111;
-      
-      let freeIds = await contract.suggestFreeIds(1, seed)
-      freeIds.length.should.equal(1)
-      
-      freeIds = await contract.suggestFreeIds(5, seed)
-      freeIds.length.should.equal(5)
+  describe('canMintOgDozen', async () => {
+    it('is false below unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply + 1)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(false)
+    })
 
-      freeIds = await contract.suggestFreeIds(10, seed)
-      freeIds.length.should.equal(10)
-      
-      for (let i = 0; i < freeIds.length; i++) {
-        let canMint = await contract.canMint(freeIds[i])
-        canMint.should.equal(true)
-      }
+    it('is true at unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(true)
+    })
+
+    it('is true over unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply - 1)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(true)
     })
   })
 
