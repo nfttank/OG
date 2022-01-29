@@ -26,7 +26,6 @@ class App extends Component {
       signerAddress: '',
       provider: null,
       signer: null,
-      stateChangingSigner: null,
       contract: null,
       balance: 0,
       totalSupply: 0,
@@ -176,10 +175,9 @@ class App extends Component {
 
     if (canMint) {
 
-      if (app.state.stateChangingSigner == null)
-        app.setState({ stateChangingSigner: app.state.contract.connect(app.state.signer)})
+      const stateChangingSigner = app.state.contract.connect(app.state.signer);
       
-      await app.state.stateChangingSigner.mint(count)
+      await stateChangingSigner.mint(count)
 
       // TODO refresh
     }
