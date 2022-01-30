@@ -18,6 +18,9 @@ const Rules = (props) => (
       <h2 className="gradient__text">Is there some additional utility?</h2>
       <p>Same as above.</p>
 
+      <h2 className="gradient__text">Can I customize my OG tokens or do I have to live with black and white?</h2>
+      <p>Simplicity is key. But someone loves easter eggs.</p>
+
       <h2 className="gradient__text">Is there a rarity score?</h2>
       <p>Most people might think that token <span className="gradient__text"><b>1</b></span> should be superior to token <span className="gradient__text"><b>4227</b></span> but it's up to everyone.<br/>
       There's no rarity beside this except - you name it - memes.</p>
