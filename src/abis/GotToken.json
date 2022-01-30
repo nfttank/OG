@@ -8478,8 +8478,8 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0x9Bf000a8E2600F70f681f604CaB5508150f99562",
-      "transactionHash": "0x9961317520a5ccdc4d30c66386d1fed53cff4a411564eb234c813b51e310c760"
+      "address": "0x5543015b57fE42a4f8c8c46dC3369F2AfCF831Ef",
+      "transactionHash": "0x967549201cdba4f7822ff3d3ace1e2cd119efe901dbc38d34ba0d3958c4d95ab"
     },
     "5777": {
       "events": {},
@@ -8489,7 +8489,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-29T16:32:42.412Z",
+  "updatedAt": "2022-01-30T20:40:59.859Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "nfttank.eth",

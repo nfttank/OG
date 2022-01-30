@@ -38,6 +38,8 @@ import './ERC/HumbleERC721Enumerable.sol';
 /**
  * @title OG
  * @author nfttank.eth
+ * OG is a free NFT that I made to thank the whole NFT community for the amazing time and fun I had in the space so far.
+ * It represents 10000 unique numbers. It is a vector based, on-chain NFT that has been optimized for the lowest possible gas consumption.
  */
 contract OG is HumbleERC721Enumerable, Ownable {
 
@@ -73,7 +75,11 @@ contract OG is HumbleERC721Enumerable, Ownable {
          // delete _supportedSlugs; not required as they can be overwritten with setSupportedCollectionSlug and won't be used if not tracked in _supportedCollections
     }
     
-    function setSupportedCollectionSlug(address contractAddress, string calldata base64EncodedSvgSlug) external onlyOwner {
+    function setSupportedCollectionSlug(address contractAddress, string calldata svgSlug) external onlyOwner {
+        _supportedSlugs[contractAddress] = svgSlug;
+    }
+
+    function setSupportedCollectionSlugBase64(address contractAddress, string calldata base64EncodedSvgSlug) external onlyOwner {
         _supportedSlugs[contractAddress] = string(Base64.decode(base64EncodedSvgSlug));
     }
 
@@ -102,7 +108,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
         if (hasCollection)
             parts[3] = "<path id='path-0' d='M 504.28 105.614 C 804.145 105.541 991.639 430.111 841.768 689.836 C 691.898 949.563 317.067 949.655 167.072 690 C 26.805 447.185 181.324 140.169 459.907 108.16 Z' style='fill: none;'/>";
         else
-           parts[3] = "";
+            parts[3] = "";
             
         // don't apply colors on this string, this should be kept white
         parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#back)' mask='url(#_mask)' stroke-width='130' stroke='url(#frame)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));

@@ -18,6 +18,7 @@ class App extends Component {
       mintCountAdd: null,
       mintCount: 5,
       mintFunction: null,
+      canMintOgDozen: false,
       mintOgDozenFunction: null,
       connectFunction: null,
       remainingMintsForWallet: 0,
@@ -41,7 +42,7 @@ class App extends Component {
       openSeaUrl: '',
       openSeaStorefrontUrl: 'https://testnets.opensea.io/collection/og-rc1',
       looksRareUrl: '',
-      ownedOgs: [],
+      ownedOgs: []
     }
   }
 
@@ -118,8 +119,10 @@ class App extends Component {
     this.setState({ balance: balance})
 
     const totalSupply = await this.state.contract.totalSupply()
+    const canMintOgDozen = await this.state.contract.canMintOgDozen()
     this.setState({ totalSupply: totalSupply })
     this.setState({ soldOut: totalSupply >= 10000})
+    this.setState({ canMintOgDozen: canMintOgDozen })
 
     this.setState({ walletLoaded: true })
     

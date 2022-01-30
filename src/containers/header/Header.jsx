@@ -1,5 +1,4 @@
 import React from 'react';
-import { injected } from 'web3modal';
 import { OgImg } from '../../components';
 import './header.css';
 

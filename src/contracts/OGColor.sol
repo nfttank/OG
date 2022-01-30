@@ -54,7 +54,7 @@ contract OGColor is ERC721, Ownable {
         
         string[] memory parts = new string[](7);
 
-        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'>";
+        parts[0] = "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1000' height='1000' viewBox='0 0 1000 1000'>";
         parts[1] = string(abi.encodePacked("<defs>", formatColor(_colors[tokenId], _applications[tokenId]), "</defs>"));
         parts[2] = "<mask id='_mask'>";
         parts[3] = "    <circle vector-effect='non-scaling-stroke' cx='150' cy='150' r='125' fill='white' stroke='none' />";
