@@ -64,6 +64,7 @@
 }
 
 .og__header-content__input .plusminus {
+    background: transparent;
     min-width: 10px;
 }
 

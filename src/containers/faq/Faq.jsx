@@ -26,7 +26,7 @@ const Rules = (props) => (
       There's no rarity beside this except - you name it - memes.</p>
 
       <h2 className="gradient__text">Why just a number?</h2>
-      <p>A lot of web3 people identity themselves with numbers online, especially within the CryptoPunks and BAYC collections. They are building brands around  simple numbers today, OG is to honor those.</p>
+      <p>A lot of web3 pioneers identify themselves with numbers online, especially within the CryptoPunks and BAYC collections. They are building brands around simple numbers today, OG is to honor those.</p>
 
     </div>
   </div>

@@ -174,6 +174,6 @@ contract OG is HumbleERC721Enumerable, Ownable {
     }
 
     function canMintOgDozen() public view returns (bool) {
-        return totalSupply() >= _unlockSupply;
+        return totalSupply() >= _unlockSupply && !_exists(1);
     }
 }

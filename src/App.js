@@ -4,7 +4,7 @@ import Web3Modal from "web3modal";
 import './App.css'
 import OG from './abis/OG.json'
 import OG1 from './assets/OG1.svg';
-import { Footer, Balance, Header, Rules, Faq } from './containers';
+import { Footer, Balance, Header, OGDozen, Rules, Faq } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -18,8 +18,8 @@ class App extends Component {
       mintCountAdd: null,
       mintCount: 5,
       mintFunction: null,
-      canMintOgDozen: false,
       mintOgDozenFunction: null,
+      canMintOgDozen: false,
       connectFunction: null,
       remainingMintsForWallet: 0,
       connected: false,
@@ -62,7 +62,7 @@ class App extends Component {
 
     this.setState({ mintCountAdd: (value) => this.mintCountAdd(value)})
     this.setState({ mintFunction: () => this.mint(this, this.state.mintCount) })
-    this.setState({ mintOgDozenFunction: () => this.mint(this, 10) })
+    this.setState({ mintOgDozenFunction: () => this.mintOgDozen(this) })
     this.setState({ connectFunction: () => this.connect(this.state.network) })
 
     if (networkId === 1) {
@@ -187,6 +187,20 @@ class App extends Component {
   }
 
 
+  async mintOgDozen (app) {
+
+    if (app.state.contract == null)
+      await app.connect(app.state.network);
+
+    if (app.state.contract == null || app.state.remainingMintsForWallet <= 0)
+      return;
+
+    const stateChangingSigner = app.state.contract.connect(app.state.signer);
+      
+    await stateChangingSigner.mintOgDozen()
+  }
+
+
   async mintCountAdd(value) {
     let newCount =  this.state.mintCount + value
     this.setState({mintCount: Math.max(Math.min(5, this.state.remainingMintsForWallet), (Math.min(newCount, this.state.remainingMintsForWallet))) })
@@ -200,6 +214,9 @@ class App extends Component {
             <Navbar data={this.state} />
             <Header data={this.state} />
           </div>
+          { this.state.canMintOgDozen &&
+                <OGDozen data={this.state} />
+          }
           <Rules />
           {   this.state.connected &&
                 <Balance data={this.state} />

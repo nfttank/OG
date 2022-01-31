@@ -12,8 +12,7 @@ const Header = (props) => (
         We are just fooling around but we are already shaping the future of the internet.
       </p>
       <p>
-        Whatever profile picture we are spinning up:<br/>
-        In the end, it's a number that identifies us within the collection we are most proud of.<br/>
+        Whatever profile picture we are spinning up: In the end, it's a number that identifies us within the collection we are most proud of.<br/>
       </p>
       <p>But we are more than different collections competing with each other.</p>
       <p className="gradient__text"><b>We are one big community and OG is a big fat *thank you* for being a number with me.</b></p>

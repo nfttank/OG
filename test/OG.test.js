@@ -60,6 +60,29 @@ contract('OG', (accounts) => {
     })
   })
 
+  describe('canMintOgDozen', async () => {
+    it('is false below unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply + 1)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(false)
+    })
+
+    it('is true at unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(true)
+    })
+
+    it('is true over unlock supply', async () => {
+      const totalSupply = await contract.totalSupply()
+      await contract.setUnlockSupply(totalSupply - 1)
+      const canMint = await contract.canMintOgDozen()
+      expect(canMint).to.equal(true)
+    })
+  })
+
   describe('minting OG dozen', async () => {
 
     it('is not possible below unlock supply', async () => {
@@ -81,26 +104,12 @@ contract('OG', (accounts) => {
     })
   })
 
-  describe('canMintOgDozen', async () => {
-    it('is false below unlock supply', async () => {
+  describe('canMintOgDozen after OG dozen mint', async () => {
+    it('is false after all OG dozen tokens were minted', async () => {
       const totalSupply = await contract.totalSupply()
-      await contract.setUnlockSupply(totalSupply + 1)
+      await contract.setUnlockSupply(totalSupply) // this would unlock OG dozen minting
       const canMint = await contract.canMintOgDozen()
-      expect(canMint).to.equal(false)
-    })
-
-    it('is true at unlock supply', async () => {
-      const totalSupply = await contract.totalSupply()
-      await contract.setUnlockSupply(totalSupply)
-      const canMint = await contract.canMintOgDozen()
-      expect(canMint).to.equal(true)
-    })
-
-    it('is true over unlock supply', async () => {
-      const totalSupply = await contract.totalSupply()
-      await contract.setUnlockSupply(totalSupply - 1)
-      const canMint = await contract.canMintOgDozen()
-      expect(canMint).to.equal(true)
+      expect(canMint).to.equal(false) // because no OG dozen tokens are available anymore
     })
   })
 
