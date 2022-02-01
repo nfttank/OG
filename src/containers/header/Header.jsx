@@ -18,7 +18,7 @@ const Header = (props) => (
       <p className="gradient__text"><b>We are one big community and OG is a big fat *thank you* for being a number with me.</b></p>
       <p></p>
       <div className="og__header-content__input">
-        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button className="plusminus" onClick={() => props.data.mintCountAdd(-5)} type="button">-</button> }
+        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button className="plusminus" onClick={() => props.data.mintCountAdd(-1)} type="button">-</button> }
         <button onClick={props.data.mintFunction} type="button">
           {
             props.data.soldOut
@@ -34,7 +34,7 @@ const Header = (props) => (
               )
           }
         </button>
-        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button className="plusminus" onClick={() => props.data.mintCountAdd(+5)} type="button">+</button> }
+        { !props.data.soldOut && props.data.walletLoaded && props.data.remainingMintsForWallet !== 0 && <button className="plusminus" onClick={() => props.data.mintCountAdd(+1)} type="button">+</button> }
       </div>
       <p className="smalltext">Mints are free but limited to {props.data.maxPerWallet} per wallet. {
         props.data.walletLoaded
