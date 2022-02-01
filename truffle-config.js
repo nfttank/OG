@@ -19,6 +19,15 @@ module.exports = {
       gas: 29000000,
       gasPrice: 10000000000,
       skipDryRun: true
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(
+        mnemonic, `https://mainnet.infura.io/v3/${infuraProjectId}`
+      ),
+      network_id: 1,
+      gas: 29000000,
+      gasPrice: 10000000000,
+      skipDryRun: false
     }
   },
   contracts_directory: './src/contracts/',
