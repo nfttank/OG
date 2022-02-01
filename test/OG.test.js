@@ -2,6 +2,10 @@ const { assert } = require('chai')
 
 const OG = artifacts.require('./contracts/OG.sol')
 
+function decode64(value) {
+  return Buffer.from(value.replace('data:application/json;base64,', ''), 'base64').toString('ascii')
+}
+
 require('chai')
   .use(require('chai-as-promised'))
   .should()
@@ -110,6 +114,34 @@ contract('OG', (accounts) => {
       await contract.setUnlockSupply(totalSupply) // this would unlock OG dozen minting
       const canMint = await contract.canMintOgDozen()
       expect(canMint).to.equal(false) // because no OG dozen tokens are available anymore
+    })
+  })
+
+  describe('attributes', async () => {
+    it('1-12 are og dozen', async () => {
+      let uri = await contract.tokenURI(1)
+      expect(decode64(uri)).to.include('"OG Dozen"')
+
+      uri = await contract.tokenURI(12)
+      expect(decode64(uri)).to.include('"OG Dozen"')
+
+      uri = await contract.tokenURI(13)
+      expect(decode64(uri)).to.include('"Common"')      
+    })
+
+    it('33 is a honorary', async () => {
+      let uri = await contract.tokenURI(33)
+      expect(decode64(uri)).to.include('"Honorary OG"')
+    })
+
+    it('42 is a meme', async () => {
+      let uri = await contract.tokenURI(42)
+      expect(decode64(uri)).to.include('"Meme"')
+    })
+
+    it('4227 is common', async () => {
+      let uri = await contract.tokenURI(4227)
+      expect(decode64(uri)).to.include('"Common"')
     })
   })
 

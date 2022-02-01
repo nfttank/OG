@@ -128,10 +128,29 @@ contract OG is HumbleERC721Enumerable, Ownable {
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
         require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
     
-        string memory attributes = Customizer.getColorAttributes(this, _trustedContracts["ogcolor"], tokenId);
-        attributes = bytes(attributes).length > 0 ? string(abi.encodePacked(attributes, ", ")) : "";
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "" ,', attributes, ' "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
+        string memory colorAttributes = Customizer.getColorAttributes(this, _trustedContracts["ogcolor"], tokenId);
+
+        string memory attributes = string(abi.encodePacked(
+            '"attributes": [',
+            colorAttributes, 
+            bytes(colorAttributes).length > 0 ? ', ' : '',
+            '{ "trait_type": "Tier", "value": "', tier(tokenId), '" }'
+            ']'));
+        
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG #', Strings.toString(tokenId), '", "description": "OG by Tank", ', attributes, ', "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
         return string(abi.encodePacked('data:application/json;base64,', json));
+    }
+
+    function tier(uint256 tokenId) public pure returns (string memory) {
+
+        if (tokenId == 42 || tokenId == 69 || tokenId == 420 || tokenId == 666 || tokenId == 1337)
+            return 'Meme';
+        else if (tokenId == 33 || tokenId == 888 || tokenId == 2745 || tokenId == 3178 || tokenId == 4156 || tokenId == 6529)
+            return 'Honorary OG';
+        else if (tokenId > 0 && tokenId < 13)
+            return 'OG Dozen';
+
+        return "Common";
     }
 
     function mint(uint16 count) public {

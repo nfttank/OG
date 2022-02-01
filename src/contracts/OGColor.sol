@@ -113,15 +113,15 @@ contract OGColor is ERC721, Ownable {
         bytes memory zz = '#7da269';
 
         if (stringContains(b, ax) || stringContains(f, ax) || stringContains(d, ax) || stringContains(s, ax)) {
-            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Alien" }]'));
+            return '{ "trait_type": "Color", "value": "Alien" }';
         }
 
         if (stringContains(b, ap) || stringContains(f, ap) || stringContains(d, ap) || stringContains(s, ap)) {
-            return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Ape" }]'));
+            return '{ "trait_type": "Color", "value": "Ape" }';
         }
 
         if (stringContains(b, zz) || stringContains(f, zz) || stringContains(d, zz) || stringContains(s, zz)) {
-           return string(abi.encodePacked('"attributes": [{ "trait_type": "Type", "value": "Zombie" }]'));
+           return '{ "trait_type": "Color", "value": "Zombie" }';
         }
 
         return '';

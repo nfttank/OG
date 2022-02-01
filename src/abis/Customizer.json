@@ -23,8 +23,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -68,8 +67,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -98,8 +96,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -133,8 +130,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract IERC721\",\"name\":\"callingContract\",\"type\":\"IERC721\"},{\"internalType\":\"address\",\"name\":\"ogColorContractAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getColorAttributes\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC721\",\"name\":\"callingContract\",\"type\":\"IERC721\"},{\"internalType\":\"address\",\"name\":\"ogColorContractAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getColors\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"back\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"frame\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"digit\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"slug\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC721\",\"name\":\"callingContract\",\"type\":\"IERC721\"},{\"internalType\":\"address\",\"name\":\"gotTokenContractAddress\",\"type\":\"address\"},{\"internalType\":\"address[]\",\"name\":\"supportedCollections\",\"type\":\"address[]\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getOwnedSupportedCollection\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC721\",\"name\":\"callingContract\",\"type\":\"IERC721\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeOwnerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/libs/Customizer.sol\":\"Customizer\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0x516a22876c1fab47f49b1bc22b4614491cd05338af8bd2e7b382da090a079990\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a439187f7126d31add4557f82d8aed6be0162007cd7182c48fd934dbab8f3849\",\"dweb:/ipfs/QmRPLguRFvrRJS7r6F1bcLvsx6q1VrgjEpZafyeL8D7xZh\"]},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]},\"project:/src/contracts/interfaces/GotTokenInterface.sol\":{\"keccak256\":\"0x089be7300e8c5d7173a628f001897662b5fbb152355fafef7696232cbeab1fb6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://44d0bd93e5729d0b313aa42ad17db56fe4f879a4bb41778eeb2b3ba94b2f5fee\",\"dweb:/ipfs/QmWGv28vbJ3toR2sN5eLXsXLHs7S1LreARsAFtt2Hi5vhZ\"]},\"project:/src/contracts/interfaces/OGColorInterface.sol\":{\"keccak256\":\"0xa3a5e28eb5ee24b56dc1d8295432a860098cb127f57db39104d0745c0facf644\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3da148b90828d50f410d572e205013d3904cf70e94dfacbffca75bb283c8552d\",\"dweb:/ipfs/QmQuZFitCS8uTMSe3hXUDYPZrSxYw3euqgpRwEXwebti61\"]},\"project:/src/contracts/libs/Customizer.sol\":{\"keccak256\":\"0xa65c2673faa178f39ba480b2e5b0176377dccd01205ded5e30055f5b750c01bf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bea30fdcd6a8ebd6176adf5f77a8719c74037524c9159ba16bcbf476b900dfc9\",\"dweb:/ipfs/QmX678Kpt6QjVdFqgkpcsVPTjN3KfyWATr8XzDSmEEgDL8\"]}},\"version\":1}",
@@ -16670,8 +16666,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-31T16:14:56.769Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-02-01T19:48:38.989Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

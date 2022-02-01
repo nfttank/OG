@@ -4,6 +4,10 @@ const OGColor = artifacts.require('./contracts/OGColor.sol')
 require('chai')
   .use(require('chai-as-promised'))
   .should()
+  
+function decode64(value) {
+  return Buffer.from(value.replace('data:application/json;base64,', ''), 'base64').toString('ascii')
+}
 
 contract('OGColor', (accounts) => {
   let contract
@@ -240,10 +244,10 @@ contract('OGColor', (accounts) => {
     const meta3 = await contract.tokenURI(tokenId3.toNumber())
     const meta4 = await contract.tokenURI(tokenId4.toNumber())
 
-    expect(Buffer.from(meta1.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "back"')
-    expect(Buffer.from(meta2.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "frame"')
-    expect(Buffer.from(meta3.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "digit"')
-    expect(Buffer.from(meta4.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('"trait_type": "Application", "value": "slug"')
+    expect(decode64(meta1)).to.include('"trait_type": "Application", "value": "back"')
+    expect(decode64(meta2)).to.include('"trait_type": "Application", "value": "frame"')
+    expect(decode64(meta3)).to.include('"trait_type": "Application", "value": "digit"')
+    expect(decode64(meta4)).to.include('"trait_type": "Application", "value": "slug"')
   })
 
   it('has secret color attributes', async () => {
@@ -265,8 +269,8 @@ contract('OGColor', (accounts) => {
     const meta2 = await contract.tokenURI(tokenId2.toNumber())
     const meta3 = await contract.tokenURI(tokenId3.toNumber())
 
-    expect(Buffer.from(meta1.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Alien')
-    expect(Buffer.from(meta2.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Zombie')
-    expect(Buffer.from(meta3.replace('data:application/json;base64,', ''), 'base64').toString('ascii')).to.include('Ape')
+    expect(decode64(meta1)).to.include('Alien')
+    expect(decode64(meta2)).to.include('Zombie')
+    expect(decode64(meta3)).to.include('Ape')
   })
 })
