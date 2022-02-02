@@ -38,8 +38,9 @@ import './ERC/HumbleERC721Enumerable.sol';
 /**
  * @title OG
  * @author nfttank.eth
- * OG is a free NFT that I made to thank the whole NFT community for the amazing time and fun I had in the space so far.
- * It represents 10000 unique numbers. It is a vector based, on-chain NFT that has been optimized for the lowest possible gas consumption.
+ * OG is a free, vector based NFT that is rendered on-chain. OG tokens represent numbers from 0-10000 and are licensed
+ * under a public domain CC0 license. Feel free to use your OG tokens in any way you want.
+ * Thank you for being a number with me.
  */
 contract OG is HumbleERC721Enumerable, Ownable {
 
@@ -72,7 +73,6 @@ contract OG is HumbleERC721Enumerable, Ownable {
 
     function clearSupportedCollections() external onlyOwner {
          delete _supportedCollections;
-         // delete _supportedSlugs; not required as they can be overwritten with setSupportedCollectionSlug and won't be used if not tracked in _supportedCollections
     }
     
     function setSupportedCollectionSlug(address contractAddress, string calldata svgSlug) external onlyOwner {
@@ -142,15 +142,18 @@ contract OG is HumbleERC721Enumerable, Ownable {
     }
 
     function tier(uint256 tokenId) public pure returns (string memory) {
+        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
 
         if (tokenId == 42 || tokenId == 69 || tokenId == 420 || tokenId == 666 || tokenId == 1337)
             return 'Meme';
         else if (tokenId == 33 || tokenId == 888 || tokenId == 2745 || tokenId == 3178 || tokenId == 4156 || tokenId == 6529)
-            return 'Honorary OG';
+            return 'Honorary';
         else if (tokenId > 0 && tokenId < 13)
             return 'OG Dozen';
+        else if (tokenId < 1)
+            return 'Glitch';
 
-        return "Common";
+        return 'OG';
     }
 
     function mint(uint16 count) public {

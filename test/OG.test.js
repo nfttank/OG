@@ -126,12 +126,12 @@ contract('OG', (accounts) => {
       expect(decode64(uri)).to.include('"OG Dozen"')
 
       uri = await contract.tokenURI(13)
-      expect(decode64(uri)).to.include('"Common"')      
+      expect(decode64(uri)).to.include('"OG"')      
     })
 
     it('33 is a honorary', async () => {
       let uri = await contract.tokenURI(33)
-      expect(decode64(uri)).to.include('"Honorary OG"')
+      expect(decode64(uri)).to.include('"Honorary"')
     })
 
     it('42 is a meme', async () => {
@@ -139,9 +139,9 @@ contract('OG', (accounts) => {
       expect(decode64(uri)).to.include('"Meme"')
     })
 
-    it('4227 is common', async () => {
+    it('4227 is OG', async () => {
       let uri = await contract.tokenURI(4227)
-      expect(decode64(uri)).to.include('"Common"')
+      expect(decode64(uri)).to.include('"OG"')
     })
   })
 
