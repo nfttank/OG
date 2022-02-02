@@ -121,12 +121,12 @@ class App extends Component {
     const totalSupply = await this.state.contract.totalSupply()
     const canMintOgDozen = await this.state.contract.canMintOgDozen()
     this.setState({ totalSupply: totalSupply })
-    this.setState({ soldOut: totalSupply >= 10000})
+    this.setState({ soldOut: totalSupply >= 9999})
     this.setState({ canMintOgDozen: canMintOgDozen })
 
     this.setState({ walletLoaded: true })
     
-    const randomId = Math.floor(Math.random() * 10000)
+    const randomId = Math.floor(Math.random() * 9999)
     const featuredSvg = await this.state.contract.renderSvg(randomId)
     this.setState({ featuredOg: { id: randomId, svg: featuredSvg }})
     console.log(this.state.featuredOg)
@@ -159,7 +159,7 @@ class App extends Component {
       return 10
 
     const totalSupply = await this.state.contract.totalSupply()
-    const available = 10000 - totalSupply
+    const available = 9999 - totalSupply
     if (count > available)
       return available
 

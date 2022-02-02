@@ -11,7 +11,13 @@ const OGDozen = (props) => (
             </p>
         </div>
         <div className="og__ogdozen-btn">
-            <button type="button" onClick={props.data.mintOgDozenFunction}>Mint</button>
+            <button type="button" onClick={props.data.mintOgDozenFunction}>
+            {
+                props.data.remainingMintsForWallet === 0 
+                    ? "Wallet limit of " + props.data.maxPerWallet + " reached."
+                    : "Mint"
+            }
+            </button>
         </div>
     </div>
 );

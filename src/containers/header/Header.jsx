@@ -38,7 +38,7 @@ const Header = (props) => (
       </div>
       <p className="smalltext">Mints are free but limited to {props.data.maxPerWallet} per wallet. {
         props.data.walletLoaded
-        ? <span className="gradient__text"><b>{(10000 - props.data.totalSupply).toString()} left.</b></span>
+        ? <span className="gradient__text"><b>{(9999 - props.data.totalSupply).toString()} left.</b></span>
         : ""
       }</p>
     </div>
