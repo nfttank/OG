@@ -8,12 +8,14 @@ import "base64-sol/base64.sol";
 
 /**
  * @title Defines colors for OG NFTs. When minting, a color and an application (which part of the OG NFT to colorize) has to be defined.
- * There are four different applications (back, frame, digit, slug), but only a few colors to mint.
+ * There are four different applications (back, frame, digit, slug).
  * @author nfttank.eth
  */
 contract OGColor is ERC721, Ownable {
     
     uint256 private _totalSupply;
+
+    uint256 private constant MAX_SUPPLY = 2500;
 
     mapping(uint256 => string) private _colors;
     mapping(uint256 => string) private _applications;
@@ -22,26 +24,47 @@ contract OGColor is ERC721, Ownable {
     mapping(address => string[]) private _frameColorsForAddress;
     mapping(address => string[]) private _digitColorsForAddress;
     mapping(address => string[]) private _slugColorsForAddress;
+
+    uint256 public _colorPrice = 40000000000000000; //0.04 ETH
+    uint256 public _extPrice =  100000000000000000; //0.10 ETH;
     
     constructor() ERC721("OGColor", "OGCOLOR") Ownable() {
     }
 
     /**
-    * @dev It's recommended to use lower case color strings like #ffffff instead of #FFFFFF
+    * @dev Mint a color for a specific application for all your OG tokens you hold in the same wallet.
+    * Applications are back, frame, digit & slug.
+    * It's recommended to use lower case color strings like #ffffff instead of #FFFFFF.
     */
-    function mint(string calldata application, string calldata color) public {
+    function mint(string calldata application, string calldata color) public payable {
 
-        require(_totalSupply + 1 < 9999, "No free tokens available.");
+        require(_totalSupply < MAX_SUPPLY, "No tokens available anymore.");
         require(isValidApplication(application), "Application invalid, allowed are 'back', 'frame', 'digit' and 'slug'.");
 
-        uint256 newId = _totalSupply;
+        if (_msgSender() != owner()) {
+            if (bytes(color).length <= 7) { // like #527862 or #fff
+                require(_colorPrice <= msg.value, "Ether value sent is not correct");
+            } else {
+                require(_extPrice <= msg.value, "Ether value sent is not correct");
+            }
+        }
+
+        uint256 newId = _totalSupply++;
 
         _colors[newId] = color;
         _applications[newId] = application;
         
         _safeMint(_msgSender(), newId);
+    }
 
-        _totalSupply++;
+    function setPrice(uint256 forColor, uint256 forExt) external onlyOwner {
+        _colorPrice = forColor;
+        _extPrice = forExt;
+    }
+
+    function withdraw() public onlyOwner {
+        uint balance = address(this).balance;
+        payable(msg.sender).transfer(balance);
     }
 
     function totalSupply() public view virtual returns (uint256) {
@@ -49,7 +72,7 @@ contract OGColor is ERC721, Ownable {
     }
 
     function renderSvg(uint256 tokenId) public virtual view returns (string memory) {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        require(tokenId > 0 && tokenId <= MAX_SUPPLY, "Token Id invalid");
         require(_exists(tokenId), "Token does not exist");
         
         string[] memory parts = new string[](7);
@@ -66,7 +89,7 @@ contract OGColor is ERC721, Ownable {
     }
 
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
-        require(tokenId >= 0 && tokenId <= 9999, "Token Id invalid");
+        require(tokenId > 0 && tokenId <= MAX_SUPPLY, "Token Id invalid");
         require(_exists(tokenId), "Token does not exist");
     
         string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "OG Color", "description": "", ', getAttributesForColor(tokenId), ', "image": "data:image/svg+xml;base64,', Base64.encode(bytes(renderSvg(tokenId))), '"}'))));
@@ -181,7 +204,6 @@ contract OGColor is ERC721, Ownable {
         }
     }
 
-    
     function bytesEquals(bytes memory a, bytes memory b) internal pure returns(bool) {
         return (a.length == b.length) && (keccak256(a) == keccak256(b));
     }

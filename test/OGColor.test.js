@@ -25,6 +25,10 @@ contract('OGColor', (accounts) => {
       assert.notEqual(address, null)
       assert.notEqual(address, undefined)
     })
+
+    it('remove minting costs', async () => {
+      await contract.setPrice(0, 0).should.be.fulfilled
+    })
   })
 
   describe('mint', async () => {
@@ -220,57 +224,57 @@ contract('OGColor', (accounts) => {
 
       expect(result[0]).to.include('#AAAAA2')
     })
-  })
 
-  it('has attributes', async () => {
+    it('has attributes', async () => {
 
-    const testAddress = accounts[9];
+      const testAddress = accounts[9];
 
-    // mint four tokens
-    const result1 = await contract.mint('back', '#aaaaaa', {from: testAddress}) 
-    const result2 = await contract.mint('frame', '#bbbbbb', {from: testAddress}) 
-    const result3 = await contract.mint('digit', '#cccccc', {from: testAddress}) 
-    const result4 = await contract.mint('slug', '#dddddd', {from: testAddress}) 
-    
-    // determine the tokenIds
-    const tokenId1 = result1.logs[0].args.tokenId
-    const tokenId2 = result2.logs[0].args.tokenId
-    const tokenId3 = result3.logs[0].args.tokenId
-    const tokenId4 = result4.logs[0].args.tokenId
+      // mint four tokens
+      const result1 = await contract.mint('back', '#aaaaaa', {from: testAddress}) 
+      const result2 = await contract.mint('frame', '#bbbbbb', {from: testAddress}) 
+      const result3 = await contract.mint('digit', '#cccccc', {from: testAddress}) 
+      const result4 = await contract.mint('slug', '#dddddd', {from: testAddress}) 
+      
+      // determine the tokenIds
+      const tokenId1 = result1.logs[0].args.tokenId
+      const tokenId2 = result2.logs[0].args.tokenId
+      const tokenId3 = result3.logs[0].args.tokenId
+      const tokenId4 = result4.logs[0].args.tokenId
 
-    // sell some tokens
-    const meta1 = await contract.tokenURI(tokenId1.toNumber())
-    const meta2 = await contract.tokenURI(tokenId2.toNumber())
-    const meta3 = await contract.tokenURI(tokenId3.toNumber())
-    const meta4 = await contract.tokenURI(tokenId4.toNumber())
+      // sell some tokens
+      const meta1 = await contract.tokenURI(tokenId1.toNumber())
+      const meta2 = await contract.tokenURI(tokenId2.toNumber())
+      const meta3 = await contract.tokenURI(tokenId3.toNumber())
+      const meta4 = await contract.tokenURI(tokenId4.toNumber())
 
-    expect(decode64(meta1)).to.include('"trait_type": "Application", "value": "back"')
-    expect(decode64(meta2)).to.include('"trait_type": "Application", "value": "frame"')
-    expect(decode64(meta3)).to.include('"trait_type": "Application", "value": "digit"')
-    expect(decode64(meta4)).to.include('"trait_type": "Application", "value": "slug"')
-  })
+      expect(decode64(meta1)).to.include('"trait_type": "Application", "value": "back"')
+      expect(decode64(meta2)).to.include('"trait_type": "Application", "value": "frame"')
+      expect(decode64(meta3)).to.include('"trait_type": "Application", "value": "digit"')
+      expect(decode64(meta4)).to.include('"trait_type": "Application", "value": "slug"')
+    })
 
-  it('has secret color attributes', async () => {
+    it('has secret color attributes', async () => {
 
-    const testAddress = accounts[9];
+      const testAddress = accounts[9];
 
-    // mint four tokens
-    const result1 = await contract.mint('back', '#c8fbfb', {from: testAddress}) 
-    const result2 = await contract.mint('frame', '#7da269', {from: testAddress}) 
-    const result3 = await contract.mint('digit', '#856f56', {from: testAddress}) 
-    
-    // determine the tokenIds
-    const tokenId1 = result1.logs[0].args.tokenId
-    const tokenId2 = result2.logs[0].args.tokenId
-    const tokenId3 = result3.logs[0].args.tokenId
+      // mint four tokens
+      const result1 = await contract.mint('back', '#c8fbfb', {from: testAddress}) 
+      const result2 = await contract.mint('frame', '#7da269', {from: testAddress}) 
+      const result3 = await contract.mint('digit', '#856f56', {from: testAddress}) 
+      
+      // determine the tokenIds
+      const tokenId1 = result1.logs[0].args.tokenId
+      const tokenId2 = result2.logs[0].args.tokenId
+      const tokenId3 = result3.logs[0].args.tokenId
 
-    // sell some tokens
-    const meta1 = await contract.tokenURI(tokenId1.toNumber())
-    const meta2 = await contract.tokenURI(tokenId2.toNumber())
-    const meta3 = await contract.tokenURI(tokenId3.toNumber())
+      // sell some tokens
+      const meta1 = await contract.tokenURI(tokenId1.toNumber())
+      const meta2 = await contract.tokenURI(tokenId2.toNumber())
+      const meta3 = await contract.tokenURI(tokenId3.toNumber())
 
-    expect(decode64(meta1)).to.include('Alien')
-    expect(decode64(meta2)).to.include('Zombie')
-    expect(decode64(meta3)).to.include('Ape')
+      expect(decode64(meta1)).to.include('Alien')
+      expect(decode64(meta2)).to.include('Zombie')
+      expect(decode64(meta3)).to.include('Ape')
+    })
   })
 })
