@@ -17,7 +17,7 @@ module.exports = {
       ),
       network_id: 4,
       gas: 29000000,
-      gasPrice: 10000000000,
+      gasPrice: 10000000000, // 10 gwei
       skipDryRun: true
     },
     mainnet: {
@@ -26,7 +26,7 @@ module.exports = {
       ),
       network_id: 1,
       gas: 29000000,
-      gasPrice: 10000000000,
+      gasPrice: 80000000000, // 80 gwei
       skipDryRun: false
     }
   },

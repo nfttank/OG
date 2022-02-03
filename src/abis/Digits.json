@@ -18,8 +18,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -58,8 +57,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -78,8 +76,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"generateDigits\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint16\",\"name\":\"number\",\"type\":\"uint16\"},{\"internalType\":\"uint256\",\"name\":\"numberDigitCount\",\"type\":\"uint256\"},{\"internalType\":\"uint16\",\"name\":\"scaleFactorTimesTen\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"currentIndex\",\"type\":\"uint16\"}],\"name\":\"getDigitBounds\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"x\",\"type\":\"uint16\"},{\"internalType\":\"uint16\",\"name\":\"y\",\"type\":\"uint16\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getDigitWidth\",\"outputs\":[{\"internalType\":\"uint16\",\"name\":\"\",\"type\":\"uint16\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/libs/Digits.sol\":\"Digits\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/Strings.sol\":{\"keccak256\":\"0x32c202bd28995dd20c4347b7c6467a6d3241c74c8ad3edcbb610cd9205916c45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8179c356adb19e70d6b31a1eedc8c5c7f0c00e669e2540f4099e3844c6074d30\",\"dweb:/ipfs/QmWFbivarEobbqhS1go64ootVuHfVohBseerYy9FTEd1W2\"]},\"project:/src/contracts/libs/Digits.sol\":{\"keccak256\":\"0x9262332e687fd7283d90c47bfae641212d363d604702d4c5f4da6c33c8a60923\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a5f5a7540a99d3acc28daf5145264e8b839d70892d0bb6c251792abb875121c6\",\"dweb:/ipfs/QmS7b7yKhhfq6rGMEkM8bK6J6wZQ1SiLCCDQ17MHqjwwvW\"]}},\"version\":1}",
@@ -24424,8 +24421,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-02T23:16:42.588Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-02-03T12:52:13.568Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
