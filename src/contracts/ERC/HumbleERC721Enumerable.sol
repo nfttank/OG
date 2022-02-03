@@ -8,8 +8,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 /**
  * @dev This is an alternative implementation to OpenZeppelin's ERC721Enumerable.
  * HumbleERC721Enumerable is focussing on reducing the gas costs by reducing efforts
- * in writing methods. With that, reading methods might do an extra mile
- * which is a fair trade off for significant lower cas costs.
+ * in writing methods.
  * @author nfttank.eth
  */
 abstract contract HumbleERC721Enumerable is ERC721, IERC721Enumerable {
