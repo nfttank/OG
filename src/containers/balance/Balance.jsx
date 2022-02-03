@@ -11,7 +11,7 @@ const Balance = (props) => (
           props.data.walletLoaded ? 
             (
               props.data.balance > 0 
-                ? (props.data.balance === 1 ? "You own an amazing OG" : "You own " + props.data.balance + " amazing OG NFTs")
+                ? (props.data.balance == 1 ? "You own an amazing OG" : "You own " + props.data.balance + " amazing OG NFTs")
                 : "No OG NFTs yet :(" 
             )
             : "Checking wallet ..."
