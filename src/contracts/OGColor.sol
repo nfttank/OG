@@ -232,7 +232,7 @@ contract OGColor is ERC721, Ownable {
     function getColors(address forAddress, uint256 tokenId) external view returns (string memory backColor, string memory frameColor, string memory digitColor, string memory slugColor) {
 
         string[] memory colors = tokenId < 99999 ? _backColorsForAddress[forAddress] : new string[](0); // pseudo use of tokenId to prevent warnings. We still want the tokenId in the method arguments to be able to modify colors by the tokenId in the future.
-        string memory back = getColorFromArray(colors, "#FFFFFF", "back");
+        string memory back = getColorFromArray(colors, "#ffffff", "back");
         
         colors = _frameColorsForAddress[forAddress];
         string memory frame = getColorFromArray(colors, "#000000", "frame");
@@ -241,7 +241,7 @@ contract OGColor is ERC721, Ownable {
         string memory digit = getColorFromArray(colors, "#000000", "digit");
         
         colors = _slugColorsForAddress[forAddress];
-        string memory slug = getColorFromArray(colors, "#FFFFFF", "slug");
+        string memory slug = getColorFromArray(colors, "#ffffff", "slug");
         
         return (back, frame, digit, slug);
     }

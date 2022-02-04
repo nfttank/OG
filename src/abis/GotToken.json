@@ -28,7 +28,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -57,7 +58,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -86,7 +88,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"possibleOwner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownsTokenOfContract\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"possibleOwner\",\"type\":\"address\"},{\"internalType\":\"address[]\",\"name\":\"contractAddresses\",\"type\":\"address[]\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownsTokenOfContracts\",\"outputs\":[{\"internalType\":\"bool[]\",\"name\":\"\",\"type\":\"bool[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"possibleOwner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"contractAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"unsafeOwnsTokenOfContract\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"nfttank.eth\",\"kind\":\"dev\",\"methods\":{\"ownsTokenOfContract(address,address,uint256)\":{\"details\":\"Checks whether a given address (possibleOwner) owns a given token by its contract address and the token id itself. This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract (with a custom implementation because CryptoPunks do not implement the ERC721 standard). Does not throw errors but returns false if the real token owner could not be found or the token does not exist. Sample contract addresses on Mainnet   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8        Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6\"},\"ownsTokenOfContracts(address,address[],uint256)\":{\"details\":\"Checks whether a given address (possibleOwner) owns a given token by given contract addresses and the token id itself. This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract (with a custom implementation because CryptoPunks do not implement the ERC721 standard). Does not throw errors but returns false if the real token owner could not be found or the token does not exist.  Returns an array with the results at the given index of the array. Sample contract addresses on Mainnet   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8        Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6\"},\"unsafeOwnsTokenOfContract(address,address,uint256)\":{\"details\":\"Checks whether a given address (possibleOwner) owns a given token by its contract address and the token id itself. This method can only check contracts implementing the ERC721 standard and in addition the CryptoPunks contract (with a custom implementation because CryptoPunks do not implement the ERC721 standard). Might revert execution if the contract address does not exist on the current net. Sample contract addresses on Mainnet   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8        Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6\"}},\"title\":\"Checks if a given address owns a token from a given ERC721 contract or the CryptoPunks contract (which does not implement ERC721)\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/src/contracts/GotToken.sol\":\"GotToken\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC721/IERC721.sol\":{\"keccak256\":\"0x516a22876c1fab47f49b1bc22b4614491cd05338af8bd2e7b382da090a079990\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a439187f7126d31add4557f82d8aed6be0162007cd7182c48fd934dbab8f3849\",\"dweb:/ipfs/QmRPLguRFvrRJS7r6F1bcLvsx6q1VrgjEpZafyeL8D7xZh\"]},\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f\",\"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy\"]},\"project:/src/contracts/GotToken.sol\":{\"keccak256\":\"0xa12ab22da4a72ba3f8282e062f1f2162219c93cb19807d13a6365882f5be505e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8dbecfd831805da31dd8ad349b21cb11676bcb903ca9bd010b31d990056ebf8e\",\"dweb:/ipfs/QmfCzW958A4RwJzN3eLY4BoNd29pYV752WyYWbTdvesdMx\"]}},\"version\":1}",
@@ -8487,12 +8490,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x270f01a39Aff7422dfCc695733605DA8968df701",
-      "transactionHash": "0xf88aa6377801ade53575a44da114b9871b65cabe7d63703fdf2c93d77a9101bb"
+      "address": "0xF34a6efeC83B393Ae8Baa4C661314139EC5f6d11",
+      "transactionHash": "0xe1a3d94feae900f12fe994e440c9372b046a74240911714648c8db1b9b6c5831"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-03T12:52:13.220Z",
+  "updatedAt": "2022-02-04T20:14:41.533Z",
+  "networkType": "ethereum",
   "devdoc": {
     "author": "nfttank.eth",
     "kind": "dev",

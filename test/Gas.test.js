@@ -43,9 +43,9 @@ contract('Gas estimates', (accounts) => {
   describe('OGColor', async () => {
     it('gas estimates', async () => {
 
-      await ogColorContract.mint('back', '#FFFFFF');
+      await ogColorContract.mint('back', '#ffffff');
 
-      logGas("mint", await ogColorContract.mint.estimateGas('back', '#FFFFFF'))
+      logGas("mint", await ogColorContract.mint.estimateGas('back', '#ffffff'))
       logGas("transfer", await ogColorContract.transferFrom.estimateGas(accounts[0], accounts[1], 0))
     })
   })

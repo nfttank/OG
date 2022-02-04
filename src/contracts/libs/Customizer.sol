@@ -33,10 +33,10 @@ library Customizer {
             }
         }
         
-        return ("<linearGradient id='back'><stop stop-color='#FFFFFF'/></linearGradient>",
+        return ("<linearGradient id='back'><stop stop-color='#ffffff'/></linearGradient>",
                 "<linearGradient id='frame'><stop stop-color='#000000'/></linearGradient>",
                 "<linearGradient id='digit'><stop stop-color='#000000'/></linearGradient>",
-                "<linearGradient id='slug'><stop stop-color='#FFFFFF'/></linearGradient>");
+                "<linearGradient id='slug'><stop stop-color='#ffffff'/></linearGradient>");
     }
 
     function getColorAttributes(IERC721 callingContract, address ogColorContractAddress, uint256 tokenId) external view returns (string memory) {

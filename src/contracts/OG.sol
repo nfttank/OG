@@ -111,7 +111,7 @@ contract OG is HumbleERC721Enumerable, Ownable {
             parts[3] = "";
             
         // don't apply colors on this string, this should be kept white
-        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#FFFFFF' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#back)' mask='url(#_mask)' stroke-width='130' stroke='url(#frame)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
+        parts[4] = string(abi.encodePacked("<circle cx='500' cy='500' r='450' fill='#ffffff' stroke='none' /></mask><circle cx='500' cy='500' r='450' fill='url(#back)' mask='url(#_mask)' stroke-width='130' stroke='url(#frame)' stroke-linejoin='miter' stroke-linecap='square' stroke-miterlimit='3' />"));
 
         parts[5] = Digits.generateDigits(tokenId);
           

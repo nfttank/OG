@@ -25,8 +25,8 @@ module.exports = {
         mnemonic, `https://mainnet.infura.io/v3/${infuraProjectId}`
       ),
       network_id: 1,
-      gas: 29000000,
-      gasPrice: 80000000000, // 80 gwei
+      gas: 6200000,
+      gasPrice: 60000000000, // 60 gwei
       skipDryRun: false
     }
   },

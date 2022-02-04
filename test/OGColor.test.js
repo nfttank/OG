@@ -75,17 +75,17 @@ contract('OGColor', (accounts) => {
       const testAddress = accounts[1];
 
       // Mint 3 more tokens
-      await contract.mint('back', '#AAAAAA', {from: testAddress})
-      await contract.mint('frame', '#BBBBBB', {from: testAddress})
-      await contract.mint('digit', '#CCCCCC', {from: testAddress})
-      await contract.mint('slug', '#DDDDDD', {from: testAddress})
+      await contract.mint('back', '#aaaaaa', {from: testAddress})
+      await contract.mint('frame', '#bbbbbb', {from: testAddress})
+      await contract.mint('digit', '#cccccc', {from: testAddress})
+      await contract.mint('slug', '#dddddd', {from: testAddress})
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#AAAAAA'/></linearGradient>")
-      expect(result[1]).to.include("<linearGradient id='frame'><stop stop-color='#BBBBBB'/></linearGradient>")
-      expect(result[2]).to.include("<linearGradient id='digit'><stop stop-color='#CCCCCC'/></linearGradient>")
-      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#DDDDDD'/></linearGradient>")
+      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#aaaaaa'/></linearGradient>")
+      expect(result[1]).to.include("<linearGradient id='frame'><stop stop-color='#bbbbbb'/></linearGradient>")
+      expect(result[2]).to.include("<linearGradient id='digit'><stop stop-color='#cccccc'/></linearGradient>")
+      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#dddddd'/></linearGradient>")
     })
 
     it('gets default values if nothing was minted', async () => {
@@ -94,10 +94,10 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      expect(result[0]).to.include('#FFFFFF')
+      expect(result[0]).to.include('#ffffff')
       expect(result[1]).to.include('#000000')
       expect(result[2]).to.include('#000000')
-      expect(result[3]).to.include('#FFFFFF')
+      expect(result[3]).to.include('#ffffff')
     })
 
     it('returns full linear gradient definitions for default colors', async () => {
@@ -106,10 +106,10 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#FFFFFF'/></linearGradient>")
+      expect(result[0]).to.include("<linearGradient id='back'><stop stop-color='#ffffff'/></linearGradient>")
       expect(result[1]).to.include("<linearGradient id='frame'><stop stop-color='#000000'/></linearGradient>")
       expect(result[2]).to.include("<linearGradient id='digit'><stop stop-color='#000000'/></linearGradient>")
-      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#FFFFFF'/></linearGradient>")
+      expect(result[3]).to.include("<linearGradient id='slug'><stop stop-color='#ffffff'/></linearGradient>")
     })
 
     it('gets complex gradients', async () => {
@@ -145,7 +145,7 @@ contract('OGColor', (accounts) => {
 
       let result = await contract.getColors(testAddress, 0) // tokenId 0 is unnecessary
 
-      expect(result[0]).to.include('#FFFFFF')
+      expect(result[0]).to.include('#ffffff')
       expect(result[1]).to.include('#000000')
       expect(result[2]).to.include('#CCCCC0')
       expect(result[3]).to.include('#DDDDD0')
@@ -192,7 +192,7 @@ contract('OGColor', (accounts) => {
       expect(result[0]).to.include('#AAAAA1') // transferred from testAddress
       expect(result[1]).to.include('#BBBBB2') // transferred from testAddress
       expect(result[2]).to.include('#CCCCC2') // first token3_1 and then token3_2 transferred from testAddress
-      expect(result[3]).to.include('#FFFFFF') // nothing transferred, default color
+      expect(result[3]).to.include('#ffffff') // nothing transferred, default color
     })
 
     it('resets multiple levels deep', async () => {
