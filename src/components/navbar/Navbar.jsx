@@ -11,16 +11,16 @@ const Navbar = (props) => {
         </div>
       </div>
       <div className="og__navbar-sign">
-        {   props.data.connected === false &&
+        {   props.data.canMint && props.data.connected === false &&
                 <button onClick={props.data.connectFunction}>Connect</button>
         }
-        {   props.data.connected === true &&
+        {   props.data.canMint && props.data.connected === true &&
                 <button>{props.data.signerAddress.substring(0, 7)}...{props.data.signerAddress.substring(props.data.signerAddress.length-7)}</button>
         }
         <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer" title="Discord">D</a>
         <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer" title="Twitter">T</a>
-        {/* <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer" title="LooksRare">L</a>
-        <a href={props.data.openSeaStorefrontUrl} target="_blank" rel="noopener noreferrer" title="OpenSea">O</a> */}
+        { props.data.canMint && <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer" title="LooksRare">L</a>  }
+        { props.data.canMint && <a href={props.data.openSeaStorefrontUrl} target="_blank" rel="noopener noreferrer" title="OpenSea">O</a> }
         <a href={props.data.contractUrl} target="_blank" rel="noopener noreferrer" title="Contract on Etherscan">E</a>
       </div>
     </div>

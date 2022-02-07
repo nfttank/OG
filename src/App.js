@@ -18,6 +18,7 @@ class App extends Component {
       mintCount: 5,
       mintFunction: null,
       mintOgDozenFunction: null,
+      canMint: false,
       canMintOgDozen: false,
       connectFunction: null,
       remainingMintsForWallet: 0,
