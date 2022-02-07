@@ -18,7 +18,7 @@ class App extends Component {
       mintCount: 5,
       mintFunction: null,
       mintOgDozenFunction: null,
-      canMint: false,
+      canMint: true,
       canMintOgDozen: false,
       connectFunction: null,
       remainingMintsForWallet: 0,
@@ -76,7 +76,7 @@ class App extends Component {
       this.setState({ looksRareUrl: "https://looksrare.org/collections/" + contractAddress })
     }
 
-    this.setState({ storeUrl: networkId === 1 ? this.state.looksRareUrl : this.state.openSeaUrl }) 
+    this.setState({ storeUrl: this.state.openSeaUrl }) 
   }
 
   async connect(network) {
