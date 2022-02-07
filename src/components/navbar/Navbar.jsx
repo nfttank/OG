@@ -19,8 +19,8 @@ const Navbar = (props) => {
         }
         <a href={props.data.discordUrl} target="_blank" rel="noopener noreferrer" title="Discord">D</a>
         <a href={props.data.ogTwitterUrl} target="_blank" rel="noopener noreferrer" title="Twitter">T</a>
-        <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer" title="LooksRare">L</a>
-        <a href={props.data.openSeaStorefrontUrl} target="_blank" rel="noopener noreferrer" title="OpenSea">O</a>
+        {/* <a href={props.data.looksRareUrl} target="_blank" rel="noopener noreferrer" title="LooksRare">L</a>
+        <a href={props.data.openSeaStorefrontUrl} target="_blank" rel="noopener noreferrer" title="OpenSea">O</a> */}
         <a href={props.data.contractUrl} target="_blank" rel="noopener noreferrer" title="Contract on Etherscan">E</a>
       </div>
     </div>

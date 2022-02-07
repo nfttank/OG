@@ -13,8 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      network: { name: 'rinkeby', id: 4 },
-      //network: { name: 'mainnet', id: 1 },
+      network: { name: 'mainnet', id: 1 },
       mintCountAdd: null,
       mintCount: 5,
       mintFunction: null,
@@ -35,13 +34,13 @@ class App extends Component {
       featuredOg: { },
       featuredOgExists: false,
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
-      discordUrl: 'https://discord.com/invite/kTvaHARW',
+      discordUrl: 'https://discord.gg/wEd2k6vE',
       tankTwitterUrl: 'https://twitter.com/nfttank',
-      contractUrl: '',
-      storeUrl: '',
-      openSeaUrl: '',
-      openSeaStorefrontUrl: 'https://testnets.opensea.io/collection/og-rc1',
-      looksRareUrl: '',
+      contractUrl: '[will be set]',
+      openSeaUrl: '[will be set]',
+      looksRareUrl: '[will be set]',
+      storeUrl: '[will be set]',
+      openSeaStorefrontUrl: 'https://opensea.io/collection/og-nft-official',
       ownedOgs: []
     }
   }

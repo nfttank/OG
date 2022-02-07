@@ -5216,7 +5216,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-04T20:14:24.761Z",
+  "updatedAt": "2022-02-05T07:57:31.561Z",
   "devdoc": {
     "author": "nfttank.eth",
     "details": "This is an alternative implementation to OpenZeppelin's ERC721Enumerable. HumbleERC721Enumerable is focussing on reducing the gas costs by reducing efforts in writing methods.",
