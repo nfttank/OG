@@ -9,6 +9,7 @@ import "base64-sol/base64.sol";
 /**
  * @title Defines colors for OG NFTs. When minting, a color and an application (which part of the OG NFT to colorize) has to be defined.
  * There are four different applications (back, frame, digit, slug).
+ * @notice You can totally mess your mint up by using unsupported color strings. Make sure you know what you are doing as there is no refund for wasted mints.
  * @author nfttank.eth
  */
 contract OGColor is ERC721, Ownable {
