@@ -25,23 +25,38 @@ contract('OGColor', (accounts) => {
       assert.notEqual(address, null)
       assert.notEqual(address, undefined)
     })
+  })
 
-    it('remove minting costs', async () => {
+  describe('prices', async () => {
+
+    it('can be set', async () => {
+      await contract.setPrice(1000, 2000).should.be.fulfilled
+    })
+
+    it('can be read', async () => {
+      const prices = await contract.getPrice()
+      prices[0].toNumber().should.equal(1000)
+      prices[1].toNumber().should.equal(2000)
+    })
+
+    it('can be eliminated', async () => {
       await contract.setPrice(0, 0).should.be.fulfilled
     })
   })
 
   describe('mint', async () => {
 
-    it('creates a new token', async () => {
+    it('creates a new token 1', async () => {
       
       const testAddress = accounts[0];
 
       const result = await contract.mint('back', '#EC058E', {from: testAddress})
       const event = result.logs[0].args
+      const tokenId = event.tokenId.toNumber()
 
       assert.equal(event.from, '0x0000000000000000000000000000000000000000', 'from is correct')
       assert.equal(event.to, accounts[0], 'to is correct')
+      assert.equal(tokenId, 1, 'mint should start with 1')
     })
 
     it('can mint the same colors multiple times', async () => {

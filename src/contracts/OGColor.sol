@@ -13,7 +13,7 @@ import "base64-sol/base64.sol";
  */
 contract OGColor is ERC721, Ownable {
     
-    uint256 private _totalSupply;
+    uint256 private _totalSupply = 0;
 
     uint256 private constant MAX_SUPPLY = 2500;
 
@@ -32,9 +32,13 @@ contract OGColor is ERC721, Ownable {
     }
 
     /**
-    * @dev Mint a color for a specific application for all your OG tokens you hold in the same wallet.
-    * Applications are back, frame, digit & slug.
+    * @notice Mint a color for a specific application for all your OG tokens you hold in the same wallet.
+    * Applications are back, frame, digit and slug.
     * It's recommended to use lower case color strings like #ffffff instead of #FFFFFF.
+    * You can totally mess your mint up by using unsupported color strings.
+    * Make sure you know what you are doing as there is no refund for wasted mints.
+    * @param application The part of the OG NFT to colorize. back, frame, digit or slug.
+    * @param color The color of the NFT to mint. Use a format like #ffffff or #fff. If you mess this up, your minted color won't work.
     */
     function mint(string calldata application, string calldata color) public payable {
 
@@ -44,12 +48,12 @@ contract OGColor is ERC721, Ownable {
         if (_msgSender() != owner()) {
             if (bytes(color).length <= 7) { // like #527862 or #fff
                 require(_colorPrice <= msg.value, "Ether value sent is not correct");
-            } else {
+            } else { // what can that be? oO
                 require(_extPrice <= msg.value, "Ether value sent is not correct");
             }
         }
 
-        uint256 newId = _totalSupply++;
+        uint256 newId = ++_totalSupply;
 
         _colors[newId] = color;
         _applications[newId] = application;
@@ -60,6 +64,10 @@ contract OGColor is ERC721, Ownable {
     function setPrice(uint256 forColor, uint256 forExt) external onlyOwner {
         _colorPrice = forColor;
         _extPrice = forExt;
+    }
+
+    function getPrice() external view returns (uint256, uint256) {
+        return (_colorPrice, _extPrice);
     }
 
     function withdraw() public onlyOwner {
