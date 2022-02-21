@@ -35,7 +35,7 @@ class App extends Component {
       featuredOg: { },
       featuredOgExists: false,
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
-      discordUrl: 'https://discord.gg/wEd2k6vE',
+      discordUrl: 'https://discord.gg/pnXynhdgGz',
       tankTwitterUrl: 'https://twitter.com/nfttank',
       contractUrl: '[will be set]',
       openSeaUrl: '[will be set]',

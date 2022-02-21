@@ -22,7 +22,7 @@ This repository contains the contracts and the minting website for OG NFT.
 ## External Mainnet Contracts
 
 ```
-address constant CryptoPunksContractMainnet = 0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8;
+address constant CryptoPunksContractMainnet = 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB;
 address constant BoredApesContractMainnet = 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D; 
 address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB9396471050C; 
 address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6;
