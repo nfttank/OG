@@ -4,7 +4,10 @@ import Web3Modal from "web3modal";
 import './App.css'
 import OG from './abis/OG.json'
 import OG1 from './assets/OG1.svg';
-import { Footer, Balance, Header, OGDozen, Rules, Faq } from './containers';
+import Digit from './assets/digit.svg';
+import Frame from './assets/frame.svg';
+import Back from './assets/back.svg';
+import { Footer, Balance, Header, OGColor, OGDozen, Rules, Faq } from './containers';
 import {  Navbar } from './components';
 import './App.css';
 
@@ -13,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      network: { name: 'mainnet', id: 1 },
+      network: { name: 'mainnet', id: 4 },
       mintCountAdd: null,
       mintCount: 5,
       mintFunction: null,
@@ -34,6 +37,9 @@ class App extends Component {
       walletLoaded: false,
       featuredOg: { },
       featuredOgExists: false,
+      ogDigit: { },
+      ogFrame: { },
+      ogBack: { },
       ogTwitterUrl: 'https://twitter.com/og_nft_official',
       discordUrl: 'https://discord.gg/pnXynhdgGz',
       tankTwitterUrl: 'https://twitter.com/nfttank',
@@ -48,8 +54,10 @@ class App extends Component {
 
   async componentWillMount() {
 
-    const svg = await (await fetch(OG1)).text()
-    this.setState({ featuredOg: { id: 1, svg: svg }})
+    this.setState({ featuredOg: { id: 1, svg: await (await fetch(OG1)).text() }})
+    this.setState({ ogDigit: { id: -1, svg: await (await fetch(Digit)).text() }})
+    this.setState({ ogFrame: { id: -2, svg: await (await fetch(Frame)).text() }})
+    this.setState({ ogBack: { id: -3, svg: await (await fetch(Back)).text() }})
     
     if (!window.ethereum) {
       window.alert('Non-Ethereum browser detected. You should consider trying MetaMask.')
@@ -214,6 +222,7 @@ class App extends Component {
             <Navbar data={this.state} />
             <Header data={this.state} />
           </div>
+          <OGColor data={this.state} />
           { this.state.canMintOgDozen &&
                 <OGDozen data={this.state} />
           }
