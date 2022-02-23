@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      network: { name: 'mainnet', id: 4 },
+      network: { name: 'mainnet', id: 1 },
       mintCountAdd: null,
       mintCount: 5,
       mintFunction: null,
