@@ -3,8 +3,15 @@
         <linearGradient id='back'>
             <stop stop-color='#FFFFFF' />
         </linearGradient>
-        <linearGradient id='frame'>
-            <stop stop-color='#000000' />
+        <linearGradient id="frame" x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fbc80b" />
+            <stop offset="0.14285714285714285" stop-color="#fdb901" />
+            <stop offset="0.2857142857142857" stop-color="#fda901" />
+            <stop offset="0.42857142857142855" stop-color="#fd9a07" />
+            <stop offset="0.5714285714285714" stop-color="#fb8a11" />
+            <stop offset="0.7142857142857142" stop-color="#f97b1a" />
+            <stop offset="0.8571428571428571" stop-color="#f56a21" />
+            <stop offset="1" stop-color="#f05a28" />
         </linearGradient>
         <linearGradient id='digit'>
             <stop stop-color='#000000' />

@@ -3,4 +3,7 @@ export { default as Footer } from './footer/Footer';
 export { default as Header } from './header/Header';
 export { default as Rules } from './rules/Rules';
 export { default as OGDozen } from './ogdozen/OGDozen';
+export { default as OGColor } from './ogcolor/OGColor';
+export { default as OGColorPicker } from './ogcolor/OGColorPicker';
+export { default as PopoverPicker } from './ogcolor/PopoverPicker';
 export { default as Faq } from './faq/Faq';
