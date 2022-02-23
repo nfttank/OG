@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import './App.css'
-import OG from './abis/OG.json'
+import OGAbi from './abis/OG.json'
+import OGColorAbi from './abis/OGColor.json'
 import OG1 from './assets/OG1.svg';
 import Digit from './assets/digit.svg';
 import Frame from './assets/frame.svg';
 import Back from './assets/back.svg';
 import { Footer, Balance, Header, OGColor, OGDozen, Rules, Faq } from './containers';
-import {  Navbar } from './components';
+import { Navbar } from './components';
 import './App.css';
 
 class App extends Component {
@@ -21,18 +22,22 @@ class App extends Component {
       mintCount: 5,
       mintFunction: null,
       mintOgDozenFunction: null,
+      mintOgColorFunction: null,
       canMint: true,
       canMintOgDozen: false,
       connectFunction: null,
       remainingMintsForWallet: 0,
       connected: false,
-      soldOut: false,
+      soldOut: true,
+      ogColorSoldOut: false,
       signerAddress: '',
       provider: null,
       signer: null,
       contract: null,
+      ogColorContract: null,
       balance: 0,
       totalSupply: 0,
+      ogColorTotalSupply: 0,
       maxPerWallet: 10,
       walletLoaded: false,
       featuredOg: { },
@@ -66,12 +71,13 @@ class App extends Component {
 
     const networkId = this.state.network.id
     const networkName = this.state.network.name
-    const contractAddress = OG.networks[networkId].address
+    const contractAddress = OGAbi.networks[networkId].address
 
     this.setState({ mintCountAdd: (value) => this.mintCountAdd(value)})
     this.setState({ mintFunction: () => this.mint(this, this.state.mintCount) })
     this.setState({ mintOgDozenFunction: () => this.mintOgDozen(this) })
     this.setState({ connectFunction: () => this.connect(this.state.network) })
+    this.setState({ mintOgColorFunction: (application, color) => this.mintOgColor(this, application, color) })
 
     if (networkId === 1) {
       this.setState({ contractUrl: "https://etherscan.io/address/" + contractAddress })
@@ -104,13 +110,15 @@ class App extends Component {
     const provider = new ethers.providers.Web3Provider(instance);
     const signer = provider.getSigner();
 
-    const contract = new ethers.Contract(OG.networks[this.state.network.id].address, OG.abi, provider);
+    const contract = new ethers.Contract(OGAbi.networks[this.state.network.id].address, OGAbi.abi, provider);
+    const ogColorContract = new ethers.Contract(OGColorAbi.networks[this.state.network.id].address, OGColorAbi.abi, provider);
 
     this.setState({ provider: provider })
     this.setState({ signer: signer })
     this.setState({ signerAddress: await this.state.signer.getAddress()})
     this.setState({ connected: this.state.signerAddress !== ''})
     this.setState({ contract: contract })
+    this.setState({ ogColorContract: ogColorContract })
 
     const remainingMints = await this.getRemainingMintsForWallet()
     this.setState({ remainingMintsForWallet: remainingMints })
@@ -126,18 +134,21 @@ class App extends Component {
     const balance = await this.state.contract.balanceOf(this.state.signerAddress)
     this.setState({ balance: balance})
 
-    const totalSupply = await this.state.contract.totalSupply()
+    let totalSupply = await this.state.contract.totalSupply()
     const canMintOgDozen = await this.state.contract.canMintOgDozen()
     this.setState({ totalSupply: totalSupply })
     this.setState({ soldOut: totalSupply >= 9999})
     this.setState({ canMintOgDozen: canMintOgDozen })
+
+    totalSupply = await this.state.ogColorContract.totalSupply()
+    this.setState({ ogColorTotalSupply: totalSupply })
+    this.setState({ ogColorSoldOut: totalSupply >= 2500})
 
     this.setState({ walletLoaded: true })
     
     const randomId = Math.floor(Math.random() * 9999)
     const featuredSvg = await this.state.contract.renderSvg(randomId)
     this.setState({ featuredOg: { id: randomId, svg: featuredSvg }})
-    console.log(this.state.featuredOg)
     
     // ownerOf might crash and abort the methods execution
     try {
@@ -209,6 +220,30 @@ class App extends Component {
   }
 
 
+  async mintOgColor (app, application, color) {
+
+    if (app.state.ogColorContract == null)
+      await app.connect(app.state.network);
+
+    if (app.state.ogColorContract == null)
+      return;
+
+    const totalSupply = await app.state.ogColorContract.totalSupply()
+
+    if (totalSupply >= 2500) {
+      window.alert("Sorry, already minted out :(")
+      return
+    }
+    
+    const contractOwner = await app.state.ogColorContract.owner()
+    const value = app.state.signerAddress === contractOwner ? '0.00' : '0.04';
+    const options = {value: ethers.utils.parseEther(value)}
+
+    const stateChangingSigner = app.state.ogColorContract.connect(app.state.signer);
+    await stateChangingSigner.mint(application, color, options)
+  }
+
+
   async mintCountAdd(value) {
     let newCount =  this.state.mintCount + value
     this.setState({mintCount: Math.max(Math.min(1, this.state.remainingMintsForWallet), (Math.min(newCount, this.state.remainingMintsForWallet))) })
@@ -223,12 +258,12 @@ class App extends Component {
             <Header data={this.state} />
           </div>
           <OGColor data={this.state} />
-          { this.state.canMintOgDozen &&
-                <OGDozen data={this.state} />
+          { 
+            this.state.canMintOgDozen && <OGDozen data={this.state} />
           }
           <Rules />
-          {   this.state.connected &&
-                <Balance data={this.state} />
+          {
+             this.state.connected && <Balance data={this.state} />
           }
           <Faq />
           <Footer data={this.state} />

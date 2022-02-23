@@ -19,7 +19,6 @@
 }
 
 .og_ogcolor-footer {
-    margin-top: 4rem;
     color: #fff;
     font-family: var(--font-family);
     font-size: 16px;
@@ -43,34 +42,10 @@
     flex-direction: row;
 }
 
-.og_ogcolor-radio div {
-    display: flex;
-    width: 240px;
-    height: 240px;
-    align-items: center;
-    flex-direction: column;
-}
-
 .og_ogcolor-radio p {
     font-family: var(--font-family);
     font-size: 25px;
     font-weight: 500;
-}
-
-.og_ogcolor-radio button {
-    background: #000;
-    color: #fff;
-    font-family: var(--font-family);
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 30px;
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-
-    border: none;
-    outline: none;
-    cursor: pointer;
-    min-width: 100px;
 }
 
 @media screen and (max-width: 1050px) {
@@ -102,10 +77,6 @@
         margin: 0;
     }
 
-    .og_ogcolor-radio div {
-        width: 120px;
-        height: 120px;
-    }
 }
 
 @media screen and (max-width: 490px) {
