@@ -18,7 +18,7 @@ contract GotToken {
      * Does not throw errors but returns false if the real token owner could not be found or the token does not exist.
      *
      * Sample contract addresses on Mainnet
-     *   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8     
+     *   CryptoPunks:           0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB     
      *   Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
      *   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C
      *   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6
@@ -39,14 +39,14 @@ contract GotToken {
      * Might revert execution if the contract address does not exist on the current net.
      *
      * Sample contract addresses on Mainnet
-     *   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8     
+     *   CryptoPunks:           0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB     
      *   Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
      *   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C
      *   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6
      */ 
     function unsafeOwnsTokenOfContract(address possibleOwner, address contractAddress, uint256 tokenId) public view returns (bool) {
 
-        address CryptoPunksContractMainnet = 0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8;
+        address CryptoPunksContractMainnet = 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB;
         address realTokenOwner = address(0);
 
         if (contractAddress == CryptoPunksContractMainnet) {
@@ -71,7 +71,7 @@ contract GotToken {
      * Returns an array with the results at the given index of the array.
      *
      * Sample contract addresses on Mainnet
-     *   CryptoPunks:           0x3C6D0C0d7c818474A93a8A271e0BBdb2e52E71d8     
+     *   CryptoPunks:           0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB     
      *   Bored Ape Yacht Club:  0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
      *   Cool Cats:             0x1A92f7381B9F03921564a437210bB9396471050C
      *   CrypToadz:             0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6
