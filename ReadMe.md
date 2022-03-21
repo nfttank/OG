@@ -1,92 +1,66 @@
 # OG by Tank
 
-This repository contains the contracts and the minting website for OG NFT.
+![OG banner](src/assets/Banner.png)
 
-## Checks
-* limit onlyOwner methods like `addSupportedCollection()`, `setSupportedCollectionSlug()`, `setTrustedContractAddresses()`, & `getTrustedContractAddress()`, `setUnlockSupply()`, `setPaused()`
-* set `setTrustedContractAddresses()` with the correct contract addresses for the corresponding net (Mainnet, etc.)
+This repository contains the contracts, migration scripts and the minting website for [OG Official](https://opensea.io/collection/og-nft-official) & [OG Color Official](https://opensea.io/collection/ogcolor-nft-official).
 
-## Add or update supported collections
-* add **new** collections with `addSupportedCollection()` if required
-* set a SVG element with `setSupportedCollectionSlug()` if required 
-  * convert texts to paths with InkScape, for example
-  * keep transform and add fill='url(#slug)'
-  * remove unnecessary path variables like aria-label, style. 
-  * convert the path to base64
+Project & minting website is hosted free and anonymously on GitHub Pages: https://nfttank.github.io/OG/
 
-## OGColors
-* when minting OGColor, prevent rbg(x,x,x) because of the commas the EtherScan replaces with line breaks
-* when minting OGColor with complex svg fills like gradients, use the correct element names like frame, back, etc.
-  
+## Recommended setup
 
-## External Mainnet Contracts
+- Visual Studio Code
+  - Solidity Visual Developer Extension
+- [Ganache](https://trufflesuite.com/ganache/)
 
-```
-address constant CryptoPunksContractMainnet = 0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB;
-address constant BoredApesContractMainnet = 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D; 
-address constant CoolCatsContractMainnet = 0x1A92f7381B9F03921564a437210bB9396471050C; 
-address constant CrypToadzContractMainnet = 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6;
-address constant MetaHeroCoreContractMainnet = 0xFb10b1717C92e9cc2d634080c3c337808408D9E1;
-address constant MetaHeroGenerativeContractMainnet = 0x6dc6001535e15b9def7b0f6A20a2111dFA9454E2;
-address constant NounsContractMainnet = 0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03;
+## Getting started
+
+This project uses [Truffle Suite](https://trufflesuite.com/) to compile, run and deploy smart contracts. To test things locally, you need to host a local Ethereum blockchain which is easy to do with [Ganache](https://trufflesuite.com/ganache/).
+
+Install and run Ganache either by using their UI or by running the Ganache command line interface which is way faster:
+
+```bash
+# -p defines the port, Ganache is listening on
+ganache-cli -p 7545
 ```
 
-## Top 100 All Time Collections on OpenSea 08.11.2021
+### Compiling
 
-CryptoPunks 0-9999
-https://opensea.io/assets/0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb/0
-Bored Apes 0-9999
-https://opensea.io/assets/0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d/0
-Cool Cats 0-9932
-https://opensea.io/assets/0x1a92f7381b9f03921564a437210bb9396471050c/0
-Cryptoadz 1-6969
-https://opensea.io/assets/0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6/1
-MetaHero Universe: Identities 1-36
-https://opensea.io/assets/0xfb10b1717c92e9cc2d634080c3c337808408d9e1/1
-Pudgy Penguins 0-8887
-https://opensea.io/assets/0xbd3531da5cf5857e7cfaa92426877b022e612cf8/0
-Creature World 0-9999
-https://opensea.io/assets/0xc92ceddfb8dd984a89fb494c376f9a48b999aafc/0
-World of Women 0-9999
-https://opensea.io/assets/0xe785e82358879f061bc3dcac6f0444462d4b5330/0
-Lazy Lions 0-9999 (placeholders > 9999)
-https://opensea.io/assets/0x8943c7bac1914c9a7aba750bf2b6b09fd21037e0/0
-SupDucks 0-10000
-https://opensea.io/assets/0x3fe1a4c1481c8351e91b64d5c398b159de07cbc5/0
-Doodles 0-9999
-https://opensea.io/assets/0x8a90cab2b38dba80c64b7734e58ee1db38b8992e/0
-Robotos Official 0-9998
-https://opensea.io/assets/0x099689220846644f87d1137665cded7bf3422747/0
-Winter Bears 0-9999
-https://opensea.io/assets/0xc8bcbe0e8ae36d8f9238cd320ef6de88784b1734/0
-DeadFellaz 1-10000
-https://opensea.io/assets/0x2acab3dea77832c09420663b0e1cb386031ba17b/1
-Wicked Ape Bone Club 1-10000
-https://opensea.io/assets/0xbe6e3669464e7db1e1528212f0bff5039461cb82/0
-Metasaurs by Dr. DMT 1-9999
-https://opensea.io/assets/0xf7143ba42d40eaeb49b88dac0067e54af042e963/1
-MetaHero Universe: Generative Identities 1-5779
-https://opensea.io/assets/0x6dc6001535e15b9def7b0f6a20a2111dfa9454e2/1
-Peaceful Groupies 1-10000
-https://opensea.io/assets/0x4f89cd0cae1e54d98db6a80150a824a533502eea/1
-Gutter Cat Gang 1-3000
-https://opensea.io/assets/0xedb61f74b0d09b2558f1eeb79b247c1f363ae452/1
-0N1 Force 1-7777
-https://opensea.io/assets/0x3bf2922f4520a8ba0c2efc3d2a1539678dad5e9d/1
-Punks Comic 1-1000
-https://opensea.io/assets/0x5ab21ec0bfa0b29545230395e3adaca7d552c948/1
+To compile the smart contracts simply run the following command once Ganache is up and running:
 
-Ape Gang uses long Ids like 4981676894159712808201908443964193325271219637660871887967797657650558140417
+```bash
+truffle compile
+```
 
-*/
+### Running tests
+
+As you can't simply fix and patch your deployed contracts, it is highly recommended to aim for a high test coverage. Write as many meaningful tests as possible and run the following command once Ganache is up to make sure your contracts are behaving the way you want them to:
+
+```bash
+
+# run all tests
+truffle test
+
+# run tests of a certain test file
+truffle test .\tests\OG.test.js
+```
 
 ## Contract deployment
-Contracts can be deployed with truffle migrate:
-```truffle migrate --reset --network rinkeby```
+
+Once your contracts are ready, you can deploy them via `truffle migrate` on the Ethereum test networks or the mainnet.
+
+```bash
+truffle migrate --reset --network rinkeby
+```
 
 ## Etherscan Verification
-This repository is set up to trigger a contract verification on Etherscan via Truffle.
 
+Once your contracts were deployed successfully, use Truffle once again to verify the source code. This is required to get the green checkmark on Etherscan, as most users won't interact with unverified smart contracts.
+
+> Note that this action will make your smart contract source code visible to everyone.
+
+![Verified contract on Etherscan](src/assets/Verified.jpg)
+
+This repository is set up to trigger a contract verification on Etherscan via Truffle.
 Api keys and secrets have to be defined in the secrets.json file (ignored in this git repository).
 
 ```json
@@ -97,22 +71,32 @@ Api keys and secrets have to be defined in the secrets.json file (ignored in thi
   "etherscanApiKey": "..."
 }
 ```
-The wallet mnemonic can be created with https://iancoleman.io/bip39/ once and will be reused then. This wallet is the owner of the contract.
+The wallet mnemonic can be created with https://iancoleman.io/bip39/ once and will be reused then. This wallet is the owner of the contract and will be able to run administrative `onlyOwner` methods.
 
-```
-// redeploy and verify
-clear; truffle migrate --reset --network rinkeby; npx truffle run verify OG OGColor GotToken Digits Customizer --network rinkeby
+> Make sure you keep your mnemonic (=seed phrase) secure.
+
+The verification can be invoked by the following command:
+
+```bash
+# redeploy and verify
+clear;
+truffle migrate --reset --network rinkeby;
+npx truffle run verify OG OGColor GotToken Digits Customizer --network rinkeby
 ```
 
 More information:
  - https://forum.openzeppelin.com/t/how-to-verify-with-hardhat-or-truffle-a-smart-contract-using-openzeppelin-contracts/4119
 
 # Website deployment
+
+The project website is hosted on GitHub Pages.
+Set up your own website with the following steps right out of your project's GitHub repository.
+
 - Install Node
 - Install yarn `npm install --global yarn`
 - **Only once** Install gh-pages `yarn add gh-pages`
 - **Only once** add homepage to package.json
-```
+```json
 {
   "name": ...,
   "version": ...,
@@ -120,7 +104,7 @@ More information:
   "dependencies": ...
 ```
 - **Only once** add scripts predeploy and deploy to package.json
-```
+```json
   "scripts": {
     "start": ...,
     "predeploy": "npm run build",
