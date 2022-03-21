@@ -1,22 +1,28 @@
+
+
+[![OG banner](src/assets/Banner1280.png)](https://twitter.com/og_nft_official)
+
 # OG by Tank
 
-![OG banner](src/assets/Banner.png)
+[![OG](src/assets/OGsmol.png)](https://twitter.com/og_nft_official) [![Tank](src/assets/4227smol.png)](https://twitter.com/nfttank)
+
+> Public domain (CC0), open source, customizable & on-chain NFTs on Ethereum. Totally free, okay gas.
 
 This repository contains the contracts, migration scripts and the minting website for [OG Official](https://opensea.io/collection/og-nft-official) & [OG Color Official](https://opensea.io/collection/ogcolor-nft-official).
 
-Project & minting website is hosted free and anonymously on GitHub Pages: https://nfttank.github.io/OG/
-
-## Recommended setup
-
-- Visual Studio Code
-  - Solidity Visual Developer Extension
-- [Ganache](https://trufflesuite.com/ganache/)
+The project & minting website is hosted free and anonymously on GitHub Pages: https://nfttank.github.io/OG/
 
 ## Getting started
 
 This project uses [Truffle Suite](https://trufflesuite.com/) to compile, run and deploy smart contracts. To test things locally, you need to host a local Ethereum blockchain which is easy to do with [Ganache](https://trufflesuite.com/ganache/).
 
-Install and run Ganache either by using their UI or by running the Ganache command line interface which is way faster:
+### Recommended setup
+
+- Visual Studio Code
+  - Solidity Visual Developer Extension
+- [Ganache](https://trufflesuite.com/ganache/)
+
+Run Ganache either by using their UI or by running the Ganache command line interface which is way faster:
 
 ```bash
 # -p defines the port, Ganache is listening on

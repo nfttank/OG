@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+     <radialGradient id="back" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+
+							<stop offset="0" stop-color="#35224d" />
+							<stop offset="0.5" stop-color="#35224d" />
+       
+			
+							<stop offset="1" stop-color="#f72bc8" />
+						
+					</radialGradient>
+   <linearGradient id="frame" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+						
+							<stop offset="0" stop-color="#ff0fbc" />
+						
+							<stop offset="0.14285714285714285" stop-color="#f72bc8" />
+						
+							<stop offset="0.2857142857142857" stop-color="#ee3cd3" />
+						
+							<stop offset="0.42857142857142855" stop-color="#e349de" />
+						
+							<stop offset="0.5714285714285714" stop-color="#d854e8" />
+						
+							<stop offset="0.7142857142857142" stop-color="#cc5ff0" />
+						
+							<stop offset="0.8571428571428571" stop-color="#be68f8" />
+						
+							<stop offset="1" stop-color="#b070ff" />
+						
+					</linearGradient>
+   <linearGradient id="digit" x1="0" y1="0" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+						
+							<stop offset="0" stop-color="#e349de" />
+						
+							<stop offset="0.14285714285714285" stop-color="#f72bc8" />
+						
+							<stop offset="0.2857142857142857" stop-color="#ee3cd3" />
+						
+							<stop offset="0.42857142857142855" stop-color="#e349de" />
+						
+							<stop offset="0.5714285714285714" stop-color="#d854e8" />
+						
+							<stop offset="0.7142857142857142" stop-color="#cc5ff0" />
+						
+							<stop offset="0.8571428571428571" stop-color="#be68f8" />
+						
+							<stop offset="1" stop-color="#b070ff" />
+						
+					</linearGradient>
+    <linearGradient id="slug">
+      <stop stop-color="#f97b1a"/>
+    </linearGradient>
+  </defs>
+  <mask id="_mask">
+    <circle cx="500" cy="500" r="450" fill="#ffffff" stroke="none"/>
+  </mask>
+  <circle cx="500" cy="500" r="450" fill="url(#back)" mask="url(#_mask)" stroke-width="130" stroke="url(#frame)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+  <path transform="translate(272
+  380) scale(0.7
+  0.7)" d=" M 152.692 109.295 C 145.089 109.295 137.718 109.82 130.479 110.926 C 152.626 73.91 174.971 37.046 197.073 0 L 100.112 0 L 38.399 104.029 C 10.279 151.122 0 185.189 0 219.61 C 0 292.874 54.433 343.5 133.664 343.5 C 212.451 343.5 266.743 292.798 266.743 219.181 C 266.743 154.287 219.882 109.295 152.692 109.295 L 152.692 109.295 Z M 133.371 266.379 C 106.17 266.379 86.466 247.255 86.466 219.181 C 86.466 190.818 106.17 171.482 133.371 171.482 C 160.86 171.482 180.277 190.818 180.277 219.181 C 180.277 247.255 160.86 266.379 133.371 266.379 Z " fill="url(#digit)"/>
+  <path transform="translate(543
+  380) scale(0.7
+  0.7)" d=" M 132.772 0 C 54.167 0 0 50.585 0 124.033 C 0 188.777 46.752 233.666 113.788 233.666 C 121.369 233.666 128.722 233.142 135.94 232.039 C 113.808 269.035 91.268 306.63 69.217 343.5 L 165.955 343.5 L 227.818 238.919 C 255.657 191.935 266.128 157.946 266.128 123.605 C 266.128 50.51 211.821 0 132.772 0 L 132.772 0 Z M 133.064 172.201 C 104.188 172.201 83.945 152.617 83.945 124.033 C 83.945 95.731 104.188 76.364 133.064 76.364 C 161.654 76.364 182.184 95.731 182.184 124.033 C 182.184 152.617 161.654 172.201 133.064 172.201 Z " fill="url(#digit)"/>
+</svg>
