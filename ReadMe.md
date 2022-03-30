@@ -6,7 +6,7 @@
 
 [![OG](src/assets/OGsmol.png)](https://twitter.com/og_nft_official) [![Tank](src/assets/4227smol.png)](https://twitter.com/nfttank)
 
-> Public domain (CC0), open source, customizable & on-chain NFTs on Ethereum. Totally free, okay gas.
+> **Public domain (CC0), open source, customizable & on-chain NFTs on Ethereum. Totally free, okay gas.**
 
 This repository contains the contracts, migration scripts and the minting website for [OG Official](https://opensea.io/collection/og-nft-official) & [OG Color Official](https://opensea.io/collection/ogcolor-nft-official).
 
