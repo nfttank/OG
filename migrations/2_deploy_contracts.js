@@ -5,6 +5,7 @@ module.exports = function(deployer) {
   let digits = artifacts.require("Digits")
   let customizer = artifacts.require("Customizer")
   let og = artifacts.require("OG")
+  let ogStats = artifacts.require("OGStats")
 
   deployer.deploy(digits)
   deployer.deploy(customizer)
@@ -15,4 +16,5 @@ module.exports = function(deployer) {
   deployer.deploy(og)
   deployer.deploy(gotToken)
   deployer.deploy(ogColor)
+  deployer.deploy(ogStats)
 };
